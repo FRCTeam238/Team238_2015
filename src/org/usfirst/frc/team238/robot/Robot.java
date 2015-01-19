@@ -16,9 +16,7 @@ public class Robot extends IterativeRobot {
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
-     */
-	/*CAT this comment added to make a small change as a test */
-	
+     */	
 	
 	Lift theLift;
 	ControlBoard theControlBoard;
