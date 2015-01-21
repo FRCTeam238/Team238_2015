@@ -23,6 +23,7 @@ public class ControlBoard { //Here are the joysticks for controlling the robot
 	// This is Button 1, it makes the claws suck things in
 	public boolean isTriggerPressed()
 	{
+		//modified
 		boolean trigger = joy1.getRawButton(1);
 		SmartDashboard.putString("Button 1", "Button 1 Is Presses");
 		return trigger;
