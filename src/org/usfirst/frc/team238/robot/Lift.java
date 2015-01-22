@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Lift 
 {	
-	//Declarations
+	//Declarations of the pistons for the claw
 	Solenoid rightFrontPiston;
 	Solenoid rightBackPiston;
 	Solenoid leftFrontPiston;
@@ -17,15 +17,18 @@ public class Lift
 
 	//Compressor compress;  May not be needed
 
+	//Switches that tell the elevator when to stop
 	DigitalInput raisedSwitch;
 	DigitalInput travelSwitch;
 	DigitalInput loadedSwitch;
 
 	int level;  
 
+	//motors to control the lift
 	Jaguar liftMotorLeft;  
 	Jaguar liftMotorRight;
 
+	//the value of the levels of the lift
 	final int GROUND_LEVEL = 0;
 	final int TRAVEL_LEVEL = 1;
 	final int LOADING_LEVEL = 2;
@@ -110,7 +113,7 @@ public class Lift
 	 */
 	public void liftGameObjects()  
 	{
-		if ((controls.isJoy2ButtonTwoPresses() == true) && (controls.isButtonThreePressed() == false) && (controls.isJoy2ButtonFourPresses() == false))
+		if ((controls.isButtonSevenPressed() == true) && (controls.isButtonThreePressed() == false) && (controls.isButtonNinePressed() == false))
 		{
 			if(loadedSwitch.get() == true) 
 			{
@@ -134,7 +137,7 @@ public class Lift
 	 */
 	public void travelingMode() 
 	{	
-		if((controls.isJoy2ButtonThreePresses() == true) && (controls.isJoy2ButtonTwoPresses() == false) && (controls.isJoy2ButtonFourPresses() == false))
+		if((controls.isButtonEightPressed() == true) && (controls.isButtonSevenPressed() == false) && (controls.isButtonNinePressed() == false))
 		{
 
 			if(travelSwitch.get() == true)  //The lift will stop when travelSwitch is hit
@@ -161,7 +164,7 @@ public class Lift
 	 */
 	public void setToGround()  
 	{	
-		if((controls.isJoy2ButtonFourPresses() == true) && (controls.isJoy2ButtonTwoPresses() == false) && (controls.isJoy2ButtonThreePresses() == false))
+		if((controls.isButtonNinePressed() == true) && (controls.isButtonSevenPressed() == false) && (controls.isButtonEightPressed() == false))
 		{
 
 			if(raisedSwitch.get() == true)  //The lift will stop when raisedSwitch is hit
@@ -184,7 +187,7 @@ public class Lift
 	 */
 	public void clampOn()    
 	{						 		
-		if(controls.isJoy2ButtonOnePresses() == true )
+		if(controls.isButtonTenPressed() == true )
 		{
 			rightFrontPiston.set(true);
 			rightBackPiston.set(true);
@@ -200,7 +203,7 @@ public class Lift
 	 */	
 	public void letItGo()    //This signals the right pistons to turn off.
 	{		
-		if(controls.isJoy2ButtonOnePresses() == false)
+		if(controls.isButtonTenPressed() == false)
 		{
 			rightFrontPiston.set(false);
 			rightBackPiston.set(false);
