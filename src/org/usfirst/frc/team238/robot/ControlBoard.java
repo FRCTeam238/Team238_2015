@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ControlBoard { //Here are the joysticks for controlling the robot
 	static Joystick joy1;  
-	Command commandList[];
+	
 	
 	public void controlBoardInit()
 	{
@@ -14,10 +14,7 @@ public class ControlBoard { //Here are the joysticks for controlling the robot
 			joy1 = new Joystick(1);
 			SmartDashboard.putString("joy1", "joy1 Is Intialized");
 			
-			int numCommands = joy1.getButtonCount(); 
-			System.out.println("ControlBoard Init:NUMCMDS = " + numCommands);
-			commandList = new Command[numCommands];
-			commandList[0] = new NOCommand();
+			
 		}
 		
 		catch(Exception ex)
@@ -26,13 +23,7 @@ public class ControlBoard { //Here are the joysticks for controlling the robot
 		}
 	}
 	
-	public void setCommand( int slot, Command command){
-		commandList[slot] = command;
-	}
 	
-	public void buttonPressed(int slot){
-		commandList[slot].execute();
-	}
 	
 	/**
 	 * loops thru all the buttons on the joystick until it gets to the one that is pressed

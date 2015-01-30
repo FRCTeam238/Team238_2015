@@ -103,4 +103,10 @@ public class Claws {
 			SmartDashboard.putString("spinItemsLeft", "I'm Off");
 		}	
 	}
+	
+	public void stop(){
+		leftClawMotor.set(CrusaderCommon.MOTOROFF);
+		rightClawMotor.set(CrusaderCommon.MOTOROFF);
+		SmartDashboard.putString("Claws.stop()", "I'm Off");
+	}
 }

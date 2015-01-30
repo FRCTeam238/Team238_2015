@@ -122,4 +122,9 @@ public class SaloonDoors {
 			SmartDashboard.putString("Button 5 or 6", "not pressed");
 		}
 	}
+	
+	public void stop(){
+		leftDoorMotor.set(CrusaderCommon.MOTOROFF);
+		rightDoorMotor.set(CrusaderCommon.MOTOROFF);
+	}
 }	

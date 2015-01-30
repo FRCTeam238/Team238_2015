@@ -31,26 +31,29 @@ public class Robot extends IterativeRobot {
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
 	LiftToLoadPositionCommand loadAGameObject;
+	NOCommand theDoNothingCmd;
+	CommandController theMCP;
 	
 	// This is only valid in test mode. When this object is
 	// valid, then the other objects (thisLife, theClaws, etc.) will not be valid
 	TestMain testController = null; 
 	 
 	public void disabledInit() {
-		 try
-	    	{
-			 	//only use checkForSmartDashboardChanges function in init methods or you will
-			 	//smoke the roborio into a usless pile of silicon
-	    		checkForSmartDashboardChanges("mode", CrusaderCommon.PREFVALUE_OP_MODE_NORMAL );
-	    		
-	    		updateTestMode();
-	    	}
-	    	catch(Exception ex)
-	    	{
-				System.out.println("disabledInit exception");
-	    	}
-		 	
-	    }
+		try
+		{
+			//only use checkForSmartDashboardChanges function in init methods or you will
+			//smoke the roborio into a useless pile of silicon
+			checkForSmartDashboardChanges("mode", CrusaderCommon.PREFVALUE_OP_MODE_NORMAL );
+
+			updateTestMode();
+		}
+		catch(Exception ex)
+		{
+			System.out.println("disabledInit exception");
+		}
+
+	}
+	
 	public void disabledPeriodic(){
 
 		
@@ -137,11 +140,17 @@ public class Robot extends IterativeRobot {
 	    		theSaloonDoors.Init();
 	    		SmartDashboard.putString("theSaloonDoors", "initialized");
 	    		
+	    		theMCP = new CommandController();
+	    		theMCP.init();
+	    		
+	    		theDoNothingCmd = new NOCommand(theLift, theClaws, theSaloonDoors, theDriveTrain );
+	    		theMCP.setCommand(0, theDoNothingCmd);
+	    		
 	    		saloonDoorsOpen = new SaloonDoorsOpenCommand(theSaloonDoors);
-	    		myControlBoard.setCommand(1, saloonDoorsOpen);
+	    		theMCP.setCommand(1, saloonDoorsOpen);
 	    		
 	    		loadAGameObject = new LiftToLoadPositionCommand(theLift);
-	    		myControlBoard.setCommand(2, loadAGameObject);
+	    		theMCP.setCommand(2, loadAGameObject);
 	    		
 	    		System.out.println("Fully Initialized");
 			}
@@ -197,7 +206,7 @@ public class Robot extends IterativeRobot {
     			
     		}
     		
-    		myControlBoard.buttonPressed(1);
+    		theMCP.buttonPressed(1);
     	}
     	catch( Exception ex){
     		System.out.println("Autonomous exception");
@@ -237,7 +246,7 @@ public class Robot extends IterativeRobot {
 	    		// theSaloonDoors.OpenDoors();
 	    		commandValue = myControlBoard.getCommand();
 	    		System.out.println("telopperiodic: " + commandValue);
-	    		myControlBoard.buttonPressed(commandValue);
+	    		theMCP.buttonPressed(commandValue);
 	    		
 	    	}
     	}
