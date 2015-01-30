@@ -26,10 +26,10 @@ public class SaloonDoors {
 			rightDoorMotor = new Talon(9);
 			SmartDashboard.putString("RightDoorMotor", "Initialized");
 			
-			leftPot = new AnalogPotentiometer(90);
+			leftPot = new AnalogPotentiometer(0);
 			SmartDashboard.putString("Leftpot","Initialized");
 			
-			rightPot = new AnalogPotentiometer(90);
+			rightPot = new AnalogPotentiometer(1);
 			SmartDashboard.putString("Rightpot","Initialized");
 			
 			SmartDashboard.putString("theControlBoard","Initialized");
@@ -45,23 +45,27 @@ public class SaloonDoors {
 	 * Input: OpenSaloonDoorsButton
 	 * Output: Motors Forward, "Saloon Doors Open"
 	 */
-	private void OpenDoors() {
-		String outPutValue = "";
+	public void OpenDoors() {
 		
-		if ((leftPot.get() == 90) && (rightPot.get() == 90)) {
-
-			rightDoorMotor.set(CrusaderCommon.DOORMOTORSPEED);
+		double leftPotValue = leftPot.get();
+		double rightPotValue = rightPot.get();
+		
+		if (leftPotValue >= CrusaderCommon.SALOONDOORSTOPVALUE) {
 			leftDoorMotor.set(CrusaderCommon.DOORMOTORSPEED);
-			outPutValue = ("CrusaderCommon.DOORMOTORSPEED");
-			
 		}
 		else {
 			leftDoorMotor.set(CrusaderCommon.MOTOROFF);
-			rightDoorMotor.set(CrusaderCommon.MOTOROFF);
-			outPutValue = "CrusaderCommon.MOTOROFF";
 		} 
 		
-		SmartDashboard.putString("SaloonDoors.OpenDoors", outPutValue);
+		if (rightPotValue >= CrusaderCommon.SALOONDOORSTOPVALUE) {
+			rightDoorMotor.set(CrusaderCommon.DOORMOTORSPEED);
+		}
+		else {
+			rightDoorMotor.set(CrusaderCommon.MOTOROFF);
+		} 
+
+		SmartDashboard.putNumber("SaloonDoors.OpenLeftDoor", leftPotValue);
+		SmartDashboard.putNumber("SaloonDoors.OpenRighttDoor", rightPotValue);
 	}	
 
 	/* Overview
@@ -70,10 +74,10 @@ public class SaloonDoors {
 	 * Input: CloseSaloonDoorsButton
 	 * Output: Motors Backward, "Saloon Doors Close"
 	 */
-	private void CloseDoors() {
+	public void CloseDoors() {
 		String outPutValue = "";
 
-		if ((leftPot.get() == 90) && (rightPot.get() == 90)) {
+		if ((leftPot.get() == .99) && (rightPot.get() == .99)) {
 
 			rightDoorMotor.set(CrusaderCommon.DOORMOTORSPEEDREVERSE);
 			leftDoorMotor.set(CrusaderCommon.DOORMOTORSPEEDREVERSE);

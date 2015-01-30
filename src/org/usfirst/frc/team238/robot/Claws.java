@@ -1,24 +1,27 @@
 package org.usfirst.frc.team238.robot;
 
-import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Jaguar;
+//import edu.wpi.first.wpilibj.Relay;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Claws {
 	
-	Relay leftClawMotor;//These lines declare the spikes
-	Relay rightClawMotor; //that will control the claw motors
-	ControlBoard theControlBoard;
+	Talon leftClawMotor;//These lines declare the talons
+	Jaguar rightClawMotor; //that will control the claw motors
+	//Relay test;
 	
 	//These lines are initializing the Relays and the controlboard
 	public void clawsInit()
 	{
 		try
 		{
-			leftClawMotor = new Relay(4);
+			leftClawMotor = new Talon(4);
 			SmartDashboard.putString("leftClawMotor", "initialized");
-			rightClawMotor = new Relay(5);
+			rightClawMotor = new Jaguar(5);
 			SmartDashboard.putString("rightClawMotor", "initialized");
-			theControlBoard = new ControlBoard();
 			SmartDashboard.putString("theControlBoard", "initialized");
+			//test = new Relay(0);
 		}
 		
 		catch(Exception ex)
@@ -31,16 +34,17 @@ public class Claws {
 	public void suckItemsIn()
 	{
 		
-		if(theControlBoard.isTriggerPressed() == true)
+		if(ControlBoard.isTriggerPressed() == true)
 		{
-			leftClawMotor.set(Relay.Value.kForward);
-			rightClawMotor.set(Relay.Value.kReverse);
+			leftClawMotor.set(ControlBoard.joy1.getX());
+			rightClawMotor.set(ControlBoard.joy1.getX());
 			SmartDashboard.putString("suckItemsIn", "I'm On");
+			//test.set(Relay.Value.kForward);
 		}
 		else
 		{
-			leftClawMotor.set(Relay.Value.kOff);
-			rightClawMotor.set(Relay.Value.kOff);
+			leftClawMotor.set(CrusaderCommon.MOTOROFF);
+			rightClawMotor.set(CrusaderCommon.MOTOROFF);
 			SmartDashboard.putString("suckItemsIn", "I'm Off");
 		}	
 	}
@@ -48,16 +52,16 @@ public class Claws {
 	//This function will cause the claws to spin outwards
 	public void spitItemsOut()
 	{
-		if(theControlBoard.isButtonTwoPressed() == true)
+		if(ControlBoard.isButtonTwoPressed() == true)
 		{
-			leftClawMotor.set(Relay.Value.kReverse);
-			rightClawMotor.set(Relay.Value.kForward);
+			leftClawMotor.set(CrusaderCommon.CLAWMOTORSPEED);
+			rightClawMotor.set(CrusaderCommon.CLAWMOTORSPEEDREVERSE);
 			SmartDashboard.putString("spitItemsOut", "I'm On");
 		}
 		else
 		{
-			leftClawMotor.set(Relay.Value.kOff);
-			rightClawMotor.set(Relay.Value.kOff);
+			leftClawMotor.set(CrusaderCommon.MOTOROFF);
+			rightClawMotor.set(CrusaderCommon.MOTOROFF);
 			SmartDashboard.putString("spitItemsOut", "I'm Off");
 		}
 	}
@@ -69,16 +73,16 @@ public class Claws {
 	public void spinItemsRight()
 	{
 		
-		if(theControlBoard.isButtonFourPressed() == true)
+		if(ControlBoard.isButtonFourPressed() == true)
 		{
-			leftClawMotor.set(Relay.Value.kForward);
-			rightClawMotor.set(Relay.Value.kForward);
+			leftClawMotor.set(CrusaderCommon.CLAWMOTORSPEED);
+			rightClawMotor.set(CrusaderCommon.CLAWMOTORSPEED);
 			SmartDashboard.putString("spinItemsRight", "I'm On");
 		}
 		else
 		{
-			leftClawMotor.set(Relay.Value.kOff);
-			rightClawMotor.set(Relay.Value.kOff);
+			leftClawMotor.set(CrusaderCommon.MOTOROFF);
+			rightClawMotor.set(CrusaderCommon.MOTOROFF);
 			SmartDashboard.putString("spinItemsRight", "I'm Off");
 		}
 	}
@@ -86,18 +90,17 @@ public class Claws {
 	//This function will cause the claw motors to spin right, rotating game pieces left
 	public void spinItemsLeft()
 	{
-		if(theControlBoard.isButtonThreePressed() == true)
+		if(ControlBoard.isButtonThreePressed() == true)
 		{
-			leftClawMotor.set(Relay.Value.kReverse);
-			rightClawMotor.set(Relay.Value.kReverse);
+			leftClawMotor.set(CrusaderCommon.CLAWMOTORSPEEDREVERSE);
+			rightClawMotor.set(CrusaderCommon.CLAWMOTORSPEEDREVERSE);
 			SmartDashboard.putString("spinItemsLeft", "I'm On");
 		}
 		else
 		{
-			leftClawMotor.set(Relay.Value.kOff);
-			rightClawMotor.set(Relay.Value.kOff);
+			leftClawMotor.set(CrusaderCommon.MOTOROFF);
+			rightClawMotor.set(CrusaderCommon.MOTOROFF);
 			SmartDashboard.putString("spinItemsLeft", "I'm Off");
 		}	
 	}
 }
-

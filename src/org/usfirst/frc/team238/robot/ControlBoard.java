@@ -1,26 +1,63 @@
 package org.usfirst.frc.team238.robot;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class ControlBoard { //Here are the joysticks for controlling the robot
 	static Joystick joy1;  
-	static Joystick joy2;
+	Command commandList[];
 	
 	public void controlBoardInit()
 	{
 		try
 		{
 			joy1 = new Joystick(1);
-			joy2 = new Joystick(2);
+			SmartDashboard.putString("joy1", "joy1 Is Intialized");
 			
+			int numCommands = joy1.getButtonCount(); 
+			System.out.println("ControlBoard Init:NUMCMDS = " + numCommands);
+			commandList = new Command[numCommands];
+			commandList[0] = new NOCommand();
 		}
 		
 		catch(Exception ex)
 		{
 			System.out.println("ControlBoard Init Failed");
 		}
+	}
+	
+	public void setCommand( int slot, Command command){
+		commandList[slot] = command;
+	}
+	
+	public void buttonPressed(int slot){
+		commandList[slot].execute();
+	}
+	
+	/**
+	 * loops thru all the buttons on the joystick until it gets to the one that is pressed
+	 * works as long as we only need one button pressed at a time, if we need  more than one
+	 * button we'll need to create an array of commands.... int command[]
+	 * @return command value
+	 */
+	public int getCommand(){
+		int command;
+		boolean jsButtonValue = false;
+		
+		int interator = joy1.getButtonCount(); 
+		
+		for(command = 1; command < interator; command++){
+			jsButtonValue = joy1.getRawButton(command);
+			if(jsButtonValue){
+				break;
+			}
+		}
+		if(!jsButtonValue){
+			command = 0;
+		}
+		
+		SmartDashboard.putNumber("Command", command);
+		return command;
 	}
 	// This is Button 1, it makes the claws suck things in
 	public static boolean isTriggerPressed()
@@ -77,31 +114,32 @@ public class ControlBoard { //Here are the joysticks for controlling the robot
 		return trigger;
 	}
 	
-	public static boolean isJoy2ButtonOnePresses()
+	public static boolean isButtonSevenPressed()
 	{
-		boolean trigger = joy2.getRawButton(1);
-		SmartDashboard.putString("Joy2 Button 1", "Button 1 Is Initialized");
+		boolean trigger = joy1.getRawButton(7);
+				
+		SmartDashboard.putString("Button 7", "Button 7 Is Initialized");
 		return trigger;
 	}
 	
-	public static boolean isJoy2ButtonTwoPresses()
+	public static boolean isButtonEightPressed()
 	{
-		boolean trigger = joy2.getRawButton(2);
-		SmartDashboard.putString("Joy2 Button 2", "Button 2 Is Initialized");
+		boolean trigger = joy1.getRawButton(8);
+		SmartDashboard.putString("Button 8", "Button 8 Is Initialized");
 		return trigger;
 	}
 	
-	public static boolean isJoy2ButtonThreePresses()
+	public static boolean isButtonNinePressed()
 	{
-		boolean trigger = joy2.getRawButton(3);
-		SmartDashboard.putString("Joy2 Button 3", "Button 3 Is Initialized");
+		boolean trigger = joy1.getRawButton(9);
+		SmartDashboard.putString("Button 9", "Button 9 Is Initialized");
 		return trigger;
 	}
 	
-	public static boolean isJoy2ButtonFourPresses()
+	public static boolean isButtonTenPressed()
 	{
-		boolean trigger = joy2.getRawButton(4);
-		SmartDashboard.putString("Joy2 Button 4", "Button 4 Is Initialized");
+		boolean trigger = joy1.getRawButton(10);
+		SmartDashboard.putString("Button 10", "Button 10 Is Initialized");
 		return trigger;
 	}
 	

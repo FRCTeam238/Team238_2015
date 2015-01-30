@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Lift 
 {	
-	//Declarations of the pistons for the claw
+	//Declarations
 	Solenoid rightFrontPiston;
 	Solenoid rightBackPiston;
 	Solenoid leftFrontPiston;
@@ -17,23 +17,18 @@ public class Lift
 
 	//Compressor compress;  May not be needed
 
-	//Switches that tell the elevator when to stop
 	DigitalInput raisedSwitch;
 	DigitalInput travelSwitch;
 	DigitalInput loadedSwitch;
 
 	int level;  
 
-	//motors to control the lift
 	Jaguar liftMotorLeft;  
 	Jaguar liftMotorRight;
 
-	//the value of the levels of the lift
 	final int GROUND_LEVEL = 0;
 	final int TRAVEL_LEVEL = 1;
 	final int LOADING_LEVEL = 2;
-
-	ControlBoard controls;
 
 	public void liftInit()
 	{
@@ -67,7 +62,7 @@ public class Lift
 			liftMotorLeft = new Jaguar(7); 
 			SmartDashboard.putNumber("Left Lift Motor: ", liftMotorLeft.get());
 
-			controls = new ControlBoard();
+			
 		}
 		catch(Exception e)
 		{
@@ -104,7 +99,7 @@ public class Lift
 	public void stop()
 	{
 		liftMotorRight.set(0);
-		liftMotorRight.set(0);
+		liftMotorLeft.set(0);
 	}
 
 	/*
@@ -113,9 +108,9 @@ public class Lift
 	 */
 	public void liftGameObjects()  
 	{
-		if ((controls.isButtonSevenPressed() == true) && (controls.isButtonThreePressed() == false) && (controls.isButtonNinePressed() == false))
+		if (ControlBoard.isButtonSevenPressed() == true)
 		{
-			if(loadedSwitch.get() == true) 
+			if(loadedSwitch.get() == false) 
 			{
 				stop();
 				level = LOADING_LEVEL;
@@ -137,10 +132,10 @@ public class Lift
 	 */
 	public void travelingMode() 
 	{	
-		if((controls.isButtonEightPressed() == true) && (controls.isButtonSevenPressed() == false) && (controls.isButtonNinePressed() == false))
+		if(ControlBoard.isButtonEightPressed() == true)
 		{
 
-			if(travelSwitch.get() == true)  //The lift will stop when travelSwitch is hit
+			if(travelSwitch.get() == false)  //The lift will stop when travelSwitch is hit
 			{
 				stop();
 				level = TRAVEL_LEVEL;
@@ -164,10 +159,10 @@ public class Lift
 	 */
 	public void setToGround()  
 	{	
-		if((controls.isButtonNinePressed() == true) && (controls.isButtonSevenPressed() == false) && (controls.isButtonEightPressed() == false))
+		if(ControlBoard.isButtonNinePressed() == true)
 		{
 
-			if(raisedSwitch.get() == true)  //The lift will stop when raisedSwitch is hit
+			if(raisedSwitch.get() == false)  //The lift will stop when raisedSwitch is hit
 			{
 				stop();
 				level = GROUND_LEVEL;
@@ -187,7 +182,7 @@ public class Lift
 	 */
 	public void clampOn()    
 	{						 		
-		if(controls.isButtonTenPressed() == true )
+		if(ControlBoard.isButtonTenPressed() == true )
 		{
 			rightFrontPiston.set(true);
 			rightBackPiston.set(true);
@@ -203,7 +198,7 @@ public class Lift
 	 */	
 	public void letItGo()    //This signals the right pistons to turn off.
 	{		
-		if(controls.isButtonTenPressed() == false)
+		if(ControlBoard.isButtonTenPressed() == false)
 		{
 			rightFrontPiston.set(false);
 			rightBackPiston.set(false);
@@ -211,6 +206,16 @@ public class Lift
 			leftBackPiston.set(false);
 		}
 	}	
+	public void test()
+	{
+		liftGoesUp();
+		liftGoesDown();
+		clampOn();
+		letItGo();
+		travelingMode();
+		setToGround();
+		liftGameObjects();
+	}
 
 }
 
