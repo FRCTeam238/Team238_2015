@@ -4,7 +4,7 @@ package org.usfirst.frc.team238.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+//import edu.wpi.first.wpilibj.;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -29,6 +29,9 @@ public class Robot extends IterativeRobot {
 	SaloonDoors theSaloonDoors;
 	CommandGoToGround operatorCmdSetToGround;
 	CommandGoToTravel operatorCmdSetToTravel;
+	CommandGoToLift operatorCmdSetToLift;
+	CommandGoToDeliver operatorCmdSetToDeliver;
+	CommandSaloonDoorsOpen operatorCmdSetToSaloonDoorsOpen;
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
 	LiftToLoadPositionCommand loadAGameObject;
@@ -153,6 +156,15 @@ public class Robot extends IterativeRobot {
 	    		operatorCmdSetToTravel = new CommandGoToTravel(theLift, theSaloonDoors);
 	    		theMCP.setCommand(2, operatorCmdSetToTravel);
 	    		
+	    		operatorCmdSetToLift = new CommandGoToLift(theLift, theSaloonDoors);
+	    		theMCP.setCommand(3, operatorCmdSetToLift);
+	    		
+	    		operatorCmdSetToDeliver = new CommandGoToDeliver(theLift, theSaloonDoors);
+	    		theMCP.setCommand(4, operatorCmdSetToDeliver);
+	    		
+	    		operatorCmdSetToSaloonDoorsOpen = new CommandSaloonDoorsOpen(theSaloonDoors);
+	    		theMCP.setCommand(5, operatorCmdSetToSaloonDoorsOpen);
+	    		
 	    		System.out.println("Fully Initialized");
 			}
     	}
@@ -235,16 +247,7 @@ public class Robot extends IterativeRobot {
 	    	}
 	    	else
 	    	{
-		    	//myControlBoard.controlBoardTest();
-		    	//theClaws.suckItemsIn();
-		    	//theClaws.spitItemsOut();
-		    	//theClaws.spinItemsRight();
-		    	//theClaws.spinItemsLeft();
-		    	//theSaloonDoors.OpenDoors();
-		    	//theLift.setToGround();	   
-	    		//theLift.travelingMode();
-	    		//theLift.liftGameObjects();
-	    		// theSaloonDoors.OpenDoors();
+
 	    		commandValue = myControlBoard.getCommand();
 	    		System.out.println("telopperiodic: " + commandValue);
 	    		theMCP.buttonPressed(commandValue);

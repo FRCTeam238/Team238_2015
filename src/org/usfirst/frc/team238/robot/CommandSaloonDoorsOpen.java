@@ -1,9 +1,9 @@
 package org.usfirst.frc.team238.robot;
 
-public class SaloonDoorsOpenCommand implements Command {
+public class CommandSaloonDoorsOpen implements Command {
 	SaloonDoors saloonDoor;
 	
-	public SaloonDoorsOpenCommand(SaloonDoors saloonDoor){
+	public CommandSaloonDoorsOpen(SaloonDoors saloonDoor){
 		this.saloonDoor = saloonDoor;
 	}
 	

@@ -1,12 +1,13 @@
 package org.usfirst.frc.team238.robot;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SaloonDoors {
 
-	Talon leftDoorMotor;
+	TalonSRX leftDoorMotor;
 	Talon rightDoorMotor;
 	AnalogPotentiometer leftPot;
 	AnalogPotentiometer rightPot;
@@ -20,7 +21,7 @@ public class SaloonDoors {
 			
 		try {
 			
-			leftDoorMotor = new Talon(8);
+			leftDoorMotor = new TalonSRX(8);
 			SmartDashboard.putString("LeftDoorMotor", "Initialized");
 			
 			rightDoorMotor = new Talon(9);
