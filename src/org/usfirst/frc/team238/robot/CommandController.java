@@ -1,6 +1,7 @@
 package org.usfirst.frc.team238.robot;
 
 public class CommandController {
+	
 	Command operatorCommandList[];
 	Command driverCommandList[];
 	
