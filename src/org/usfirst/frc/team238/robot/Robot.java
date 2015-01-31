@@ -148,22 +148,22 @@ public class Robot extends IterativeRobot {
 	    		theMCP.init();
 	    		
 	    		theDoNothingCmd = new NOCommand(theLift, theClaws, theSaloonDoors, theDriveTrain );
-	    		theMCP.setCommand(0, theDoNothingCmd);
+	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 0, theDoNothingCmd);
 	    		
 	    		operatorCmdSetToGround = new CommandGoToGround(theLift, theSaloonDoors);
-	    		theMCP.setCommand(1, operatorCmdSetToGround);
+	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 1, operatorCmdSetToGround);
 	    		
 	    		operatorCmdSetToTravel = new CommandGoToTravel(theLift, theSaloonDoors);
-	    		theMCP.setCommand(2, operatorCmdSetToTravel);
+	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 2, operatorCmdSetToTravel);
 	    		
 	    		operatorCmdSetToLift = new CommandGoToLift(theLift, theSaloonDoors);
-	    		theMCP.setCommand(3, operatorCmdSetToLift);
+	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 3, operatorCmdSetToLift);
 	    		
 	    		operatorCmdSetToDeliver = new CommandGoToDeliver(theLift, theSaloonDoors);
-	    		theMCP.setCommand(4, operatorCmdSetToDeliver);
+	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 4, operatorCmdSetToDeliver);
 	    		
 	    		operatorCmdSetToSaloonDoorsOpen = new CommandSaloonDoorsOpen(theSaloonDoors);
-	    		theMCP.setCommand(5, operatorCmdSetToSaloonDoorsOpen);
+	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 5, operatorCmdSetToSaloonDoorsOpen);
 	    		
 	    		System.out.println("Fully Initialized");
 			}
@@ -219,7 +219,7 @@ public class Robot extends IterativeRobot {
     			
     		}
     		
-    		theMCP.buttonPressed(1);
+    		//theMCP.buttonPressed(1);
     	}
     	catch( Exception ex){
     		System.out.println("Autonomous exception");
@@ -230,7 +230,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	int commandValue = 0;
+    	int commandValue[];
     	
     	try
     	{
@@ -248,7 +248,7 @@ public class Robot extends IterativeRobot {
 	    	else
 	    	{
 
-	    		commandValue = myControlBoard.getCommand();
+	    		commandValue = myControlBoard.getCommands();
 	    		System.out.println("telopperiodic: " + commandValue);
 	    		theMCP.buttonPressed(commandValue);
 	    		

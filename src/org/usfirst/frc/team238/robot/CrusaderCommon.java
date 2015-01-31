@@ -14,6 +14,9 @@ public class CrusaderCommon {
 	public static final String PREFVALUE_OP_MODE_TEST = "test";
 	public static final String PREFVALUE_OP_AUTO = "auto";
 	public static final String PREFVALUE_OP_AUTO_DEFAULT = "1";
+	
+	public static final int OPR_CMD_LIST = 1;
+	public static final int DRIVER_CMD_LIST = 2;
 }
 
 

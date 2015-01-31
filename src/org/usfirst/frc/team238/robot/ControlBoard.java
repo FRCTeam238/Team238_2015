@@ -5,13 +5,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ControlBoard { //Here are the joysticks for controlling the robot
 	static Joystick joy1;  
-	
+	static Joystick joy2; 
+	static Joystick joy3; 
+	static Joystick joy4; 
+	static int commands[];
 	
 	public void controlBoardInit()
 	{
 		try
 		{
 			joy1 = new Joystick(1);
+			joy2 = new Joystick(2);
+			joy3 = new Joystick(3);
+			joy4 = new Joystick(4);
+			commands = new int[4];
+			
 			SmartDashboard.putString("joy1", "joy1 Is Intialized");
 			
 			
@@ -31,14 +39,14 @@ public class ControlBoard { //Here are the joysticks for controlling the robot
 	 * button we'll need to create an array of commands.... int command[]
 	 * @return command value
 	 */
-	public int getCommand(){
+	public int getCommand(Joystick theJoyStick){
 		int command;
 		boolean jsButtonValue = false;
 		
-		int interator = joy1.getButtonCount(); 
+		int interator = theJoyStick.getButtonCount(); 
 		
 		for(command = 1; command < interator; command++){
-			jsButtonValue = joy1.getRawButton(command);
+			jsButtonValue = theJoyStick.getRawButton(command);
 			if(jsButtonValue){
 				break;
 			}
@@ -50,6 +58,17 @@ public class ControlBoard { //Here are the joysticks for controlling the robot
 		SmartDashboard.putNumber("Command", command);
 		return command;
 	}
+	
+	public int[] getCommands(){
+		
+		commands[0] = getCommand(joy1);
+		commands[1] = getCommand(joy2);
+		commands[2] = getCommand(joy3);
+		commands[3] = getCommand(joy4);
+		
+		return commands;
+	}
+	
 	// This is Button 1, it makes the claws suck things in
 	public static boolean isTriggerPressed()
 	{
