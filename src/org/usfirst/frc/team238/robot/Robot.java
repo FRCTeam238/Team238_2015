@@ -27,7 +27,8 @@ public class Robot extends IterativeRobot {
 	Claws theClaws;
 	DriveTrain theDriveTrain;
 	SaloonDoors theSaloonDoors;
-	SaloonDoorsOpenCommand saloonDoorsOpen;
+	CommandGoToGround operatorCmdSetToGround;
+	CommandGoToTravel operatorCmdSetToTravel;
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
 	LiftToLoadPositionCommand loadAGameObject;
@@ -146,11 +147,11 @@ public class Robot extends IterativeRobot {
 	    		theDoNothingCmd = new NOCommand(theLift, theClaws, theSaloonDoors, theDriveTrain );
 	    		theMCP.setCommand(0, theDoNothingCmd);
 	    		
-	    		saloonDoorsOpen = new SaloonDoorsOpenCommand(theSaloonDoors);
-	    		theMCP.setCommand(1, saloonDoorsOpen);
+	    		operatorCmdSetToGround = new CommandGoToGround(theLift, theSaloonDoors);
+	    		theMCP.setCommand(1, operatorCmdSetToGround);
 	    		
-	    		loadAGameObject = new LiftToLoadPositionCommand(theLift);
-	    		theMCP.setCommand(2, loadAGameObject);
+	    		operatorCmdSetToTravel = new CommandGoToTravel(theLift, theSaloonDoors);
+	    		theMCP.setCommand(2, operatorCmdSetToTravel);
 	    		
 	    		System.out.println("Fully Initialized");
 			}

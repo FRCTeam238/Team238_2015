@@ -102,7 +102,7 @@ public class Lift
 	public void stop()
 	{
 		liftMotorRight.set(0);
-		liftMotorRight.set(0);
+		liftMotorLeft.set(0);
 	}
 
 	/*
@@ -153,6 +153,12 @@ public class Lift
 			}
 
 		}
+		
+		
+		SmartDashboard.putBoolean("Travel Switch Hit: ", travelSwitch.get());
+		SmartDashboard.putNumber("Level: ", level);
+
+		
 	}
 	/*
 	 * This method will bring the lift to level 0 from any height.
