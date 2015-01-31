@@ -52,18 +52,11 @@ public class Claws {
 	//This function will cause the claws to spin outwards
 	public void spitItemsOut()
 	{
-		if(ControlBoard.isButtonTwoPressed() == true)
-		{
-			leftClawMotor.set(CrusaderCommon.CLAWMOTORSPEED);
-			rightClawMotor.set(CrusaderCommon.CLAWMOTORSPEEDREVERSE);
-			SmartDashboard.putString("spitItemsOut", "I'm On");
-		}
-		else
-		{
-			leftClawMotor.set(CrusaderCommon.MOTOROFF);
-			rightClawMotor.set(CrusaderCommon.MOTOROFF);
-			SmartDashboard.putString("spitItemsOut", "I'm Off");
-		}
+
+		leftClawMotor.set(CrusaderCommon.CLAWMOTORSPEED);
+		rightClawMotor.set(CrusaderCommon.CLAWMOTORSPEEDREVERSE);
+		SmartDashboard.putString("spitItemsOut", "I'm On");
+
 	}
 		
 		

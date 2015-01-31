@@ -21,6 +21,7 @@ public class Lift
 	DigitalInput raisedSwitch;
 	DigitalInput travelSwitch;
 	DigitalInput loadedSwitch;
+	DigitalInput coopSwitch;
 
 	int level;  
 
@@ -32,6 +33,7 @@ public class Lift
 	final int GROUND_LEVEL = 0;
 	final int TRAVEL_LEVEL = 1;
 	final int LOADING_LEVEL = 2;
+	final int COOP_LEVEL = 3;
 
 
 
@@ -57,6 +59,8 @@ public class Lift
 			SmartDashboard.putBoolean("Travel Switch Hit: ", travelSwitch.get());
 			raisedSwitch = new DigitalInput(6); // This level is when we are approaching a new tote or a bin
 			SmartDashboard.putBoolean("Raised Switch Hit: ", raisedSwitch.get());
+			coopSwitch = new DigitalInput(7);
+			SmartDashboard.putBoolean("Co-Op Switch Hit: ", coopSwitch.get());
 
 			level = GROUND_LEVEL; // Maybe?  under revise
 			SmartDashboard.putNumber("Level: ", level);
@@ -80,8 +84,8 @@ public class Lift
 	 */
 	public void liftGoesUp()  
 	{	
-		liftMotorRight.set(0.5);
-		liftMotorLeft.set(0.5);
+		liftMotorRight.set(-1);
+		liftMotorLeft.set(-1);
 	}
 
 
@@ -91,8 +95,8 @@ public class Lift
 	 */
 	public void liftGoesDown()  
 	{
-		liftMotorRight.set(-0.5);
-		liftMotorLeft.set(-0.5);
+		liftMotorRight.set(1);
+		liftMotorLeft.set(1);
 	}
 
 	/*
@@ -139,7 +143,7 @@ public class Lift
 		if(travelSwitch.get() == true)  //The lift will stop when travelSwitch is hit
 		{
 			stop();
-			level = TRAVEL_LEVEL;
+			
 		}
 		else
 		{
@@ -147,14 +151,14 @@ public class Lift
 			{
 				liftGoesDown();				
 			}
-			if (level == GROUND_LEVEL)
+			if ((level == GROUND_LEVEL) || (level == COOP_LEVEL))
 			{
 				liftGoesUp();			
 			}
-
+			
 		}
 		
-		
+		level = TRAVEL_LEVEL;
 		SmartDashboard.putBoolean("Travel Switch Hit: ", travelSwitch.get());
 		SmartDashboard.putNumber("Level: ", level);
 
@@ -170,14 +174,36 @@ public class Lift
 		if(raisedSwitch.get() == true)  //The lift will stop when raisedSwitch is hit
 		{
 			stop();
-			level = GROUND_LEVEL;
+			
 		}
 		else 
 		{
 			liftGoesDown();
 		}
-
+		level = GROUND_LEVEL;
 	}
+	
+	public void setToCoop()
+	{
+		if(coopSwitch.get() == true)
+		{
+			stop();
+			
+		}
+		else
+		{
+			if(level == LOADING_LEVEL)
+			{
+				liftGoesDown();
+			}
+			else
+			{
+				liftGoesUp();
+			}
+		}
+		level = COOP_LEVEL;
+	}
+	
 	// Here are the pneumatics parts where the lift clamps on
 
 	/*

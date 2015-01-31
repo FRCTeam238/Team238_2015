@@ -25,6 +25,6 @@ public class CommandController {
 	
 	public void buttonPressed(int slot[]){
 		operatorCommandList[slot[0]].execute();
-		driverCommandList[slot[1]].execute();
+		//driverCommandList[slot[1]].execute();
 	}
 }

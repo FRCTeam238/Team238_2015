@@ -31,6 +31,7 @@ public class Robot extends IterativeRobot {
 	CommandGoToTravel operatorCmdSetToTravel;
 	CommandGoToLift operatorCmdSetToLift;
 	CommandGoToDeliver operatorCmdSetToDeliver;
+	CommandCoopPoints operatorCmdCoopPoints;
 	CommandSaloonDoorsOpen operatorCmdSetToSaloonDoorsOpen;
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
@@ -150,6 +151,7 @@ public class Robot extends IterativeRobot {
 	    		theDoNothingCmd = new NOCommand(theLift, theClaws, theSaloonDoors, theDriveTrain );
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 0, theDoNothingCmd);
 	    		
+	    		
 	    		operatorCmdSetToGround = new CommandGoToGround(theLift, theSaloonDoors);
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 1, operatorCmdSetToGround);
 	    		
@@ -162,8 +164,12 @@ public class Robot extends IterativeRobot {
 	    		operatorCmdSetToDeliver = new CommandGoToDeliver(theLift, theSaloonDoors);
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 4, operatorCmdSetToDeliver);
 	    		
+	    		operatorCmdCoopPoints = new CommandCoopPoints(theLift, theSaloonDoors, theClaws);
+	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 5, operatorCmdCoopPoints);
+	    		
 	    		operatorCmdSetToSaloonDoorsOpen = new CommandSaloonDoorsOpen(theSaloonDoors);
-	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 5, operatorCmdSetToSaloonDoorsOpen);
+	    		theMCP.setCommand(CrusaderCommon.DRIVER_CMD_LIST, 1, operatorCmdSetToSaloonDoorsOpen);
+	    		
 	    		
 	    		System.out.println("Fully Initialized");
 			}
@@ -249,7 +255,7 @@ public class Robot extends IterativeRobot {
 	    	{
 
 	    		commandValue = myControlBoard.getCommands();
-	    		System.out.println("telopperiodic: " + commandValue);
+	    		System.out.println("telopperiodic: " + commandValue[0]);
 	    		theMCP.buttonPressed(commandValue);
 	    		
 	    	}
