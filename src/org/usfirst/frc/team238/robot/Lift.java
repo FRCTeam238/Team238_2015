@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Lift 
 {	
-	//Declarations
+	//Declarations of the pistons for the claw
 	Solenoid rightFrontPiston;
 	Solenoid rightBackPiston;
 	Solenoid leftFrontPiston;
@@ -17,23 +17,28 @@ public class Lift
 
 	//Compressor compress;  May not be needed
 
+	//Switches that tell the elevator when to stop
 	DigitalInput raisedSwitch;
 	DigitalInput travelSwitch;
 	DigitalInput loadedSwitch;
 
 	int level;  
 
+	//motors to control the lift
 	Jaguar liftMotorLeft;  
 	Jaguar liftMotorRight;
 
+	//the value of the levels of the lift
 	final int GROUND_LEVEL = 0;
 	final int TRAVEL_LEVEL = 1;
 	final int LOADING_LEVEL = 2;
 
+
+
 	public void liftInit()
 	{
+		//initializations of everything
 		try{
-			//initializations
 
 			// The pneumatics are used to clamp onto the new game piece
 			rightFrontPiston = new Solenoid(0); 
@@ -62,12 +67,10 @@ public class Lift
 			liftMotorLeft = new Jaguar(7); 
 			SmartDashboard.putNumber("Left Lift Motor: ", liftMotorLeft.get());
 
-			
 		}
 		catch(Exception e)
 		{
-			System.out.println(e.getMessage());  //not working (e.getMessage())
-			e.printStackTrace();
+			System.out.println(e.getStackTrace());  
 		}
 	}
 
@@ -99,7 +102,7 @@ public class Lift
 	public void stop()
 	{
 		liftMotorRight.set(0);
-		liftMotorLeft.set(0);
+		liftMotorRight.set(0);
 	}
 
 	/*
@@ -108,22 +111,21 @@ public class Lift
 	 */
 	public void liftGameObjects()  
 	{
-		if (ControlBoard.isButtonSevenPressed() == true)
-		{
-			if(loadedSwitch.get() == false) 
-			{
-				stop();
-				level = LOADING_LEVEL;
-			}
 
-			else
+		if(loadedSwitch.get() == true) 
+		{
+			stop();
+			level = LOADING_LEVEL;
+		}
+
+		else
+		{
+			if((level == TRAVEL_LEVEL)||(level == GROUND_LEVEL))		 				
 			{
-				if((level == TRAVEL_LEVEL)||(level == GROUND_LEVEL))		 				
-				{
-					liftGoesUp();
-				}
+				liftGoesUp();
 			}
 		}
+
 	}
 	/*
 	 * This method will bring the lift to level 1 from any height
@@ -132,25 +134,24 @@ public class Lift
 	 */
 	public void travelingMode() 
 	{	
-		if(ControlBoard.isButtonEightPressed() == true)
-		{
 
-			if(travelSwitch.get() == false)  //The lift will stop when travelSwitch is hit
+
+		if(travelSwitch.get() == true)  //The lift will stop when travelSwitch is hit
+		{
+			stop();
+			level = TRAVEL_LEVEL;
+		}
+		else
+		{
+			if(level == LOADING_LEVEL)
 			{
-				stop();
-				level = TRAVEL_LEVEL;
+				liftGoesDown();				
 			}
-			else
+			if (level == GROUND_LEVEL)
 			{
-				if(level == LOADING_LEVEL)
-				{
-					liftGoesDown();				
-				}
-				if (level == GROUND_LEVEL)
-				{
-					liftGoesUp();			
-				}
+				liftGoesUp();			
 			}
+
 		}
 	}
 	/*
@@ -159,19 +160,17 @@ public class Lift
 	 */
 	public void setToGround()  
 	{	
-		if(ControlBoard.isButtonNinePressed() == true)
-		{
 
-			if(raisedSwitch.get() == false)  //The lift will stop when raisedSwitch is hit
-			{
-				stop();
-				level = GROUND_LEVEL;
-			}
-			else 
-			{
-				liftGoesDown();
-			}
+		if(raisedSwitch.get() == true)  //The lift will stop when raisedSwitch is hit
+		{
+			stop();
+			level = GROUND_LEVEL;
 		}
+		else 
+		{
+			liftGoesDown();
+		}
+
 	}
 	// Here are the pneumatics parts where the lift clamps on
 
@@ -182,13 +181,12 @@ public class Lift
 	 */
 	public void clampOn()    
 	{						 		
-		if(ControlBoard.isButtonTenPressed() == true )
-		{
-			rightFrontPiston.set(true);
-			rightBackPiston.set(true);
-			leftFrontPiston.set(true);
-			leftBackPiston.set(true);
-		}
+
+		rightFrontPiston.set(true);
+		rightBackPiston.set(true);
+		leftFrontPiston.set(true);
+		leftBackPiston.set(true);
+
 	}
 
 	/*
@@ -198,25 +196,31 @@ public class Lift
 	 */	
 	public void letItGo()    //This signals the right pistons to turn off.
 	{		
-		if(ControlBoard.isButtonTenPressed() == false)
-		{
-			rightFrontPiston.set(false);
-			rightBackPiston.set(false);
-			leftFrontPiston.set(false);
-			leftBackPiston.set(false);
-		}
-	}	
+
+		rightFrontPiston.set(false);
+		rightBackPiston.set(false);
+		leftFrontPiston.set(false);
+		leftBackPiston.set(false);
+	}
+
+
 	public void test()
 	{
 		liftGoesUp();
 		liftGoesDown();
-		clampOn();
-		letItGo();
+		stop();
+		liftGameObjects();
 		travelingMode();
 		setToGround();
-		liftGameObjects();
-	}
+		clampOn();
+		letItGo();
+		System.out.println("All set and ready to go.");
+
+
+	}	
 
 }
+
+
 
 
