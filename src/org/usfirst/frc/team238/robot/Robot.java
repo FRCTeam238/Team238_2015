@@ -114,12 +114,12 @@ public class Robot extends IterativeRobot {
     	try
     	{
     		System.out.println("RobotInit()");
-    		SmartDashboard.putString(CrusaderCommon.PREFERENCE_OP_MODE, "");
-    		SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
+    		//SmartDashboard.putString(CrusaderCommon.PREFERENCE_OP_MODE, "");
+    		//SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
     		
     		myControlBoard = new ControlBoard();
     		myControlBoard.controlBoardInit();
-			SmartDashboard.putString("myControlBoard", "initialized");
+			//SmartDashboard.putString("myControlBoard", "initialized");
 			
 			updateTestMode();
 			
@@ -132,18 +132,18 @@ public class Robot extends IterativeRobot {
 			{
 	    		theLift = new Lift();
 	    		theLift.liftInit();
-	    		SmartDashboard.putString("theLift", "initialized");
+	    		//SmartDashboard.putString("theLift", "initialized");
 	    		
 	    		theClaws = new Claws();
 	    		theClaws.clawsInit();
-	    		SmartDashboard.putString("theClaws", "initialized");
+	    		//SmartDashboard.putString("theClaws", "initialized");
 	    		
 	    		theDriveTrain = new DriveTrain();
-	    		SmartDashboard.putString("theDriveTrain", "initialized");
+	    		//SmartDashboard.putString("theDriveTrain", "initialized");
 	    		
 	    		theSaloonDoors = new SaloonDoors();
 	    		theSaloonDoors.Init();
-	    		SmartDashboard.putString("theSaloonDoors", "initialized");
+	    		//SmartDashboard.putString("theSaloonDoors", "initialized");
 	    		
 	    		theMCP = new CommandController();
 	    		theMCP.init();
