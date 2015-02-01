@@ -30,12 +30,6 @@ public class Lift
 	Jaguar liftMotorLeft;  
 	Jaguar liftMotorRight;
 
-	//the value of the levels of the lift
-	final int GROUND_LEVEL = 0;
-	final int TRAVEL_LEVEL = 1;
-	final int LOADING_LEVEL = 2;
-	final int COOP_LEVEL = 3;
-
 	Talon potens;
 
 	public void liftInit()
@@ -53,7 +47,8 @@ public class Lift
 			leftBackPiston = new Solenoid(3);  
 			SmartDashboard.putBoolean("Left Back Piston:", leftBackPiston.get());
 
-			//These are Sensors that will tell the height of the lift
+			
+		    //These are Sensors that will tell the height of the lift
 			loadedSwitch = new DigitalInput(4); // This level is when the robot is picking up the tower
 			SmartDashboard.putBoolean("Load Switch Hit: ", loadedSwitch.get());
 			travelSwitch = new DigitalInput(5); // This level is used when robot is traveling with the tower
@@ -63,7 +58,7 @@ public class Lift
 			coopSwitch = new DigitalInput(7);
 			SmartDashboard.putBoolean("Co-Op Switch Hit: ", coopSwitch.get());
 
-			level = GROUND_LEVEL; // Maybe?  under revise
+			level = CrusaderCommon.GROUND_LEVEL; // Maybe?  under revise
 			SmartDashboard.putNumber("Level: ", level);
 
 			//These will bring the game piece up or down
@@ -71,7 +66,7 @@ public class Lift
 			SmartDashboard.putNumber("Right Lift Motor: ", liftMotorRight.get());
 			liftMotorLeft = new Jaguar(7); 
 			SmartDashboard.putNumber("Left Lift Motor: ", liftMotorLeft.get());
-			
+
 			//This is the potentiometer which may be added for more acuraccy
 			potens = new Talon(2); // these go into analog ports
 
@@ -88,8 +83,8 @@ public class Lift
 	 */
 	public void liftGoesUp()  
 	{	
-		liftMotorRight.set(-1);
-		liftMotorLeft.set(-1);
+		liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP);
+		liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP);
 	}
 
 
@@ -99,8 +94,8 @@ public class Lift
 	 */
 	public void liftGoesDown()  
 	{
-		liftMotorRight.set(1);
-		liftMotorLeft.set(1);
+		liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN);
+		liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN);
 	}
 
 	/*
@@ -109,8 +104,8 @@ public class Lift
 	 */
 	public void stop()
 	{
-		liftMotorRight.set(0);
-		liftMotorLeft.set(0);
+		liftMotorRight.set(CrusaderCommon.LIFT_STOPS);
+		liftMotorLeft.set(CrusaderCommon.LIFT_STOPS);
 	}
 
 	/*
@@ -120,21 +115,18 @@ public class Lift
 	public void liftGameObjects()  
 	{
 
-		if(loadedSwitch.get() == true) 
+		if((loadedSwitch.get() == true) || (potens.get() == CrusaderCommon.POT_GROUND)) 
 		{
 			stop();
-			level = LOADING_LEVEL;
-			SmartDashboard.putBoolean("Load Switch Hit: ", loadedSwitch.get());
+			level = CrusaderCommon.GROUND_LEVEL;
 		}
-
 		else
 		{
-			if((level == TRAVEL_LEVEL)||(level == GROUND_LEVEL))		 				
-			{
-				liftGoesUp();
-			}
+			liftGoesUp();
 		}
 
+		SmartDashboard.putBoolean("Load Switch Hit: ", loadedSwitch.get());
+		SmartDashboard.putNumber("Level: ", level);
 	}
 	/*
 	 * This method will bring the lift to level 1 from any height
@@ -145,29 +137,28 @@ public class Lift
 	{	
 
 
-		if(travelSwitch.get() == true)  //The lift will stop when travelSwitch is hit
+		if((travelSwitch.get() == true) || (potens.get() == CrusaderCommon.POT_TRAVEL))  //The lift will stop when travelSwitch is hit
 		{
 			stop();
-			SmartDashboard.putBoolean("Travel Switch Hit: ", travelSwitch.get());
+			level = CrusaderCommon.TRAVEL_LEVEL;
 		}
 		else
 		{
-			if(level == LOADING_LEVEL)
+			if((level == CrusaderCommon.LOADING_LEVEL) || (potens.get() < CrusaderCommon.POT_TRAVEL))
 			{
 				liftGoesDown();				
 			}
-			if ((level == GROUND_LEVEL) || (level == COOP_LEVEL))
+			if ((level == CrusaderCommon.GROUND_LEVEL) || (level == CrusaderCommon.COOP_LEVEL) || (potens.get() > CrusaderCommon.POT_TRAVEL))
 			{
 				liftGoesUp();			
 			}
-			
+
 		}
-		
-		level = TRAVEL_LEVEL;
+
 		SmartDashboard.putBoolean("Travel Switch Hit: ", travelSwitch.get());
 		SmartDashboard.putNumber("Level: ", level);
 
-		
+
 	}
 	/*
 	 * This method will bring the lift to level 0 from any height.
@@ -179,24 +170,28 @@ public class Lift
 		if(raisedSwitch.get() == true)  //The lift will stop when raisedSwitch is hit
 		{
 			stop();
-			
+			level = CrusaderCommon.GROUND_LEVEL;
 		}
 		else 
 		{
 			liftGoesDown();
 		}
-		level = GROUND_LEVEL;
+
+		SmartDashboard.putBoolean("Raised Switch Hit: ", raisedSwitch.get());
+		SmartDashboard.putNumber("Level: ", level);
 	}
-	
+
+
 	public void setToCoop()
 	{
 		if(coopSwitch.get() == true)
 		{
 			stop();
+			level = CrusaderCommon.COOP_LEVEL;
 		}
 		else
 		{
-			if(level == LOADING_LEVEL)
+			if((level == CrusaderCommon.LOADING_LEVEL) || (potens.get() > CrusaderCommon.POT_COOP))
 			{
 				liftGoesDown();
 			}
@@ -205,9 +200,11 @@ public class Lift
 				liftGoesUp();
 			}
 		}
-		level = COOP_LEVEL;
+		SmartDashboard.putBoolean("Co-Op Switch Hit: ", coopSwitch.get());
+		SmartDashboard.putNumber("Level: ", level);
+
 	}
-	
+
 	// Here are the pneumatics parts where the lift clamps on
 
 	/*
@@ -226,11 +223,11 @@ public class Lift
 	}
 
 	/*
-	 *  This signals the right pistons to turn on.
+	 *  This signals the right pistons to turn off.
 	 *	This read in a button value to see if it is true or not.
-	 *  If the button is pressed, than the solenoids on the right side will turn on.
+	 *  If the button is not pressed, than the solenoids on the right side will turn off.
 	 */	
-	public void letItGo()    //This signals the right pistons to turn off.
+	public void letItGo()   
 	{		
 
 		rightFrontPiston.set(false);
@@ -239,7 +236,7 @@ public class Lift
 		leftBackPiston.set(false);
 	}
 
-
+/*
 	public void test()
 	{
 		liftGoesUp();
@@ -254,7 +251,7 @@ public class Lift
 
 
 	}	
-
+*/
 }
 
 
