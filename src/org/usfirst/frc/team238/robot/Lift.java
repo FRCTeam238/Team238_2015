@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Talon;
 
 
 public class Lift 
@@ -35,7 +36,7 @@ public class Lift
 	final int LOADING_LEVEL = 2;
 	final int COOP_LEVEL = 3;
 
-
+	Talon potens;
 
 	public void liftInit()
 	{
@@ -70,6 +71,9 @@ public class Lift
 			SmartDashboard.putNumber("Right Lift Motor: ", liftMotorRight.get());
 			liftMotorLeft = new Jaguar(7); 
 			SmartDashboard.putNumber("Left Lift Motor: ", liftMotorLeft.get());
+			
+			//This is the potentiometer which may be added for more acuraccy
+			potens = new Talon(2); // these go into analog ports
 
 		}
 		catch(Exception e)
@@ -120,6 +124,7 @@ public class Lift
 		{
 			stop();
 			level = LOADING_LEVEL;
+			SmartDashboard.putBoolean("Load Switch Hit: ", loadedSwitch.get());
 		}
 
 		else
@@ -143,7 +148,7 @@ public class Lift
 		if(travelSwitch.get() == true)  //The lift will stop when travelSwitch is hit
 		{
 			stop();
-			
+			SmartDashboard.putBoolean("Travel Switch Hit: ", travelSwitch.get());
 		}
 		else
 		{
@@ -188,7 +193,6 @@ public class Lift
 		if(coopSwitch.get() == true)
 		{
 			stop();
-			
 		}
 		else
 		{

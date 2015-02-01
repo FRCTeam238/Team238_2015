@@ -18,6 +18,8 @@ public class CrusaderCommon {
 	//two types of command lists
 	public static final int OPR_CMD_LIST = 1;
 	public static final int DRIVER_CMD_LIST = 2;
+	
+	// Temperary potentiometer values for the lift code
 }
 
 

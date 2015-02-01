@@ -119,7 +119,7 @@ public class Robot extends IterativeRobot {
     		
     		myControlBoard = new ControlBoard();
     		myControlBoard.controlBoardInit();
-			SmartDashboard.putString("myControlBoard", "initialized");
+			//SmartDashboard.putString("myControlBoard", "initialized");
 			
 			updateTestMode();
 			
@@ -132,18 +132,18 @@ public class Robot extends IterativeRobot {
 			{
 	    		theLift = new Lift();
 	    		theLift.liftInit();
-	    		SmartDashboard.putString("theLift", "initialized");
+	    		//SmartDashboard.putString("theLift", "initialized");
 	    		
 	    		theClaws = new Claws();
 	    		theClaws.clawsInit();
-	    		SmartDashboard.putString("theClaws", "initialized");
+	    		//SmartDashboard.putString("theClaws", "initialized");
 	    		
 	    		theDriveTrain = new DriveTrain();
-	    		SmartDashboard.putString("theDriveTrain", "initialized");
+	    		//SmartDashboard.putString("theDriveTrain", "initialized");
 	    		
 	    		theSaloonDoors = new SaloonDoors();
 	    		theSaloonDoors.Init();
-	    		SmartDashboard.putString("theSaloonDoors", "initialized");
+	    		//SmartDashboard.putString("theSaloonDoors", "initialized");
 	    		
 	    		theMCP = new CommandController();
 	    		theMCP.init();
