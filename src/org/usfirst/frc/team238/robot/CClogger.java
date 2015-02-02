@@ -7,6 +7,7 @@ public class CClogger {
 	}
 	
 	public void logSD(String message, String type, String value) {
+		//my change is better
 		
 	}
 
