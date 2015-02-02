@@ -5,5 +5,9 @@ public class CClogger {
 	public CClogger() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public void logSD(String message) {
+		
+	}
 
 }
