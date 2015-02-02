@@ -7,7 +7,7 @@ public class CClogger {
 	}
 	
 	public void logSD(String message, String type, String value) {
-		
+		//this is a test for merging
 	}
 
 }
