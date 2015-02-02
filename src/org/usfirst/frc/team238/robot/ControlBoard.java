@@ -3,21 +3,23 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-public class ControlBoard { //Here are the joysticks for controlling the robot
-	static Joystick joy1;  
-	static Joystick joy2; 
-	static Joystick joy3; 
-	static Joystick joy4; 
+public class ControlBoard { 
+	//Here are the joysticks for controlling the robot
+	static Joystick joy0; 	// operator manual ovveride
+	static Joystick joy1;  	// operator control board
+	static Joystick joy2; 	// driveTrain left
+	static Joystick joy3; 	// driveTrain right
 	static int commands[];
 	
 	public void controlBoardInit()
 	{
 		try
 		{
+			joy0 = new Joystick(0);
 			joy1 = new Joystick(1);
 			joy2 = new Joystick(2);
 			joy3 = new Joystick(3);
-			joy4 = new Joystick(4);
+			
 			commands = new int[4];
 			
 			SmartDashboard.putString("joy1", "joy1 Is Intialized");
@@ -59,15 +61,30 @@ public class ControlBoard { //Here are the joysticks for controlling the robot
 		return command;
 	}
 	
+	//populates each array element with the corresponding value for the joys stick
 	public int[] getCommands(){
 		
-		commands[0] = getCommand(joy1);
-		commands[1] = getCommand(joy2);
-		commands[2] = getCommand(joy3);
-		commands[3] = getCommand(joy4);
+		commands[0] = getCommand(joy0);
+		commands[1] = getCommand(joy1);
+		commands[2] = getCommand(joy2);
+		commands[3] = getCommand(joy3);
 		
 		return commands;
 	}
+	
+	//gets the y value of the manual overide joy stick to feed to the command controller
+	public static double getManualCommandValue()
+	{
+		return joy0.getY();
+	}
+
+	//hardcoded to false until we get a switch  or possibly use SmartDshBd
+	public static boolean overRide(){
+		
+		return false;
+					
+	}
+	
 	
 	// This is Button 1, it makes the claws suck things in
 	public static boolean isTriggerPressed()
@@ -153,6 +170,8 @@ public class ControlBoard { //Here are the joysticks for controlling the robot
 		return trigger;
 	}
 	
+	
+	
 	public void controlBoardTest()
 	{
 		boolean buttonOne = isTriggerPressed();
@@ -185,4 +204,6 @@ public class ControlBoard { //Here are the joysticks for controlling the robot
     	boolean joyTwoButtonFour = isButtonSixPressed();
     	SmartDashboard.putBoolean("TestCB", joyTwoButtonFour);
 	}
-}
+
+	
+	}

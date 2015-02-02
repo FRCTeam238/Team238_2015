@@ -1,6 +1,6 @@
 package org.usfirst.frc.team238.robot;
 
-public class CommandSaloonDoorsOpen implements Command {
+public  class CommandSaloonDoorsOpen implements Command {
 	SaloonDoors saloonDoor;
 	
 	public CommandSaloonDoorsOpen(SaloonDoors saloonDoor){
@@ -9,7 +9,8 @@ public class CommandSaloonDoorsOpen implements Command {
 	
 	public void execute() {
 		saloonDoor.OpenDoors();
-
 	}
 
+	public void execute(double overRideValue) {
+	}
 }

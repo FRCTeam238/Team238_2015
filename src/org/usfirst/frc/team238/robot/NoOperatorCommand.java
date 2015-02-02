@@ -1,13 +1,13 @@
 package org.usfirst.frc.team238.robot;
 
-public class NOCommand implements Command {
+public  class NoOperatorCommand implements Command {
 	
 	Lift lift;
 	Claws claws;
 	SaloonDoors saloonDoors;
 	DriveTrain driveTrain;
 	
-	public NOCommand(Lift theLift, Claws theClaws, SaloonDoors theSaloonDoors, DriveTrain theDT ){
+	public NoOperatorCommand(Lift theLift, Claws theClaws, SaloonDoors theSaloonDoors, DriveTrain theDT ){
 		this.claws = theClaws;
 		this.driveTrain = theDT;
 		this.lift = theLift;
@@ -17,10 +17,13 @@ public class NOCommand implements Command {
 	}
 	public void execute() {
 		lift.stop();
-		claws.stop();
 		saloonDoors.stop();
-		driveTrain.stop();
-
+		claws.stop();
+		
+	}
+	
+	public void execute(double overRideValue) {
+		
 	}
 
 }

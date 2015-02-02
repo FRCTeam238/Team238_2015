@@ -35,8 +35,7 @@ public class Robot extends IterativeRobot {
 	CommandSaloonDoorsOpen operatorCmdSetToSaloonDoorsOpen;
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
-	LiftToLoadPositionCommand loadAGameObject;
-	NOCommand theDoNothingCmd;
+	NoOperatorCommand theDoNothingCmd;
 	CommandController theMCP;
 	
 	// This is only valid in test mode. When this object is
@@ -148,7 +147,7 @@ public class Robot extends IterativeRobot {
 	    		theMCP = new CommandController();
 	    		theMCP.init();
 	    		
-	    		theDoNothingCmd = new NOCommand(theLift, theClaws, theSaloonDoors, theDriveTrain );
+	    		theDoNothingCmd = new NoOperatorCommand(theLift, theClaws, theSaloonDoors, theDriveTrain );
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 0, theDoNothingCmd);
 	    		
 	    		
@@ -257,6 +256,8 @@ public class Robot extends IterativeRobot {
 	    		commandValue = myControlBoard.getCommands();
 	    		System.out.println("telopperiodic: " + commandValue[0]);
 	    		theMCP.buttonPressed(commandValue);
+	    		
+	    		
 	    		
 	    	}
     	}

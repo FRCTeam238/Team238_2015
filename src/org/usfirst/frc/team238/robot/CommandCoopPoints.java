@@ -1,6 +1,6 @@
 package org.usfirst.frc.team238.robot;
 
-public class CommandCoopPoints implements Command {
+public  class CommandCoopPoints implements Command {
 	
 	public Lift myLift;
 	public SaloonDoors mySaloonDoor;
@@ -18,5 +18,8 @@ public class CommandCoopPoints implements Command {
 		myLift.liftGoesUp();
 		mySaloonDoor.OpenDoors();
 		myClaws.spitItemsOut();
+	}
+	
+	public void execute(double overRideValue) {
 	}
 }

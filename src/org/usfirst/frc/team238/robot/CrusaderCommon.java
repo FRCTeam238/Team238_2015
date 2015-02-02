@@ -35,4 +35,10 @@ public class CrusaderCommon {
 	public static final int LIFT_GOES_UP = -1;
 	public static final int LIFT_GOES_DOWN = 1;
 	public static final int LIFT_STOPS = 0;
+	
+	//
+	public static final int INPUT_MANUAL_OVERRIDE = 0;
+	public static final int INPUT_OPR_CONTROL = 1;
+	public static final int INPUT_DRIVER = 2;
+	
 }

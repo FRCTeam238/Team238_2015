@@ -17,4 +17,7 @@ public class CommandGoToDeliver implements Command {
 		myLift.liftGoesDown();
 		mySaloonDoor.OpenDoors();
 	}
+	
+	public void execute(double overRideValue) {
+	}
 }

@@ -1,6 +1,6 @@
 package org.usfirst.frc.team238.robot;
 
-public class CommandGoToLift implements Command {
+public  class CommandGoToLift implements Command {
 	
 	Lift myLift;
 	SaloonDoors mySaloonDoor;
@@ -15,5 +15,8 @@ public class CommandGoToLift implements Command {
 		myLift.clampOn();
 		myLift.liftGameObjects();
 		mySaloonDoor.CloseDoors();
+	}
+	
+	public void execute(double overRideValue) {
 	}
 }

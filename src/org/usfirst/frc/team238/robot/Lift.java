@@ -87,13 +87,18 @@ public class Lift
 		liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP);
 	}
 
+	public void manualControlOfLifter( double overRideValue)  
+	{
+		liftMotorRight.set(overRideValue);
+		liftMotorLeft.set(overRideValue);
+	}
 
 	/*
 	 * The jaguars will start going backwards and the lift will go down.
 	 * I set the Jag speed to -.5 for now.  It can be adjusted when robot robot is built
 	 */
 	public void liftGoesDown()  
-	{
+	{	
 		liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN);
 		liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN);
 	}

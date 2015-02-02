@@ -18,4 +18,7 @@ public class CommandGoToTravel implements Command
 		mySaloonDoors.CloseDoors();
 		
 	}
+	
+	public void execute(double overRideValue) {
+	}
 }
