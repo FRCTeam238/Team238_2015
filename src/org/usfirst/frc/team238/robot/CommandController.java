@@ -43,7 +43,7 @@ public class CommandController {
 			//get the value( button pressed) from the array
 			int buttonpressed = slot[CrusaderCommon.INPUT_MANUAL_OVERRIDE];
 			//use the index to get the command that was loaded during robot init
-			Command manualCmd = manualOperatorCommandList[buttonpressed];
+			Command manualCmd = operatorCommandList[buttonpressed];
 			//ask the control Board for a value to feed to the execute command
 			double valueForMotors = ControlBoard.getManualCommandValue();
 			//execute the command

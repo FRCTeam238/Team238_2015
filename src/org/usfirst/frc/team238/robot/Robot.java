@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 
-@SuppressWarnings("deprecation")
 public class Robot extends IterativeRobot {
    
 	private static boolean robotTestMode = false;
@@ -36,6 +35,7 @@ public class Robot extends IterativeRobot {
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
 	NoOperatorCommand theDoNothingCmd;
+	NoDriverCommand theDriverNOOPCMD;
 	CommandController theMCP;
 	
 	// This is only valid in test mode. When this object is
@@ -166,8 +166,8 @@ public class Robot extends IterativeRobot {
 	    		operatorCmdCoopPoints = new CommandCoopPoints(theLift, theSaloonDoors, theClaws);
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 5, operatorCmdCoopPoints);
 	    		
-	    		//operatorCmdSetToSaloonDoorsOpen = new CommandSaloonDoorsOpen(theSaloonDoors);
-	    		//theMCP.setCommand(CrusaderCommon.DRIVER_CMD_LIST, 1, operatorCmdSetToSaloonDoorsOpen);
+	    		theDriverNOOPCMD = new NoDriverCommand (theClaws);
+	    		theMCP.setCommand(CrusaderCommon.DRIVER_CMD_LIST, 0, theDriverNOOPCMD);
 	    		
 	    		
 	    		System.out.println("Fully Initialized");

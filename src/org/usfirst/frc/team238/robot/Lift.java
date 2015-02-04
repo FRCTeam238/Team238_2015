@@ -87,7 +87,7 @@ public class Lift
 		liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP);
 	}
 
-	public void manualControlOfLifter( double overRideValue)  
+	public void manualControlOfLifter(double overRideValue)  
 	{
 		liftMotorRight.set(overRideValue);
 		liftMotorLeft.set(overRideValue);
@@ -141,19 +141,20 @@ public class Lift
 	public void travelingMode() 
 	{	
 
-
-		if((travelSwitch.get() == true) || (potens.get() == CrusaderCommon.POT_TRAVEL))  //The lift will stop when travelSwitch is hit
+		double travelPotValue = potens.get();
+		
+		if((travelSwitch.get() == true) || ((travelPotValue >= CrusaderCommon.POT_TRAVEL_MAX) && (travelPotValue <= CrusaderCommon.POT_TRAVEL_MIN)))  //The lift will stop when travelSwitch is hit
 		{
 			stop();
 			level = CrusaderCommon.TRAVEL_LEVEL;
 		}
 		else
 		{
-			if((level == CrusaderCommon.LOADING_LEVEL) || (potens.get() < CrusaderCommon.POT_TRAVEL))
+			if(level == CrusaderCommon.LOADING_LEVEL) 
 			{
 				liftGoesDown();				
 			}
-			if ((level == CrusaderCommon.GROUND_LEVEL) || (level == CrusaderCommon.COOP_LEVEL) || (potens.get() > CrusaderCommon.POT_TRAVEL))
+			if (level == CrusaderCommon.GROUND_LEVEL)
 			{
 				liftGoesUp();			
 			}

@@ -15,7 +15,7 @@ public abstract class CommandManualLiftControlClampsOn implements Command
 		myLift.clampOn();
 	}
 	public void execute(double overRideValue){
-		myLift.manualControlOfLifter(0);
+		myLift.manualControlOfLifter(overRideValue);    
 	}
 }
 

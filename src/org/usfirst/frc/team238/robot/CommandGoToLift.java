@@ -17,6 +17,10 @@ public  class CommandGoToLift implements Command {
 		mySaloonDoor.CloseDoors();
 	}
 	
-	public void execute(double overRideValue) {
+	public void execute(double overRideValue) 
+	{
+		myLift.clampOn();
+		myLift.manualControlOfLifter(overRideValue);
+		mySaloonDoor.CloseDoors();
 	}
 }

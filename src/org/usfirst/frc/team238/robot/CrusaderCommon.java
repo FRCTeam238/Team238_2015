@@ -20,10 +20,23 @@ public class CrusaderCommon {
 	public static final int DRIVER_CMD_LIST = 2;
 	
 	// Temperary potentiometer values for the lift code
-	public static final double POT_GROUND = 0.0;
-	public static final double POT_TRAVEL = 0.25;
-	public static final double POT_RAISED = 0.5;
-	public static final double POT_COOP = 1.0;
+	public static final double POT_GROUND_MIN = 0.690;
+	public static final double POT_GROUND = 0.660;
+	public static final double POT_GROUND_MAX = 0.610;
+	
+	public static final double POT_TRAVEL_MIN = 0.380;
+	public static final double POT_TRAVEL = 0.330;	
+	public static final double POT_TRAVEL_MAX = 0.280;
+	
+	public static final double POT_COOP_MIN = 0.230;
+	public static final double POT_COOP = 0.180;
+	public static final double POT_COOP_MAX = 0.130;
+	
+	public static final double POT_LOADING_MIN = 0.100;
+	public static final double POT_LOADING = 0.050;
+	public static final double POT_LOADING_MAX = 0.020;
+	
+	
 	
 	//Levels for the Lift 
 	public static final int GROUND_LEVEL = 0;
