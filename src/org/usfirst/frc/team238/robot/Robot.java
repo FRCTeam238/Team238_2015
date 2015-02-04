@@ -166,8 +166,8 @@ public class Robot extends IterativeRobot {
 	    		operatorCmdCoopPoints = new CommandCoopPoints(theLift, theSaloonDoors, theClaws);
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 5, operatorCmdCoopPoints);
 	    		
-	    		operatorCmdSetToSaloonDoorsOpen = new CommandSaloonDoorsOpen(theSaloonDoors);
-	    		theMCP.setCommand(CrusaderCommon.DRIVER_CMD_LIST, 1, operatorCmdSetToSaloonDoorsOpen);
+	    		//operatorCmdSetToSaloonDoorsOpen = new CommandSaloonDoorsOpen(theSaloonDoors);
+	    		//theMCP.setCommand(CrusaderCommon.DRIVER_CMD_LIST, 1, operatorCmdSetToSaloonDoorsOpen);
 	    		
 	    		
 	    		System.out.println("Fully Initialized");
