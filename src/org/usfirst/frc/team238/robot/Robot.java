@@ -166,6 +166,9 @@ public class Robot extends IterativeRobot {
 	    		operatorCmdCoopPoints = new CommandCoopPoints(theLift, theSaloonDoors, theClaws);
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 5, operatorCmdCoopPoints);
 	    		
+	    		operatorCmdSetToSaloonDoorsOpen = new CommandSaloonDoorsOpen(theSaloonDoors);
+	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 6, operatorCmdSetToSaloonDoorsOpen);
+	    		
 	    		theDriverNOOPCMD = new NoDriverCommand (theClaws);
 	    		theMCP.setCommand(CrusaderCommon.DRIVER_CMD_LIST, 0, theDriverNOOPCMD);
 	    		

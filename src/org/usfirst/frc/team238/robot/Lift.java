@@ -160,7 +160,7 @@ public class Lift
 			}
 
 		}
-
+		SmartDashboard.putNumber("LiftPotValue", travelPotValue);
 		SmartDashboard.putBoolean("Travel Switch Hit: ", travelSwitch.get());
 		SmartDashboard.putNumber("Level: ", level);
 
