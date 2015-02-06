@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 
 public class Lift 
@@ -30,7 +30,7 @@ public class Lift
 	Jaguar liftMotorLeft;  
 	Jaguar liftMotorRight;
 
-	Talon potens;
+	AnalogPotentiometer potens;
 
 	public void liftInit()
 	{
@@ -68,7 +68,7 @@ public class Lift
 			SmartDashboard.putNumber("Left Lift Motor: ", liftMotorLeft.get());
 
 			//This is the potentiometer which may be added for more acuraccy
-			potens = new Talon(2); // these go into analog ports
+			potens = new AnalogPotentiometer(2); // these go into analog ports
 
 		}
 		catch(Exception e)
@@ -76,7 +76,11 @@ public class Lift
 			System.out.println(e.getStackTrace());  
 		}
 	}
-
+	public int getLevel()
+	{
+		return level;
+	}
+	
 	/*
 	 * The jaguars will start going forward and the lift will go up.
 	 * I set the Jag speed to .5 for now.  It can be adjusted when robot robot is built
@@ -119,11 +123,13 @@ public class Lift
 	 */
 	public void liftGameObjects()  
 	{
-
-		if((loadedSwitch.get() == true) || (potens.get() == CrusaderCommon.POT_GROUND)) 
+		double liftPotValue = potens.get() ;
+		if((loadedSwitch.get() == true) || (liftPotValue <= CrusaderCommon.POT_LOADING_MIN)) 
 		{
-			stop();
-			level = CrusaderCommon.GROUND_LEVEL;
+			stop(); 
+			level = CrusaderCommon.LOADING_LEVEL;
+			
+			
 		}
 		else
 		{
@@ -132,6 +138,7 @@ public class Lift
 
 		SmartDashboard.putBoolean("Load Switch Hit: ", loadedSwitch.get());
 		SmartDashboard.putNumber("Level: ", level);
+		SmartDashboard.putNumber("LiftPotValue2", liftPotValue);
 	}
 	/*
 	 * This method will bring the lift to level 1 from any height
@@ -160,7 +167,7 @@ public class Lift
 			}
 
 		}
-		SmartDashboard.putNumber("LiftPotValue", travelPotValue);
+		SmartDashboard.putNumber("TravelPotValue", travelPotValue);
 		SmartDashboard.putBoolean("Travel Switch Hit: ", travelSwitch.get());
 		SmartDashboard.putNumber("Level: ", level);
 

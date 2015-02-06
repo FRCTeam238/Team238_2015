@@ -22,16 +22,16 @@ public class SaloonDoors {
 		try {
 			
 			leftDoorMotor = new TalonSRX(8);
-			SmartDashboard.putString("LeftDoorMotor", "Initialized");
+			//SmartDashboard.putString("LeftDoorMotor", "Initialized");
 			
 			rightDoorMotor = new Talon(9);
-			SmartDashboard.putString("RightDoorMotor", "Initialized");
+			//SmartDashboard.putString("RightDoorMotor", "Initialized");
 			
 			leftPot = new AnalogPotentiometer(0);
-			SmartDashboard.putString("Leftpot","Initialized");
+			//SmartDashboard.putString("Leftpot","Initialized");
 			
 			rightPot = new AnalogPotentiometer(1);
-			SmartDashboard.putString("Rightpot","Initialized");
+			//SmartDashboard.putString("Rightpot","Initialized");
 			
 			SmartDashboard.putString("theControlBoard","Initialized");
 			

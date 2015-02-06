@@ -13,9 +13,17 @@ public class CommandGoToDeliver implements Command {
 	
 	public void execute()
 	{
-		myLift.letItGo();
 		myLift.liftGoesDown();
-		mySaloonDoor.OpenDoors();
+		
+		int liftLevel = myLift.getLevel();
+		
+		if (liftLevel == CrusaderCommon.TRAVEL_LEVEL)
+		{
+			myLift.letItGo();
+			
+			mySaloonDoor.OpenDoors();
+		}
+		
 	}
 	
 	public void execute(double overRideValue) {

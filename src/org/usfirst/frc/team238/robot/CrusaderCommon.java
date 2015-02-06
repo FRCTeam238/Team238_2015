@@ -39,10 +39,11 @@ public class CrusaderCommon {
 	
 	
 	//Levels for the Lift 
-	public static final int GROUND_LEVEL = 0;
-	public static final int TRAVEL_LEVEL = 1;
-	public static final int LOADING_LEVEL = 2;
-	public static final int COOP_LEVEL = 3;
+	public static final int GROUND_LEVEL = 1;
+	public static final int TRAVEL_LEVEL = 2;
+	public static final int LOADING_LEVEL = 3;
+	public static final int DELIVER_LEVEL = 4;
+	public static final int COOP_LEVEL = 5;
 	
 	//Speed for the Lift Jaguars
 	public static final int LIFT_GOES_UP = -1;
