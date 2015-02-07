@@ -1,5 +1,7 @@
 package org.usfirst.frc.team238.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class CommandClawSpinRight implements Command {
 
 	public Claws myClaws;
@@ -13,7 +15,7 @@ public class CommandClawSpinRight implements Command {
 	public void execute() 
 	{
 		myClaws.spinItemsRight();
-		
+		SmartDashboard.putString("ClawsSpinRight", "YES");
 	}
 
 	@Override

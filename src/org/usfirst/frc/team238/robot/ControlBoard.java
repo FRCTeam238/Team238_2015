@@ -82,6 +82,7 @@ public class ControlBoard {
 			command = 2;
 		}
 		
+		SmartDashboard.putNumber("ZPOS", zPos);
 		SmartDashboard.putNumber("Command", command);
 		return command;
 	}

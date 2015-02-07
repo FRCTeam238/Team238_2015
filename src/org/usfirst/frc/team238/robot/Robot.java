@@ -179,12 +179,12 @@ public class Robot extends IterativeRobot {
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 5, operatorCmdCoopPoints);
 	    		
 	    		
-	    		driverCmdSpinRight = new CommandClawSpinRight(leftClaw);
+	    		driverCmdSpinRight = new CommandClawSpinRight(rightClaw);
 	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 1, driverCmdSpinRight);
 	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 1, driverCmdSpinRight);
 	    		
-	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 2, driverCmdSpinRight);
-	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverCmdSpinRight);
+	    		//theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 2, driverCmdSpinRight);
+	    		//theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverCmdSpinRight);
 	    		
 	    		myRobotDrive = new RobotDrive(0,1,2,3);
 	    		

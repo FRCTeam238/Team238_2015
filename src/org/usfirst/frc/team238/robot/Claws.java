@@ -49,7 +49,7 @@ public class Claws {
 	{
 		clawMotor.set(CrusaderCommon.CLAWMOTORSPEED);
 		
-		SmartDashboard.putString("spinItemsRight", "I'm On");
+		SmartDashboard.putNumber("spinItemsRight", this.channel);
 	}
 
 	//This function will cause the claw motors to spin right, rotating game pieces left
