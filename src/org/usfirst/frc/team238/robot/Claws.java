@@ -35,8 +35,8 @@ public class Claws {
 	{
 
 
-		leftClawMotor.set(ControlBoard.joy1.getX());
-		rightClawMotor.set(ControlBoard.joy1.getX());
+		//leftClawMotor.set(ControlBoard.joy1.getX());
+		//rightClawMotor.set(ControlBoard.joy1.getX());
 		SmartDashboard.putString("suckItemsIn", "I'm On");
 		//test.set(Relay.Value.kForward);
 

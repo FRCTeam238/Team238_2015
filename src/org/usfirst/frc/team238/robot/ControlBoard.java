@@ -4,25 +4,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class ControlBoard { 
-	//Here are the joysticks for controlling the robot
-	static Joystick joy0; 	// operator manual ovveride
-	static Joystick joy1;  	// operator control board
-	static Joystick joy2; 	// driveTrain left
-	static Joystick joy3; 	// driveTrain right
+	//Here are the joysticks for controlling  the robot
+	static Joystick manualOverrideJs; 	// operator manual overide
+	static Joystick operatorJs;  	// operator control board
+	static Joystick driverLeftJs; 	// driveTrain left
+	static Joystick driverRightJs; 	// driveTrain right
 	static int commands[];
 	
 	public void controlBoardInit()
 	{
 		try
 		{
-			joy0 = new Joystick(0);
-			joy1 = new Joystick(1);
-			joy2 = new Joystick(2);
-			joy3 = new Joystick(3);
+			manualOverrideJs = new Joystick(0);
+			operatorJs = new Joystick(1);
+			driverLeftJs = new Joystick(2);
+			driverRightJs = new Joystick(3);
 			
 			commands = new int[4];
 			
-			//SmartDashboard.putString("joy1", "joy1 Is Intialized");
+			SmartDashboard.putString("operatorJs", "operatorJs Is Intialized");
 			
 			
 		}
@@ -64,10 +64,10 @@ public class ControlBoard {
 	//populates each array element with the corresponding value for the joys stick
 	public int[] getCommands(){
 		
-		commands[0] = getCommand(joy0);
-		commands[1] = getCommand(joy1);
-		commands[2] = getCommand(joy2);
-		commands[3] = getCommand(joy3);
+		commands[0] = getCommand(manualOverrideJs);
+		commands[1] = getCommand(operatorJs);
+		commands[2] = getCommand(driverLeftJs);
+		commands[3] = getCommand(driverRightJs);
 		
 		return commands;
 	}
@@ -75,7 +75,7 @@ public class ControlBoard {
 	//gets the y value of the manual overide joy stick to feed to the command controller
 	public static double getManualCommandValue()
 	{
-		return joy0.getY();
+		return manualOverrideJs.getY();
 	}
 
 	//hardcoded to false until we get a switch  or possibly use SmartDshBd
@@ -93,7 +93,7 @@ public class ControlBoard {
 		
 		try
 		{
-			trigger = joy1.getRawButton(1);
+			trigger = operatorJs.getRawButton(1);
 			SmartDashboard.putString("Button 1", "Button 1 Is Initialized");
 			return trigger;
 		}
@@ -108,42 +108,42 @@ public class ControlBoard {
 	// This is Button 2, it makes the claws spit things out
 	public static boolean isButtonTwoPressed()
 	{
-		boolean trigger = joy1.getRawButton(2);
+		boolean trigger = operatorJs.getRawButton(2);
 		SmartDashboard.putString("Button 2", "Button 2 Is Initialized");
 		return trigger;
 	}
 	// This is Button 3, it will make the claws spin items left
 	public static boolean isButtonThreePressed()
 	{
-		boolean trigger = joy1.getRawButton(3);
+		boolean trigger = operatorJs.getRawButton(3);
 		SmartDashboard.putString("Button 3", "Button 3 Is Initialized");
 		return trigger;
 	}
 	// This is Button 4, it will make the claws spin items right
 	public static boolean isButtonFourPressed()
 	{
-		boolean trigger = joy1.getRawButton(4);
+		boolean trigger = operatorJs.getRawButton(4);
 		SmartDashboard.putString("Button 4", "Button 4 Is Initialized");
 		return trigger;
 	}
 	// This is Button 5, it will open the Saloon Doors
 	public static boolean isButtonFivePressed()
 	{
-		boolean trigger = joy1.getRawButton(5);
+		boolean trigger = operatorJs.getRawButton(5);
 		SmartDashboard.putString("Button 5", "Button 5 Is Initialized");
 		return trigger;
 	}
 	// This is Button 6, it will close the Saloon Doors
 	public static boolean isButtonSixPressed()
 	{
-		boolean trigger = joy1.getRawButton(6);
+		boolean trigger = operatorJs.getRawButton(6);
 		SmartDashboard.putString("Button 6", "Button 6 Is Initialized");
 		return trigger;
 	}
 	
 	public static boolean isButtonSevenPressed()
 	{
-		boolean trigger = joy1.getRawButton(7);
+		boolean trigger = operatorJs.getRawButton(7);
 				
 		SmartDashboard.putString("Button 7", "Button 7 Is Initialized");
 		return trigger;
@@ -151,21 +151,21 @@ public class ControlBoard {
 	
 	public static boolean isButtonEightPressed()
 	{
-		boolean trigger = joy1.getRawButton(8);
+		boolean trigger = operatorJs.getRawButton(8);
 		SmartDashboard.putString("Button 8", "Button 8 Is Initialized");
 		return trigger;
 	}
 	
 	public static boolean isButtonNinePressed()
 	{
-		boolean trigger = joy1.getRawButton(9);
+		boolean trigger = operatorJs.getRawButton(9);
 		SmartDashboard.putString("Button 9", "Button 9 Is Initialized");
 		return trigger;
 	}
 	
 	public static boolean isButtonTenPressed()
 	{
-		boolean trigger = joy1.getRawButton(10);
+		boolean trigger = operatorJs.getRawButton(10);
 		SmartDashboard.putString("Button 10", "Button 10 Is Initialized");
 		return trigger;
 	}
