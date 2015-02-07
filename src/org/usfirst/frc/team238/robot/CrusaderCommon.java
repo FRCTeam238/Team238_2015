@@ -17,7 +17,8 @@ public class CrusaderCommon {
 	
 	//two types of command lists
 	public static final int OPR_CMD_LIST = 1;
-	public static final int DRIVER_CMD_LIST = 2;
+	public static final int LEFTDRIVER_CMD_LIST = 2;
+	public static final int RIGHTDRIVER_CMD_LIST = 3;
 	
 	// Temperary potentiometer values for the lift code
 	public static final double POT_GROUND_MIN = 0.690;
@@ -53,6 +54,7 @@ public class CrusaderCommon {
 	//
 	public static final int INPUT_MANUAL_OVERRIDE = 0;
 	public static final int INPUT_OPR_CONTROL = 1;
-	public static final int INPUT_DRIVER = 2;
+	public static final int INPUT_DRIVER_LEFT_JS = 2;
+	public static final int INPUT_DRIVER_RIGHT_JS = 3;
 	
 }

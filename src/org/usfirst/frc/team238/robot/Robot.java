@@ -24,7 +24,8 @@ public class Robot extends IterativeRobot {
      */
 	
 	Lift theLift;
-	Claws theClaws;
+	Claws rightClaw;
+	Claws leftClaw;
 	DriveTrain theDriveTrain;
 	SaloonDoors theSaloonDoors;
 	CommandGoToGround operatorCmdSetToGround;
@@ -33,9 +34,12 @@ public class Robot extends IterativeRobot {
 	CommandGoToDeliver operatorCmdSetToDeliver;
 	CommandCoopPoints operatorCmdCoopPoints;
 	CommandSaloonDoorsOpen operatorCmdSetToSaloonDoorsOpen;
+	CommandClawSpinRight driverCmdSpinRight;
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
 	NoOperatorCommand theDoNothingCmd;
+	NoDriverCommand theDoNothingRightDriverCmd;
+	NoDriverCommand theDoNothingLeftDriverCmd;
 	CommandController theMCP;
 	RobotDrive myRobotDrive;
 	// This is only valid in test mode. When this object is
@@ -133,8 +137,11 @@ public class Robot extends IterativeRobot {
 	    		theLift.liftInit();
 	    		//SmartDashboard.putString("theLift", "initialized");
 	    		
-	    		theClaws = new Claws();
-	    		theClaws.clawsInit();
+	    		leftClaw = new Claws();
+	    		leftClaw.clawsInit(4);
+	    		
+	    		rightClaw = new Claws();
+	    		rightClaw.clawsInit(5);
 	    		//SmartDashboard.putString("theClaws", "initialized");
 	    		
 	    		theDriveTrain = new DriveTrain();
@@ -147,8 +154,13 @@ public class Robot extends IterativeRobot {
 	    		theMCP = new CommandController();
 	    		theMCP.init();
 	    		
-	    		theDoNothingCmd = new NoOperatorCommand(theLift, theClaws, theSaloonDoors, theDriveTrain );
+	    		theDoNothingCmd = new NoOperatorCommand(theLift, theSaloonDoors );
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 0, theDoNothingCmd);
+	    		
+	    		theDoNothingRightDriverCmd = new NoDriverCommand(rightClaw);
+	    		theDoNothingLeftDriverCmd = new NoDriverCommand(leftClaw);
+	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 0, theDoNothingLeftDriverCmd);
+	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 0, theDoNothingRightDriverCmd);
 	    		
 	    		
 	    		operatorCmdSetToGround = new CommandGoToGround(theLift, theSaloonDoors);
@@ -163,8 +175,16 @@ public class Robot extends IterativeRobot {
 	    		operatorCmdSetToDeliver = new CommandGoToDeliver(theLift, theSaloonDoors);
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 4, operatorCmdSetToDeliver);
 	    		
-	    		operatorCmdCoopPoints = new CommandCoopPoints(theLift, theSaloonDoors, theClaws);
+	    		operatorCmdCoopPoints = new CommandCoopPoints(theLift, theSaloonDoors);
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 5, operatorCmdCoopPoints);
+	    		
+	    		
+	    		driverCmdSpinRight = new CommandClawSpinRight(leftClaw);
+	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 1, driverCmdSpinRight);
+	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 1, driverCmdSpinRight);
+	    		
+	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 2, driverCmdSpinRight);
+	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverCmdSpinRight);
 	    		
 	    		myRobotDrive = new RobotDrive(0,1,2,3);
 	    		

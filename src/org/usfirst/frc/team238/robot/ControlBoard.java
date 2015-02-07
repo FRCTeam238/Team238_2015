@@ -61,13 +61,37 @@ public class ControlBoard {
 		return command;
 	}
 	
+	/**
+	 * 
+	 * @param theJoyStick
+	 * @return
+	 */
+	public int getDriverCommand(Joystick theJoyStick){
+		int command = 0;
+		boolean jsButtonValue = false;
+		
+		
+		double zPos = theJoyStick.getZ(); 
+		
+		if( zPos > .10)
+		{
+			command = 1;
+		}
+		else if(zPos < -.10)
+		{
+			command = 2;
+		}
+		
+		SmartDashboard.putNumber("Command", command);
+		return command;
+	}
 	//populates each array element with the corresponding value for the joys stick
 	public int[] getCommands(){
 		
 		commands[0] = getCommand(manualOverrideJs);
 		commands[1] = getCommand(operatorJs);
-		commands[2] = getCommand(driverLeftJs);
-		commands[3] = getCommand(driverRightJs);
+		commands[2] = getDriverCommand(driverLeftJs);
+		commands[3] = getDriverCommand(driverRightJs);
 		
 		return commands;
 	}
