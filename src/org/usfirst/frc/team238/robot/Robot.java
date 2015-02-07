@@ -113,8 +113,8 @@ public class Robot extends IterativeRobot {
     	try
     	{
     		System.out.println("RobotInit()");
-    		SmartDashboard.putString(CrusaderCommon.PREFERENCE_OP_MODE, "");
-    		SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
+    		//SmartDashboard.putString(CrusaderCommon.PREFERENCE_OP_MODE, "");
+    		//SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
     		
     		myControlBoard = new ControlBoard();
     		myControlBoard.controlBoardInit();

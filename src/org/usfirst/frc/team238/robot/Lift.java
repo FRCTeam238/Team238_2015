@@ -39,22 +39,22 @@ public class Lift
 
 			// The pneumatics are used to clamp onto the new game piece
 			rightFrontPiston = new Solenoid(0); 
-			SmartDashboard.putBoolean("Right Front Piston: ", rightFrontPiston.get());
+			//SmartDashboard.putBoolean("Right Front Piston: ", rightFrontPiston.get());
 			rightBackPiston = new Solenoid(1); 
-			SmartDashboard.putBoolean("Right Rear Piston", rightBackPiston.get());
+			//SmartDashboard.putBoolean("Right Rear Piston", rightBackPiston.get());
 			leftFrontPiston = new Solenoid(2);
-			SmartDashboard.putBoolean("Left Front Pistons:", leftFrontPiston.get());
+			//SmartDashboard.putBoolean("Left Front Pistons:", leftFrontPiston.get());
 			leftBackPiston = new Solenoid(3);  
-			SmartDashboard.putBoolean("Left Back Piston:", leftBackPiston.get());
+			//SmartDashboard.putBoolean("Left Back Piston:", leftBackPiston.get());
 
 			
 		    //These are Sensors that will tell the height of the lift
 			loadedSwitch = new DigitalInput(4); // This level is when the robot is picking up the tower
-			SmartDashboard.putBoolean("Load Switch Hit: ", loadedSwitch.get());
+			//SmartDashboard.putBoolean("Load Switch Hit: ", loadedSwitch.get());
 			travelSwitch = new DigitalInput(5); // This level is used when robot is traveling with the tower
-			SmartDashboard.putBoolean("Travel Switch Hit: ", travelSwitch.get());
+		SmartDashboard.putBoolean("Travel Switch Hit: ", travelSwitch.get());
 			raisedSwitch = new DigitalInput(6); // This level is when we are approaching a new tote or a bin
-			SmartDashboard.putBoolean("Raised Switch Hit: ", raisedSwitch.get());
+			//SmartDashboard.putBoolean("Raised Switch Hit: ", raisedSwitch.get());
 			coopSwitch = new DigitalInput(7);
 			SmartDashboard.putBoolean("Co-Op Switch Hit: ", coopSwitch.get());
 
@@ -190,7 +190,7 @@ public class Lift
 			liftGoesDown();
 		}
 
-		SmartDashboard.putBoolean("Raised Switch Hit: ", raisedSwitch.get());
+		SmartDashboard.putBoolean("Ground Switch Hit: ", raisedSwitch.get());
 		SmartDashboard.putNumber("Level: ", level);
 	}
 

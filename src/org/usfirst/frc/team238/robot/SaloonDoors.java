@@ -33,7 +33,7 @@ public class SaloonDoors {
 			rightPot = new AnalogPotentiometer(1);
 			//SmartDashboard.putString("Rightpot","Initialized");
 			
-			SmartDashboard.putString("theControlBoard","Initialized");
+			
 			
 		} catch (Exception ex) {
 			System.out.println(ex.getStackTrace());
@@ -65,8 +65,8 @@ public class SaloonDoors {
 			rightDoorMotor.set(CrusaderCommon.MOTOROFF);
 		} 
 
-		SmartDashboard.putNumber("SaloonDoors.OpenLeftDoor", leftPotValue);
-		SmartDashboard.putNumber("SaloonDoors.OpenRighttDoor", rightPotValue);
+		//SmartDashboard.putNumber("SaloonDoors.OpenLeftDoor", leftPotValue);
+		//SmartDashboard.putNumber("SaloonDoors.OpenRighttDoor", rightPotValue);
 	}	
 
 	/* Overview
@@ -90,7 +90,7 @@ public class SaloonDoors {
 			outPutValue = "CrusaderCommon.MOTOROFF";
 		}
 
-		SmartDashboard.putString ("SaloonDoors.CloseDoors",outPutValue);
+		//SmartDashboard.putString ("SaloonDoors.CloseDoors",outPutValue);
 	}
 
 	/*Overview
@@ -117,10 +117,10 @@ public class SaloonDoors {
 		{
 			leftDoorMotor.set(CrusaderCommon.MOTOROFF);
 			rightDoorMotor.set(CrusaderCommon.MOTOROFF);
-			SmartDashboard.putString("Button 5 or 6", "motors are off");
+			//SmartDashboard.putString("Button 5 or 6", "motors are off");
 		
 		} else { 
-			SmartDashboard.putString("Button 5 or 6", "not pressed");
+			//SmartDashboard.putString("Button 5 or 6", "not pressed");
 		}
 	}
 	

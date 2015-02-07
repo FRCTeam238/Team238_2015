@@ -22,7 +22,7 @@ public class ControlBoard {
 			
 			commands = new int[4];
 			
-			SmartDashboard.putString("joy1", "joy1 Is Intialized");
+			//SmartDashboard.putString("joy1", "joy1 Is Intialized");
 			
 			
 		}

@@ -15,7 +15,7 @@ public class CommandGoToDeliver implements Command {
 	{
 		myLift.liftGoesDown();
 		
-		int liftLevel = myLift.getLevel();
+		int liftLevel = 2; //myLift.getLevel();
 		
 		if (liftLevel == CrusaderCommon.TRAVEL_LEVEL)
 		{
