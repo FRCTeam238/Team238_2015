@@ -34,9 +34,12 @@ public class Robot extends IterativeRobot {
 	CommandGoToDeliver operatorCmdSetToDeliver;
 	CommandCoopPoints operatorCmdCoopPoints;
 	CommandSaloonDoorsOpen operatorCmdSetToSaloonDoorsOpen;
-	CommandClawSpinRight driverCmdSpinRight;
+	CommandClawSpinRight driverJs3CmdSpinRight;
+	CommandClawSpinRight driverJs2CmdSpinRight;
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
+	CommandClawSpinLeft driverJs3CmdSpinLeft;
+	CommandClawSpinLeft driverJs2CmdSpinLeft;
 	NoOperatorCommand theDoNothingCmd;
 	NoDriverCommand theDoNothingRightDriverCmd;
 	NoDriverCommand theDoNothingLeftDriverCmd;
@@ -174,13 +177,17 @@ public class Robot extends IterativeRobot {
 	    		operatorCmdCoopPoints = new CommandCoopPoints(theLift, theSaloonDoors);
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 5, operatorCmdCoopPoints);
 	    		
+	    		driverJs2CmdSpinRight = new CommandClawSpinRight(leftClaw);
+	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 1, driverJs2CmdSpinRight);	    		
 	    		
-	    		driverCmdSpinRight = new CommandClawSpinRight(rightClaw);
-	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 1, driverCmdSpinRight);
-	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 1, driverCmdSpinRight);
+	    		driverJs2CmdSpinLeft = new CommandClawSpinLeft(leftClaw);
+	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 2, driverJs2CmdSpinLeft);
 	    		
-	    		//theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 2, driverCmdSpinLeft);
-	    		//theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverCmdSpinLeft;
+	    		driverJs3CmdSpinRight = new CommandClawSpinRight(rightClaw);
+	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 1, driverJs3CmdSpinRight);
+	    		
+	    		driverJs3CmdSpinLeft = new CommandClawSpinLeft(rightClaw);
+	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverJs3CmdSpinLeft);
 	    		
 	    		myRobotDrive = new RobotDrive(0,1,2,3);
 	    		
