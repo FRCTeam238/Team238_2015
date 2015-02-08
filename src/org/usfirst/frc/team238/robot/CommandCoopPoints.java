@@ -15,7 +15,7 @@ public  class CommandCoopPoints implements Command {
 	
 	public void execute()
 	{
-		myLift.liftGoesUp();
+		//myLift.liftGoesUp();
 		mySaloonDoor.OpenDoors();
 		//myClaws.spitItemsOut();
 	}

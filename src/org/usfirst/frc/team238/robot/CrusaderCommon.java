@@ -47,9 +47,11 @@ public class CrusaderCommon {
 	public static final int COOP_LEVEL = 5;
 	
 	//Speed for the Lift Jaguars
-	public static final int LIFT_GOES_UP = -1;
-	public static final int LIFT_GOES_DOWN = 1;
+	public static final int LIFT_GOES_UP_NORMAL = -1;
+	public static final int LIFT_GOES_DOWN_NORMAL = 1;
 	public static final int LIFT_STOPS = 0;
+	public static final double LIFT_GOES_DOWN_SLOW = 0.75;
+	public static final double LIFT_GOES_UP_SLOW = -0.75;
 	
 	//
 	public static final int INPUT_MANUAL_OVERRIDE = 0;

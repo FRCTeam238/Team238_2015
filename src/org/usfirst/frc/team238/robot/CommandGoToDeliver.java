@@ -13,7 +13,7 @@ public class CommandGoToDeliver implements Command {
 	
 	public void execute()
 	{
-		myLift.liftGoesDown();
+	//	myLift.liftGoesDown();
 		
 		int liftLevel = 2; //myLift.getLevel();
 		

@@ -1,7 +1,6 @@
 package org.usfirst.frc.team238.robot;
 
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Jaguar;
 //import edu.wpi.first.wpilibj.Relay;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -49,7 +48,7 @@ public class Claws {
 	{
 		clawMotor.set(CrusaderCommon.CLAWMOTORSPEED);
 		
-		SmartDashboard.putNumber("spinItemsRight", this.channel);
+		SmartDashboard.putString("spinItemsRight", "I'm On");
 	}
 
 	//This function will cause the claw motors to spin right, rotating game pieces left

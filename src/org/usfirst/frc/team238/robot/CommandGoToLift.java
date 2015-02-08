@@ -13,7 +13,7 @@ public  class CommandGoToLift implements Command {
 	public void execute()
 	{
 		myLift.clampOn();
-		myLift.liftGameObjects();
+		myLift.liftToLoadLevel();
 		mySaloonDoor.CloseDoors();
 	}
 	
