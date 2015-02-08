@@ -52,7 +52,10 @@ public class Lift
 			loadedSwitch = new DigitalInput(4); // This level is when the robot is picking up the tower
 			//SmartDashboard.putBoolean("Load Switch Hit: ", loadedSwitch.get());
 			travelSwitch = new DigitalInput(5); // This level is used when robot is traveling with the tower
-			//SmartDashboard.putBoolean("Travel Switch Hit: ", travelSwitch.get());
+
+
+		SmartDashboard.putBoolean("Travel Switch Hit: ", travelSwitch.get());
+
 			raisedSwitch = new DigitalInput(6); // This level is when we are approaching a new tote or a bin
 			//SmartDashboard.putBoolean("Raised Switch Hit: ", raisedSwitch.get());
 			coopSwitch = new DigitalInput(7);
@@ -190,7 +193,7 @@ public class Lift
 			liftGoesDown();
 		}
 
-		SmartDashboard.putBoolean("Raised Switch Hit: ", raisedSwitch.get());
+		SmartDashboard.putBoolean("Ground Switch Hit: ", raisedSwitch.get());
 		SmartDashboard.putNumber("Level: ", level);
 	}
 

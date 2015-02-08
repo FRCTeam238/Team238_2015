@@ -6,9 +6,9 @@ public  class CommandCoopPoints implements Command {
 	public SaloonDoors mySaloonDoor;
 	public Claws myClaws;
 	
-	public CommandCoopPoints(Lift theLift, SaloonDoors theSaloonDoors, Claws theClaws)
+	public CommandCoopPoints(Lift theLift, SaloonDoors theSaloonDoors)
 	{
-		this.myClaws = theClaws;
+		//this.myClaws = theClaws;
 		this.myLift = theLift;
 		this.mySaloonDoor = theSaloonDoors;
 	}
@@ -17,7 +17,7 @@ public  class CommandCoopPoints implements Command {
 	{
 		myLift.liftGoesUp();
 		mySaloonDoor.OpenDoors();
-		myClaws.spitItemsOut();
+		//myClaws.spitItemsOut();
 	}
 	
 	public void execute(double overRideValue) {

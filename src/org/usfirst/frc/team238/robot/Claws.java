@@ -7,21 +7,16 @@ import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Claws {
 
-	Talon leftClawMotor;//These lines declare the talons
-	Jaguar rightClawMotor; //that will control the claw motors
-	//Relay test;
-
+	Talon clawMotor;//These lines declare the talons
+	int channel;
 	//These lines are initializing the Relays and the controlboard
-	public void clawsInit()
+	public void clawsInit(int channel)
 	{
+		this.channel = channel;
 		try
 		{
-			leftClawMotor = new Talon(4);
-			SmartDashboard.putString("leftClawMotor", "initialized");
-			rightClawMotor = new Jaguar(5);
-			SmartDashboard.putString("rightClawMotor", "initialized");
-			SmartDashboard.putString("theControlBoard", "initialized");
-			//test = new Relay(0);
+			clawMotor = new Talon(channel);
+			SmartDashboard.putString("ClawMotorChannel:"+ channel, "initialized");
 		}
 
 		catch(Exception ex)
@@ -35,8 +30,7 @@ public class Claws {
 	{
 
 
-		leftClawMotor.set(ControlBoard.joy1.getX());
-		rightClawMotor.set(ControlBoard.joy1.getX());
+		//lawMotor.set(ControlBoard.driverLeftJs.getX());
 		SmartDashboard.putString("suckItemsIn", "I'm On");
 		//test.set(Relay.Value.kForward);
 
@@ -45,8 +39,7 @@ public class Claws {
 	public void spitItemsOut()
 	{
 
-		leftClawMotor.set(CrusaderCommon.CLAWMOTORSPEED);
-		rightClawMotor.set(CrusaderCommon.CLAWMOTORSPEEDREVERSE);
+		//clawMotor.set(CrusaderCommon.CLAWMOTORSPEED);
 		SmartDashboard.putString("spitItemsOut", "I'm On");
 
 	}
@@ -54,28 +47,24 @@ public class Claws {
 		//This function will cause the claw motors to spin left, rotating game pieces right
 	public void spinItemsRight()
 	{
-
-
-		leftClawMotor.set(CrusaderCommon.CLAWMOTORSPEED);
-		rightClawMotor.set(CrusaderCommon.CLAWMOTORSPEED);
-		SmartDashboard.putString("spinItemsRight", "I'm On");
-
+		clawMotor.set(CrusaderCommon.CLAWMOTORSPEED);
+		
+		SmartDashboard.putNumber("spinItemsRight", this.channel);
 	}
 
 	//This function will cause the claw motors to spin right, rotating game pieces left
 	public void spinItemsLeft()
 	{
 
-		leftClawMotor.set(CrusaderCommon.CLAWMOTORSPEEDREVERSE);
-		rightClawMotor.set(CrusaderCommon.CLAWMOTORSPEEDREVERSE);
+		clawMotor.set(CrusaderCommon.CLAWMOTORSPEEDREVERSE);
 		SmartDashboard.putString("spinItemsLeft", "I'm On");
 
 	}
 
 	public void stop()
 	{
-		leftClawMotor.set(CrusaderCommon.MOTOROFF);
-		rightClawMotor.set(CrusaderCommon.MOTOROFF);
+		clawMotor.set(CrusaderCommon.MOTOROFF);
+		
 		SmartDashboard.putString("Claws.stop()", "I'm Off");
 	}
 }

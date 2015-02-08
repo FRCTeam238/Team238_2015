@@ -7,18 +7,15 @@ public  class NoOperatorCommand implements Command {
 	SaloonDoors saloonDoors;
 	DriveTrain driveTrain;
 	
-	public NoOperatorCommand(Lift theLift, Claws theClaws, SaloonDoors theSaloonDoors, DriveTrain theDT ){
-		this.claws = theClaws;
-		this.driveTrain = theDT;
+	public NoOperatorCommand(Lift theLift, SaloonDoors theSaloonDoors ){
+		
 		this.lift = theLift;
 		this.saloonDoors = theSaloonDoors;
-		
 		
 	}
 	public void execute() {
 		lift.stop();
 		saloonDoors.stop();
-		claws.stop();
 		
 	}
 	

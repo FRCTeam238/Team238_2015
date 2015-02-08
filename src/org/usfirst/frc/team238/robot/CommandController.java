@@ -3,7 +3,8 @@ package org.usfirst.frc.team238.robot;
 public class CommandController {
 	
 	Command operatorCommandList[];
-	Command driverCommandList[];
+	Command driverRightCommandList[];
+	Command driverLeftCommandList[];
 	Command manualOperatorCommandList[];
 	
 	public void  init()
@@ -11,7 +12,8 @@ public class CommandController {
 		int numCommands = 10; 
 		System.out.println("ControlBoard Init:NUMCMDS = " + numCommands);
 		operatorCommandList = new Command[numCommands];
-		driverCommandList = new Command[numCommands];
+		driverLeftCommandList = new Command[numCommands];
+		driverRightCommandList = new Command[numCommands];
 		manualOperatorCommandList = new Command[numCommands];
 	}
 	
@@ -22,8 +24,11 @@ public class CommandController {
 		case CrusaderCommon.OPR_CMD_LIST:
 			operatorCommandList[slot] = command;
 			break;
-		case CrusaderCommon.DRIVER_CMD_LIST:
-			driverCommandList[slot] = command;
+		case CrusaderCommon.LEFTDRIVER_CMD_LIST:
+			driverLeftCommandList[slot] = command;
+			break;
+		case CrusaderCommon.RIGHTDRIVER_CMD_LIST:
+			driverRightCommandList[slot] = command;
 			break;
 		default:
 			manualOperatorCommandList[slot] = command;
@@ -55,6 +60,7 @@ public class CommandController {
 			operatorCommandList[slot[CrusaderCommon.INPUT_OPR_CONTROL]].execute();
 		}
 		
-		driverCommandList[slot[CrusaderCommon.INPUT_DRIVER]].execute();
+		driverLeftCommandList[slot[CrusaderCommon.INPUT_DRIVER_LEFT_JS]].execute();
+		driverRightCommandList[slot[CrusaderCommon.INPUT_DRIVER_RIGHT_JS]].execute();
 	}
 }

@@ -1,10 +1,10 @@
 
-package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.robot; 
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import edu.wpi.first.wpilibj.;
+import edu.wpi.first.wpilibj.RobotDrive;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 
+//@SuppressWarnings("deprecation")
 public class Robot extends IterativeRobot {
    
 	private static boolean robotTestMode = false;
@@ -23,7 +24,8 @@ public class Robot extends IterativeRobot {
      */
 	
 	Lift theLift;
-	Claws theClaws;
+	Claws rightClaw;
+	Claws leftClaw;
 	DriveTrain theDriveTrain;
 	SaloonDoors theSaloonDoors;
 	CommandGoToGround operatorCmdSetToGround;
@@ -32,12 +34,14 @@ public class Robot extends IterativeRobot {
 	CommandGoToDeliver operatorCmdSetToDeliver;
 	CommandCoopPoints operatorCmdCoopPoints;
 	CommandSaloonDoorsOpen operatorCmdSetToSaloonDoorsOpen;
+	CommandClawSpinRight driverCmdSpinRight;
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
 	NoOperatorCommand theDoNothingCmd;
-	NoDriverCommand theDriverNOOPCMD;
+	NoDriverCommand theDoNothingRightDriverCmd;
+	NoDriverCommand theDoNothingLeftDriverCmd;
 	CommandController theMCP;
-	
+	RobotDrive myRobotDrive;
 	// This is only valid in test mode. When this object is
 	// valid, then the other objects (thisLife, theClaws, etc.) will not be valid
 	TestMain testController = null; 
@@ -133,8 +137,11 @@ public class Robot extends IterativeRobot {
 	    		theLift.liftInit();
 	    		//SmartDashboard.putString("theLift", "initialized");
 	    		
-	    		theClaws = new Claws();
-	    		theClaws.clawsInit();
+	    		leftClaw = new Claws();
+	    		leftClaw.clawsInit(4);
+	    		
+	    		rightClaw = new Claws();
+	    		rightClaw.clawsInit(5);
 	    		//SmartDashboard.putString("theClaws", "initialized");
 	    		
 	    		theDriveTrain = new DriveTrain();
@@ -147,8 +154,13 @@ public class Robot extends IterativeRobot {
 	    		theMCP = new CommandController();
 	    		theMCP.init();
 	    		
-	    		theDoNothingCmd = new NoOperatorCommand(theLift, theClaws, theSaloonDoors, theDriveTrain );
+	    		theDoNothingCmd = new NoOperatorCommand(theLift, theSaloonDoors );
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 0, theDoNothingCmd);
+	    		
+	    		theDoNothingRightDriverCmd = new NoDriverCommand(rightClaw);
+	    		theDoNothingLeftDriverCmd = new NoDriverCommand(leftClaw);
+	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 0, theDoNothingLeftDriverCmd);
+	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 0, theDoNothingRightDriverCmd);
 	    		
 	    		
 	    		operatorCmdSetToGround = new CommandGoToGround(theLift, theSaloonDoors);
@@ -163,14 +175,21 @@ public class Robot extends IterativeRobot {
 	    		operatorCmdSetToDeliver = new CommandGoToDeliver(theLift, theSaloonDoors);
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 4, operatorCmdSetToDeliver);
 	    		
-	    		operatorCmdCoopPoints = new CommandCoopPoints(theLift, theSaloonDoors, theClaws);
+	    		operatorCmdCoopPoints = new CommandCoopPoints(theLift, theSaloonDoors);
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 5, operatorCmdCoopPoints);
 	    		
-	    		operatorCmdSetToSaloonDoorsOpen = new CommandSaloonDoorsOpen(theSaloonDoors);
-	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 6, operatorCmdSetToSaloonDoorsOpen);
 	    		
-	    		theDriverNOOPCMD = new NoDriverCommand (theClaws);
-	    		theMCP.setCommand(CrusaderCommon.DRIVER_CMD_LIST, 0, theDriverNOOPCMD);
+	    		driverCmdSpinRight = new CommandClawSpinRight(rightClaw);
+	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 1, driverCmdSpinRight);
+	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 1, driverCmdSpinRight);
+	    		
+	    		//theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 2, driverCmdSpinRight);
+	    		//theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverCmdSpinRight);
+	    		
+	    		myRobotDrive = new RobotDrive(0,1,2,3);
+	    		
+	    		//operatorCmdSetToSaloonDoorsOpen = new CommandSaloonDoorsOpen(theSaloonDoors);
+	    		//theMCP.setCommand(CrusaderCommon.DRIVER_CMD_LIST, 1, operatorCmdSetToSaloonDoorsOpen);
 	    		
 	    		
 	    		System.out.println("Fully Initialized");
@@ -238,7 +257,11 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	
     	int commandValue[];
+    	
+    	double leftJsValue = 0;
+    	double rightJsValue = 0;
     	
     	try
     	{
@@ -255,7 +278,12 @@ public class Robot extends IterativeRobot {
 	    	}
 	    	else
 	    	{
-
+	    		leftJsValue = ControlBoard.driverLeftJs.getY();
+	    		rightJsValue = ControlBoard.driverRightJs.getY();
+	    		
+	    		myRobotDrive.tankDrive(leftJsValue, rightJsValue);
+	    		
+	    		
 	    		commandValue = myControlBoard.getCommands();
 	    		System.out.println("telopperiodic: " + commandValue[0]);
 	    		theMCP.buttonPressed(commandValue);

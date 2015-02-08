@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class TestMain {
+public class TestMain { 
 	
 	private static final int TEST_PWM_CHANNEL_JAG = 4;
 	private static final int TEST_PWM_CHANNEL_TALON = 8;
@@ -43,7 +43,7 @@ public class TestMain {
 	public void Poll()
 	{
 		try {
-			double axisValue = ControlBoard.joy1.getY();
+			double axisValue = ControlBoard.operatorJs.getY();
 			
 			SmartDashboard.putNumber(TEST_DASH_KEY_AXIS_POS, axisValue);
 			
