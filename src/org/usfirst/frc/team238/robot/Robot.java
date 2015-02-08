@@ -135,21 +135,17 @@ public class Robot extends IterativeRobot {
 			{
 	    		theLift = new Lift();
 	    		theLift.liftInit();
-	    		//SmartDashboard.putString("theLift", "initialized");
 	    		
 	    		leftClaw = new Claws();
 	    		leftClaw.clawsInit(4);
 	    		
 	    		rightClaw = new Claws();
 	    		rightClaw.clawsInit(5);
-	    		//SmartDashboard.putString("theClaws", "initialized");
 	    		
 	    		theDriveTrain = new DriveTrain();
-	    		//SmartDashboard.putString("theDriveTrain", "initialized");
 	    		
 	    		theSaloonDoors = new SaloonDoors();
 	    		theSaloonDoors.Init();
-	    		//SmartDashboard.putString("theSaloonDoors", "initialized");
 	    		
 	    		theMCP = new CommandController();
 	    		theMCP.init();
@@ -183,8 +179,8 @@ public class Robot extends IterativeRobot {
 	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 1, driverCmdSpinRight);
 	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 1, driverCmdSpinRight);
 	    		
-	    		//theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 2, driverCmdSpinRight);
-	    		//theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverCmdSpinRight);
+	    		//theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 2, driverCmdSpinLeft);
+	    		//theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverCmdSpinLeft;
 	    		
 	    		myRobotDrive = new RobotDrive(0,1,2,3);
 	    		

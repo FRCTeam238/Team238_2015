@@ -20,10 +20,10 @@ public class ControlBoard {
 			driverLeftJs = new Joystick(2);
 			driverRightJs = new Joystick(3);
 			
+			//array that holds the command sent by each control device
 			commands = new int[4];
 			
 			SmartDashboard.putString("operatorJs", "operatorJs Is Intialized");
-			
 			
 		}
 		
@@ -68,24 +68,31 @@ public class ControlBoard {
 	 */
 	public int getDriverCommand(Joystick theJoyStick){
 		int command = 0;
-		boolean jsButtonValue = false;
+		double zPos =  0.0;
 		
+		boolean jsButtonValue = theJoyStick.getRawButton(1);
 		
-		double zPos = theJoyStick.getZ(); 
-		
-		if( zPos > .10)
+		//if the triggers is pressed get the z axis  for direction to spin the wheel
+		if(jsButtonValue)
 		{
-			command = 1;
-		}
-		else if(zPos < -.10)
-		{
-			command = 2;
+			zPos = theJoyStick.getZ(); 
+
+			if( zPos > .10)
+			{
+				command = 1;
+			}
+			else if(zPos < -.10)
+			{
+				command = 2;
+			}			
 		}
 		
-		SmartDashboard.putNumber("ZPOS", zPos);
 		SmartDashboard.putNumber("Command", command);
+		SmartDashboard.putNumber("ZPOS", zPos);
+		
 		return command;
 	}
+	
 	//populates each array element with the corresponding value for the joys stick
 	public int[] getCommands(){
 		
@@ -105,8 +112,9 @@ public class ControlBoard {
 
 	//hardcoded to false until we get a switch  or possibly use SmartDshBd
 	public static boolean overRide(){
+		boolean overRide = operatorJs.getRawButton(7);
 		
-		return false;
+		return overRide;
 					
 	}
 	

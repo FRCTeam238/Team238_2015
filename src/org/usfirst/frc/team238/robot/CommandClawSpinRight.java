@@ -4,17 +4,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CommandClawSpinRight implements Command {
 
-	public Claws myClaws;
+	public Claws myClaw;
 
-	public CommandClawSpinRight(Claws theClaws)
+	public CommandClawSpinRight(Claws theClaw)
 	{
-		this.myClaws = theClaws;
+		this.myClaw = theClaw;
 	}
 
 	@Override
 	public void execute() 
 	{
-		myClaws.spinItemsRight();
+		myClaw.spinItemsRight();
 		SmartDashboard.putString("ClawsSpinRight", "YES");
 	}
 
