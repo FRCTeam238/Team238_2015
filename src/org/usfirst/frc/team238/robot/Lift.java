@@ -245,7 +245,7 @@ public class Lift
 		double coopPotValueLeft = leftPotens.get();
 		double coopPotValueRight = rightPotens.get();
 
-		if((coopPotValueLeft >= CrusaderCommon.POT_COOP_MAX) && (coopPotValueLeft <= CrusaderCommon.POT_COOP_MIN) && (coopPotValueRight >= CrusaderCommon.POT_COOP_MAX) && (coopPotValueRight <= CrusaderCommon.POT_COOP_MIN))//)((coopSwitch.get() == true) || 
+		if((coopPotValueLeft >= CrusaderCommon.POT_COOP_MAX) && (coopPotValueLeft <= CrusaderCommon.POT_COOP_MIN) || (coopPotValueRight >= CrusaderCommon.POT_COOP_MAX) && (coopPotValueRight <= CrusaderCommon.POT_COOP_MIN))//)((coopSwitch.get() == true) || 
 		{
 			stop();
 			level = CrusaderCommon.COOP_LEVEL;
