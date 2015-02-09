@@ -37,7 +37,8 @@ public class CrusaderCommon {
 	public static final double POT_LOADING = 0.050;
 	public static final double POT_LOADING_MAX = 0.020;
 	
-	
+	public static final double POT_DIFF_MAX = 0.010;
+	public static final double POT_DEAD_BAND = 0.050;
 	
 	//Levels for the Lift 
 	public static final int GROUND_LEVEL = 1;
@@ -58,5 +59,6 @@ public class CrusaderCommon {
 	public static final int INPUT_OPR_CONTROL = 1;
 	public static final int INPUT_DRIVER_LEFT_JS = 2;
 	public static final int INPUT_DRIVER_RIGHT_JS = 3;
+	
 	
 }
