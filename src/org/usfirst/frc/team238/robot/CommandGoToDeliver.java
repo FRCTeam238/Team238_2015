@@ -25,6 +25,14 @@ public class CommandGoToDeliver implements Command {
 
 	}
 
-	public void execute(double overRideValue) {
+	public void execute(double overRideValue)
+	{
+		myLift.manualControlOfLifter(overRideValue);
+		
+		if(myLift.getLevel() == CrusaderCommon.GROUND_LEVEL)
+		{
+			myLift.letItGo();
+			mySaloonDoor.OpenDoors();
+		}
 	}
 }

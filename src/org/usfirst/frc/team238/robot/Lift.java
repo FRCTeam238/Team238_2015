@@ -207,19 +207,19 @@ public class Lift
 		{
 			if(differential < 0)
 			{
-				liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_SLOW);
-				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);	
+				liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_SLOW);
+				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);	
 			}
 			else
 			{
-				liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
-				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_SLOW);
+				liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
+				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_SLOW);
 			}
 		}
 		else
 		{
-			liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
-			liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+			liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
+			liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
 		}	
 		
 		SmartDashboard.putNumber("Lift Motor Right", liftMotorRight.get());

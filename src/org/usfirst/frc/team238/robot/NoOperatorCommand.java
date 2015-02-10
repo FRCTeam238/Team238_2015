@@ -20,7 +20,8 @@ public  class NoOperatorCommand implements Command {
 	}
 	
 	public void execute(double overRideValue) {
-		
+		lift.stop();
+		saloonDoors.stop();
 	}
 
 }

@@ -20,6 +20,9 @@ public  class CommandCoopPoints implements Command {
 		//myClaws.spitItemsOut();
 	}
 	
-	public void execute(double overRideValue) {
+	public void execute(double overRideValue) 
+	{
+		myLift.manualControlOfLifter(overRideValue);
+		mySaloonDoor.OpenDoors();
 	}
 }
