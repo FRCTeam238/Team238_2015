@@ -240,6 +240,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	int commandValue[];
     	
     	try{
     		count++;
@@ -248,8 +249,8 @@ public class Robot extends IterativeRobot {
     			
     			String key = "auto";
 
-    			String valueFromPrefs = myPreferences.getString(key, "1");
-    			System.out.println("Auto-PREFs: " + valueFromPrefs);	
+    			String autoMode = myPreferences.getString(key, "1");
+    			System.out.println("Auto-PREFs: " + autoMode);	
 
     			//String valueFromDS = SmartDashboard.getString(key);
     			//System.out.println("AUTO-SB: " + valueFromDS);
@@ -257,7 +258,9 @@ public class Robot extends IterativeRobot {
     			
     		}
     		
-    		//theMCP.buttonPressed(1);
+    		//commandvalue = Autonomous.buildAutoCommands(autoMode);
+    		//theMCP.buttonPressed(commandValue);
+    	
     	}
     	catch( Exception ex){
     		System.out.println("Autonomous exception");
