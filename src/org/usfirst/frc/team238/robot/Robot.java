@@ -28,6 +28,7 @@ public class Robot extends IterativeRobot {
 	Claws leftClaw;
 	DriveTrain theDriveTrain;
 	SaloonDoors theSaloonDoors;
+	Shifter theShifter;
 	CommandGoToGround operatorCmdSetToGround;
 	CommandGoToTravel operatorCmdSetToTravel;
 	CommandGoToLift operatorCmdSetToLift;
@@ -45,6 +46,7 @@ public class Robot extends IterativeRobot {
 	NoDriverCommand theDoNothingLeftDriverCmd;
 	CommandController theMCP;
 	RobotDrive myRobotDrive;
+	CommandShifter shifterCMD;
 	// This is only valid in test mode. When this object is
 	// valid, then the other objects (thisLife, theClaws, etc.) will not be valid
 	TestMain testController = null; 
@@ -145,6 +147,9 @@ public class Robot extends IterativeRobot {
 	    		rightClaw = new Claws();
 	    		rightClaw.clawsInit(5);
 	    		
+	    		theShifter = new Shifter();
+	    		theShifter.init();
+	    		
 	    		theDriveTrain = new DriveTrain();
 	    		
 	    		theSaloonDoors = new SaloonDoors();
@@ -188,6 +193,9 @@ public class Robot extends IterativeRobot {
 	    		
 	    		driverJs3CmdSpinLeft = new CommandClawSpinLeft(rightClaw);
 	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverJs3CmdSpinLeft);
+	    		
+	    		shifterCMD = new CommandShifter(theShifter);
+	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,  3, shifterCMD);
 	    		
 	    		myRobotDrive = new RobotDrive(0,1,2,3);
 	    		

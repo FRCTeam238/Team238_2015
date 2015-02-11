@@ -60,5 +60,11 @@ public class CrusaderCommon {
 	public static final int INPUT_DRIVER_LEFT_JS = 2;
 	public static final int INPUT_DRIVER_RIGHT_JS = 3;
 	
+	public static final boolean SHIFTER_HIGH_GEAR = false;
+	public static final boolean SHIFTER_LOW_GEAR = true;
+	
+	public static final int SHIFT_STATE_HIGH_GEAR = 1;
+	public static final int SHIFT_STATE_LOW_GEAR = 0;
+	
 	
 }

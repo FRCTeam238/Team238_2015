@@ -57,7 +57,7 @@ public class ControlBoard {
 			command = 0;
 		}
 		
-		SmartDashboard.putNumber("Command", command);
+		SmartDashboard.putNumber("Opperator Command", command);
 		return command;
 	}
 	
@@ -87,7 +87,7 @@ public class ControlBoard {
 			}			
 		}
 		
-		SmartDashboard.putNumber("Command", command);
+		SmartDashboard.putNumber("Driver Command", command);
 		SmartDashboard.putNumber("ZPOS", zPos);
 		
 		return command;
