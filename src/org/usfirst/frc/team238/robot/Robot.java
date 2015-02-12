@@ -46,7 +46,10 @@ public class Robot extends IterativeRobot {
 	NoDriverCommand theDoNothingLeftDriverCmd;
 	CommandController theMCP;
 	RobotDrive myRobotDrive;
-	CommandShifter shifterCMD;
+	CommandShiftLow shiftLowCMD;
+	CommandShiftHigh shiftHighCMD;
+	Autonomous myAutonomous;
+	String autoMode;
 	// This is only valid in test mode. When this object is
 	// valid, then the other objects (thisLife, theClaws, etc.) will not be valid
 	TestMain testController = null; 
@@ -158,6 +161,10 @@ public class Robot extends IterativeRobot {
 	    		theMCP = new CommandController();
 	    		theMCP.init();
 	    		
+	    		myAutonomous = new Autonomous();
+	    		myAutonomous.autoInit();
+	    		autoMode = "1";
+	    		
 	    		theDoNothingCmd = new NoOperatorCommand(theLift, theSaloonDoors );
 	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 0, theDoNothingCmd);
 	    		
@@ -194,8 +201,11 @@ public class Robot extends IterativeRobot {
 	    		driverJs3CmdSpinLeft = new CommandClawSpinLeft(rightClaw);
 	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverJs3CmdSpinLeft);
 	    		
-	    		shifterCMD = new CommandShifter(theShifter);
-	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,  3, shifterCMD);
+	    		shiftLowCMD = new CommandShiftLow(theShifter);
+	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,  3, shiftLowCMD);
+	    		
+	    		shiftHighCMD = new CommandShiftHigh(theShifter);
+	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,  3, shiftHighCMD);
 	    		
 	    		myRobotDrive = new RobotDrive(0,1,2,3);
 	    		
@@ -242,6 +252,7 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	int commandValue[];
     	
+    	
     	try{
     		count++;
     		if( count > 500){
@@ -249,7 +260,7 @@ public class Robot extends IterativeRobot {
     			
     			String key = "auto";
 
-    			String autoMode = myPreferences.getString(key, "1");
+    			autoMode = myPreferences.getString(key, "1");
     			System.out.println("Auto-PREFs: " + autoMode);	
 
     			//String valueFromDS = SmartDashboard.getString(key);
@@ -258,8 +269,8 @@ public class Robot extends IterativeRobot {
     			
     		}
     		
-    		//commandvalue = Autonomous.buildAutoCommands(autoMode);
-    		//theMCP.buttonPressed(commandValue);
+    		commandValue = myAutonomous.buildAutoCommands(autoMode);
+    		theMCP.buttonPressed(commandValue);
     	
     	}
     	catch( Exception ex){

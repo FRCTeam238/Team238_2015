@@ -17,10 +17,10 @@ public class Shifter {
 		
 		setLowGear();
 		
-			
+		
 	}
 	
-	private void setHighGear() 
+	public void setHighGear() 
 	{
 		
 		leftSolenoid.set(CrusaderCommon.SHIFTER_HIGH_GEAR);
@@ -32,7 +32,7 @@ public class Shifter {
 			
 	}
 
-	private void setLowGear()
+	public void setLowGear()
 	{
 
 		leftSolenoid.set(CrusaderCommon.SHIFTER_LOW_GEAR);
@@ -50,6 +50,17 @@ public class Shifter {
 		//if low shift to high; set shift state to high
 		//else its high; shift to low; set shift state to low
 		//
+		
+		if(shiftState == CrusaderCommon.SHIFT_STATE_LOW_GEAR)
+		{
+			shiftState = CrusaderCommon.SHIFT_STATE_HIGH_GEAR;
+		}
+		
+		else
+		{
+			shiftState = CrusaderCommon.SHIFT_STATE_LOW_GEAR;
+		}
+		
 		
 	}
 	

@@ -1,17 +1,19 @@
 package org.usfirst.frc.team238.robot;
 
-public class CommandShifter   implements Command
+public class CommandShiftLow   implements Command
 {
 	public Shifter myShifter;
+	int shiftState;
 	
-	public CommandShifter(Shifter theShifter)
+	public CommandShiftLow(Shifter theShifter)
 	{
 		this.myShifter = theShifter;
 	}
 	
 	public void execute()
 	{
-		myShifter.shiftingGears();
+		
+		myShifter.setLowGear();
 		
 	}
 	
