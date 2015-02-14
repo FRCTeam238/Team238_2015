@@ -26,7 +26,6 @@ public class Robot extends IterativeRobot {
 	Lift theLift;
 	Claws rightClaw;
 	Claws leftClaw;
-	DriveTrain theDriveTrain;
 	SaloonDoors theSaloonDoors;
 	Shifter theShifter;
 	CommandGoToGround operatorCmdSetToGround;
@@ -96,7 +95,7 @@ public class Robot extends IterativeRobot {
 		try{
 			System.out.println("TeleopInit()");
 			//only use checkForSmartDashboardChanges function in init methods or you will
-		 	//smoke the roborio into a usless pile of silicon
+		 	//smoke the roborio into a useless pile of silicon
 			checkForSmartDashboardChanges("mode", CrusaderCommon.PREFVALUE_OP_MODE_NORMAL);
     		updateTestMode();
 		}
@@ -126,7 +125,6 @@ public class Robot extends IterativeRobot {
     	{
     		System.out.println("RobotInit()");
     		SmartDashboard.putString(CrusaderCommon.PREFERENCE_OP_MODE, "");
-    		SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
     		
     		myControlBoard = new ControlBoard();
     		myControlBoard.controlBoardInit();
@@ -152,8 +150,6 @@ public class Robot extends IterativeRobot {
 	    		
 	    		theShifter = new Shifter();
 	    		theShifter.init();
-	    		
-	    		theDriveTrain = new DriveTrain();
 	    		
 	    		theSaloonDoors = new SaloonDoors();
 	    		theSaloonDoors.Init();

@@ -5,7 +5,6 @@ public  class NoOperatorCommand implements Command {
 	Lift lift;
 	Claws claws;
 	SaloonDoors saloonDoors;
-	DriveTrain driveTrain;
 	
 	public NoOperatorCommand(Lift theLift, SaloonDoors theSaloonDoors ){
 		

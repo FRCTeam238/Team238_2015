@@ -17,10 +17,10 @@ public class Autonomous
 	}
 	
 	private void autoMode1(){
-		commandValue[0] = 0;
-		commandValue[1] = 2; //2 is the lift travel command
-		commandValue[2] = 1;
-		commandValue[3] = 2;
+		commandValue[0] = 0; // do nothing command
+		commandValue[1] = 2; // move to travel mode
+		commandValue[2] = 1; // left claw spins right 
+		commandValue[3] = 2; // right claw spins left
 	}
 	
 	private void autoMode2(){
@@ -40,7 +40,6 @@ public class Autonomous
 		default:
 		
 		}
-		
 		
 		return commandValue;
 		
