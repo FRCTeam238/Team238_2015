@@ -52,7 +52,7 @@ public class CommandController {
 			//ask the control Board for a value to feed to the execute command
 			double valueForMotors = ControlBoard.getManualCommandValue();
 			//execute the command
-			manualCmd.execute(valueForMotors);
+			manualCmd.execute(-valueForMotors);
 		}
 		else
 		{

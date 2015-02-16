@@ -302,7 +302,7 @@ public class Robot extends IterativeRobot {
 	    		leftJsValue = ControlBoard.driverLeftJs.getY();
 	    		rightJsValue = ControlBoard.driverRightJs.getY();
 	    		
-	    		myRobotDrive.tankDrive(leftJsValue, rightJsValue);
+	    		myRobotDrive.tankDrive(-leftJsValue, -rightJsValue);
 	    		
 	    		
 	    		commandValue = myControlBoard.getCommands();
