@@ -25,6 +25,11 @@ public class Autonomous
 	
 	private void autoMode2(){
 		
+		commandValue[0] =0;
+		commandValue[1] =0;
+		commandValue[2] =0;
+		commandValue[3] =0;
+				
 	}
 	
 	public int[] buildAutoCommands(String autoMode)

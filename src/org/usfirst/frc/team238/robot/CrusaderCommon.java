@@ -19,6 +19,7 @@ public class CrusaderCommon {
 	public static final int OPR_CMD_LIST = 1;
 	public static final int LEFTDRIVER_CMD_LIST = 2;
 	public static final int RIGHTDRIVER_CMD_LIST = 3;
+	public static final int AUTONOMOUS_CMD_LIST = 4;
 	
 	// Temperary potentiometer values for the lift code
 	public static final double POT_GROUND_MIN = 0.690;

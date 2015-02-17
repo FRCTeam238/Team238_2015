@@ -1,21 +1,20 @@
 package org.usfirst.frc.team238.robot;
-
+import edu.wpi.first.wpilibj.RobotDrive;
 
 
 public class CommandDriveForward implements Command {
 
 	
-	Robot myDT;
-	
-	public CommandDriveForward(Robot theRobot)
+	RobotDrive myRobotDrive; 
+	public CommandDriveForward(RobotDrive theRobotDrive)
 	{
-		this.myDT = theRobot;
+		this.myRobotDrive = theRobotDrive;
 	}
 	
 	public void execute() 
 	{
 
-		myDT.myRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_FORWARD, CrusaderCommon.AUTO_DRIVE_FORWARD);
+		myRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_FORWARD, CrusaderCommon.AUTO_DRIVE_FORWARD);
 	}
 
 	public void execute(double overRideValue) {

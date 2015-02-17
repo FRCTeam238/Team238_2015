@@ -1,16 +1,24 @@
 package org.usfirst.frc.team238.robot;
+import edu.wpi.first.wpilibj.RobotDrive;
+
 
 public class CommandDriveBackwards implements Command {
 
-	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
+	
+	RobotDrive myRobotDrive; 
+	public CommandDriveBackwards(RobotDrive theRobotDrive)
+	{
+		this.myRobotDrive = theRobotDrive;
+	}
+	
+	public void execute() 
+	{
 
+		myRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_BACKWARD, CrusaderCommon.AUTO_DRIVE_BACKWARD);
 	}
 
-	@Override
 	public void execute(double overRideValue) {
-		// TODO Auto-generated method stub
+	
 
 	}
 

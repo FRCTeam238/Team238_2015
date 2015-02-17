@@ -49,6 +49,8 @@ public class Robot extends IterativeRobot {
 	CommandShiftHigh shiftHighCMD;
 	Autonomous myAutonomous;
 	String autoMode;
+	CommandDriveForward autoDriveForward;
+	CommandDriveBackwards autoDriveBackward;
 	// This is only valid in test mode. When this object is
 	// valid, then the other objects (thisLife, theClaws, etc.) will not be valid
 	TestMain testController = null; 
@@ -115,7 +117,7 @@ public class Robot extends IterativeRobot {
 			checkForSmartDashboardChanges("auto", "1");
 		}
 		catch(Exception ex){
-			System.out.println("AutonoousInit:Exception");
+			System.out.println("AutononousInit:Exception");
 		}
 	}
 	
@@ -156,6 +158,7 @@ public class Robot extends IterativeRobot {
 	    		
 	    		theMCP = new CommandController();
 	    		theMCP.init();
+	    		
 	    		
 	    		myAutonomous = new Autonomous();
 	    		myAutonomous.autoInit();
@@ -198,10 +201,16 @@ public class Robot extends IterativeRobot {
 	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverJs3CmdSpinLeft);
 	    		
 	    		shiftLowCMD = new CommandShiftLow(theShifter);
-	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,  3, shiftLowCMD);
+	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,  4, shiftLowCMD);
 	    		
 	    		shiftHighCMD = new CommandShiftHigh(theShifter);
 	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,  3, shiftHighCMD);
+	    		
+	    		autoDriveForward = new CommandDriveForward(myRobotDrive);
+	    		theMCP.setCommand(CrusaderCommon.AUTONOMOUS_CMD_LIST, 1, autoDriveForward);
+	    		
+	    		autoDriveBackward = new CommandDriveBackwards(myRobotDrive);
+	    		theMCP.setCommand(CrusaderCommon.AUTONOMOUS_CMD_LIST, 2, autoDriveBackward);
 	    		
 	    		myRobotDrive = new RobotDrive(0,1,2,3);
 	    		
@@ -217,6 +226,7 @@ public class Robot extends IterativeRobot {
     	{
 			//SmartDashboard.putString(TestMain.TEST_DASH_KEY_EXCEPTION, "EXCEPTION");
     		System.out.println(ex.getMessage());
+    		
     	}
     }
     
@@ -268,6 +278,11 @@ public class Robot extends IterativeRobot {
     		commandValue = myAutonomous.buildAutoCommands(autoMode);
     		theMCP.buttonPressed(commandValue);
     	
+    		if((autoMode == "1"))// && (<15))  // if (is autoMode == 1) and (time elapsed < N)
+    		 {
+    		     autoDriveForward.execute();
+    		 }
+    				
     	}
     	catch( Exception ex){
     		System.out.println("Autonomous exception");

@@ -342,7 +342,8 @@ public class Lift
 				liftGoesUp(coopPotValueLeft, coopPotValueRight);
 			}
 		}
-		SmartDashboard.putBoolean("Co-Op Switch Hit: ", coopSwitch.get());
+		SmartDashboard.putNumber("CoopPotValueRight", coopPotValueRight);
+		SmartDashboard.putNumber("CoopPotValueLeft", coopPotValueLeft);
 		SmartDashboard.putNumber("Level: ", level);
 
 	}
