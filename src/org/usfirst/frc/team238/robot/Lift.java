@@ -61,13 +61,14 @@ public class Lift
 			SmartDashboard.putNumber("Level: ", level);
 
 			//These will bring the game piece up or down
-			liftMotorRight= new Jaguar(6);  
-			liftMotorLeft = new Jaguar(7); 
+			liftMotorRight= new Jaguar(7);  
+			liftMotorLeft = new Jaguar(6); 
 
 			//This is the potentiometer which may be added for more acuraccy
 			leftPotens = new AnalogPotentiometer(2); // these go into analog ports
 			rightPotens = new AnalogPotentiometer(3);
 			
+			letItGo();
 			setPotOffsetValue();
 
 		}
@@ -90,6 +91,7 @@ public class Lift
 		double rightPOtValue = rightPotens.get();
 		
 		potensOffsetValue = leftPOtValue - rightPOtValue;
+		
 	}
 	
 	private boolean isAtLevel(double level, double leftPot, double rightPot){
@@ -104,32 +106,20 @@ public class Lift
 		}
 		return atLevel;
 	}
-	/*
-	 * The jaguars will start going forward and the lift will go up.
-	 * I set the Jag speed to .5 for now.  It can be adjusted when robot robot is built
-	 *
-	public void liftGoesUp(double leftPot, double rightPot)  
-	{	
-		if(leftPot > rightPot)
-		{
-			liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_SLOW);
-			liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
-		}
-		else if(leftPot < rightPot)
-		{
-			liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
-			liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_SLOW);
-		}
-		else
-		{
-			liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
-			liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
-		}
+	
+	private boolean isAtLevel(double level, double leftPot){
+		boolean atLevel = false;
 		
-		SmartDashboard.putNumber("Lift Motor Right", liftMotorRight.get());
-		SmartDashboard.putNumber("Lift Motor Left", liftMotorLeft.get());
+		double leftSide = leftPot - level;
+		
+		
+		if((Math.abs(leftSide) < CrusaderCommon.POT_DEAD_BAND) )
+		{
+			atLevel = true;
+		}
+		return atLevel;
 	}
-	 */
+	
 	
 	/*
 	 * The jaguars will start going forward and the lift will go up.
@@ -145,11 +135,11 @@ public class Lift
 			if(differential < 0)
 			{
 				liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
-				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_SLOW);
+				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
 			}
 			else
 			{
-				liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_SLOW);
+				liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
 				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
 			}
 		}
@@ -162,38 +152,67 @@ public class Lift
 		SmartDashboard.putNumber("Lift Motor Right", liftMotorRight.get());
 		SmartDashboard.putNumber("Lift Motor Left", liftMotorLeft.get());
 	}
+	public void liftGoesUpL(double leftPot, double rightPot)  
+	{	
+		double differential = leftPot - rightPot;
+		
+		//if the potentiometers readings are more than "X" different we need to adjust motor speed
+		if( Math.abs(differential) > CrusaderCommon.POT_DIFF_MAX)
+		{
+			if(differential < 0)
+			{
+				//liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+			}
+			else
+			{
+				//liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_SLOW);
+				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+			}
+		}
+		else
+		{
+			//liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+			liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+		}
+		
+		//SmartDashboard.putNumber("Lift Motor Right", liftMotorRight.get());
+		SmartDashboard.putNumber("Lift Motor Left", liftMotorLeft.get());
+	}
+	public void liftGoesUpR(double leftPot, double rightPot)  
+	{	
+		double differential = leftPot - rightPot;
+		
+		//if the potentiometers readings are more than "X" different we need to adjust motor speed
+		if( Math.abs(differential) > CrusaderCommon.POT_DIFF_MAX)
+		{
+			if(differential < 0)
+			{
+				liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+				//liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_SLOW);
+			}
+			else
+			{
+				liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+				//liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+			}
+		}
+		else
+		{
+			liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+			//liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+		}
+		
+		SmartDashboard.putNumber("Lift Motor Right", liftMotorRight.get());
+		//SmartDashboard.putNumber("Lift Motor Left", liftMotorLeft.get());
+	}
 	public void manualControlOfLifter(double overRideValue)  
 	{
 		liftMotorRight.set(overRideValue);
 		liftMotorLeft.set(overRideValue);
 	}
 
-	/*
-	 * The jaguars will start going backwards and the lift will go down.
-	 * I set the Jag speed to -.5 for now.  It can be adjusted when robot robot is built
-	 
-	public void liftGoesDown(double lPot, double rPot)  
-	{	
-		if(lPot > rPot)
-		{
-			liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
-			liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_SLOW);
-		}
-		else if(lPot < rPot)
-		{
-			liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_SLOW);
-			liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
-		}
-		else
-		{
-			liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
-			liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
-		}
-		
-		SmartDashboard.putNumber("Lift Motor Right", liftMotorRight.get());
-		SmartDashboard.putNumber("Lift Motor Left", liftMotorLeft.get());
-	}
-	*/
+	
 	/*
 	 * The jaguars will start going backwards and the lift will go down.
 	 * I set the Jag speed to -.5 for now.  It can be adjusted when robot robot is built
@@ -207,13 +226,13 @@ public class Lift
 		{
 			if(differential < 0)
 			{
-				liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_SLOW);
+				liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
 				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);	
 			}
 			else
 			{
 				liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
-				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_SLOW);
+				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
 			}
 		}
 		else
@@ -236,7 +255,7 @@ public class Lift
 		liftMotorLeft.set(CrusaderCommon.LIFT_STOPS);
 	}
 
-	public void liftToLoadLevel()  
+	public void liftToLoadLeveOrg()  
 	{
 		double loadPotValueLeft = leftPotens.get();
 		double loadPotValueRight = rightPotens.get() + potensOffsetValue;
@@ -245,12 +264,57 @@ public class Lift
 		if(isAtLevel(CrusaderCommon.POT_LOADING, loadPotValueLeft, loadPotValueRight))
 		{
 			stop(); 
+			setPotOffsetValue();
 			level = CrusaderCommon.LOADING_LEVEL;
 		}
 		else
 		{
 			liftGoesUp(loadPotValueLeft, loadPotValueRight);
 		}
+
+		//SmartDashboard.putBoolean("Load Switch Hit: ", loadedSwitch.get());
+		SmartDashboard.putNumber("Level: ", level);
+		SmartDashboard.putNumber("loadPotValueLeft", loadPotValueLeft);
+		SmartDashboard.putNumber("loadPotValueRight", loadPotValueRight);
+	}
+	
+	public void liftToLoadLevel()  
+	{
+		double loadPotValueLeft = leftPotens.get();
+		double loadPotValueRight = rightPotens.get() + potensOffsetValue;
+
+		//if(((loadPotValueLeft <= CrusaderCommon.POT_LOADING_MIN) || (loadPotValueRight <= CrusaderCommon.POT_LOADING_MIN))) 
+		boolean left = isAtLevel(CrusaderCommon.POT_LOADING, loadPotValueLeft);
+		boolean right = isAtLevel(CrusaderCommon.POT_LOADING, loadPotValueRight);
+		SmartDashboard.putBoolean("Loading zleft", left);
+		SmartDashboard.putBoolean("Loading zRight", right);
+		if ( left == true){
+			
+			liftMotorLeft.set(CrusaderCommon.LIFT_STOPS);
+			SmartDashboard.putBoolean("zleft", left);
+			
+		}
+		else
+		{
+			liftGoesUpL(loadPotValueLeft, loadPotValueRight);
+			SmartDashboard.putBoolean("zleft", left);
+		}
+		
+		if(right == true){
+			liftMotorRight.set(CrusaderCommon.LIFT_STOPS);
+			SmartDashboard.putBoolean("zRight", right);
+		}
+		else
+		{
+			liftGoesUpR(loadPotValueLeft, loadPotValueRight);
+			SmartDashboard.putBoolean("zRight", right);
+		}
+		
+		if( left && right){
+			setPotOffsetValue();
+			level = CrusaderCommon.LOADING_LEVEL;
+		}
+		
 
 		//SmartDashboard.putBoolean("Load Switch Hit: ", loadedSwitch.get());
 		SmartDashboard.putNumber("Level: ", level);
@@ -272,6 +336,7 @@ public class Lift
 		if(isAtLevel(CrusaderCommon.POT_TRAVEL, travelPotValueLeft, travelPotValueRight))
 		{
 			stop();
+			setPotOffsetValue();
 			level = CrusaderCommon.TRAVEL_LEVEL;
 		}
 		else
@@ -306,6 +371,7 @@ public class Lift
 		if(isAtLevel(CrusaderCommon.POT_GROUND, groundPotValueLeft, groundPotValueRight))
 		{
 			stop();
+			setPotOffsetValue();
 			level = CrusaderCommon.GROUND_LEVEL;
 		}
 		else 
@@ -329,6 +395,7 @@ public class Lift
 		if(isAtLevel(CrusaderCommon.POT_COOP, coopPotValueLeft, coopPotValueRight))
 		{
 			stop();
+			setPotOffsetValue();
 			level = CrusaderCommon.COOP_LEVEL;
 		}
 		else

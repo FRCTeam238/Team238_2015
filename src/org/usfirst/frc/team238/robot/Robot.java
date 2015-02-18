@@ -197,8 +197,10 @@ public class Robot extends IterativeRobot {
 	    		driverJs3CmdSpinLeft = new CommandClawSpinLeft(rightClaw);
 	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverJs3CmdSpinLeft);
 	    		
+	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 3, theDoNothingLeftDriverCmd);
+	    		
 	    		shiftLowCMD = new CommandShiftLow(theShifter);
-	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,  3, shiftLowCMD);
+	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,  4, shiftLowCMD);
 	    		
 	    		shiftHighCMD = new CommandShiftHigh(theShifter);
 	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,  3, shiftHighCMD);

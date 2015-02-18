@@ -20,25 +20,24 @@ public class CrusaderCommon {
 	public static final int LEFTDRIVER_CMD_LIST = 2;
 	public static final int RIGHTDRIVER_CMD_LIST = 3;
 	
-	// Temperary potentiometer values for the lift code
-	public static final double POT_GROUND_MIN = 0.690;
-	public static final double POT_GROUND = 0.660;
-	public static final double POT_GROUND_MAX = 0.610;
+	//public static final double POT_GROUND_MIN = 0.690;
+	public static final double POT_GROUND = 0.440;
+	//public static final double POT_GROUND_MAX = 0.610;
 	
-	public static final double POT_TRAVEL_MIN = 0.380;
-	public static final double POT_TRAVEL = 0.330;	
-	public static final double POT_TRAVEL_MAX = 0.280;
+	//public static final double POT_TRAVEL_MIN = 0.380;
+	public static final double POT_TRAVEL = 0.346;	
+	//public static final double POT_TRAVEL_MAX = 0.280;
 	
-	public static final double POT_COOP_MIN = 0.230;
-	public static final double POT_COOP = 0.180;
-	public static final double POT_COOP_MAX = 0.130;
+	//public static final double POT_COOP_MIN = 0.230;
+	public static final double POT_COOP = 0.140;
+	//public static final double POT_COOP_MAX = 0.130;
 	
-	public static final double POT_LOADING_MIN = 0.100;
-	public static final double POT_LOADING = 0.050;
-	public static final double POT_LOADING_MAX = 0.020;
+	//public static final double POT_LOADING_MIN = 0.100;
+	public static final double POT_LOADING = 0.005;
+	//public static final double POT_LOADING_MAX = 0.010;/
 	
 	public static final double POT_DIFF_MAX = 0.010;
-	public static final double POT_DEAD_BAND = 0.050;
+	public static final double POT_DEAD_BAND = 0.005;
 	
 	//Levels for the Lift 
 	public static final int GROUND_LEVEL = 1;
@@ -51,8 +50,8 @@ public class CrusaderCommon {
 	public static final int LIFT_GOES_UP_NORMAL = -1;
 	public static final int LIFT_GOES_DOWN_NORMAL = 1;
 	public static final int LIFT_STOPS = 0;
-	public static final double LIFT_GOES_DOWN_SLOW = 0.75;
-	public static final double LIFT_GOES_UP_SLOW = -0.75;
+	public static final double LIFT_GOES_DOWN_SLOW = 0.5;
+	public static final double LIFT_GOES_UP_SLOW = -0.5;
 	
 	//
 	public static final int INPUT_MANUAL_OVERRIDE = 0;
@@ -60,8 +59,8 @@ public class CrusaderCommon {
 	public static final int INPUT_DRIVER_LEFT_JS = 2;
 	public static final int INPUT_DRIVER_RIGHT_JS = 3;
 	
-	public static final boolean SHIFTER_HIGH_GEAR = false;
-	public static final boolean SHIFTER_LOW_GEAR = true;
+	public static final boolean SHIFTER_HIGH_GEAR = true;
+	public static final boolean SHIFTER_LOW_GEAR = false;
 	
 	public static final int SHIFT_STATE_HIGH_GEAR = 1;
 	public static final int SHIFT_STATE_LOW_GEAR = 0;
