@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.RobotDrive;
 
 public class CommandDriveForward implements Command {
 
-	
 	RobotDrive myRobotDrive; 
 	public CommandDriveForward(RobotDrive theRobotDrive)
 	{

@@ -147,7 +147,19 @@ public class Lift
 		double rightPOtValue = rightPotens.get();
 		
 		potensOffsetValue = leftPOtValue - rightPOtValue;
+	}
+	
+	private boolean isAtLevel(double level, double leftPot, double rightPot){
+		boolean atLevel = false;
+		double leftSide = leftPot - level;
+		double rightSide = rightPot- level;
 		
+		if((Math.abs(leftSide) < CrusaderCommon.POT_DEAD_BAND) || (Math.abs(rightSide) < CrusaderCommon.POT_DEAD_BAND))
+		{
+			atLevel = true;
+		}
+		
+		return atLevel;
 	}
 	
 	/*
@@ -314,7 +326,7 @@ public class Lift
 	{
 		goToSpecifiedLevel(CrusaderCommon.COOP_LEVEL);
 	}
-//	
+
 	public void clampOn()    
 	{						 		
 
@@ -341,7 +353,3 @@ public class Lift
 
 	
 }
-
-
-
-

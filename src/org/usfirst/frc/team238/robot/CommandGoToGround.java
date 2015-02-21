@@ -15,7 +15,7 @@ public  class CommandGoToGround implements Command {
 	{
 		myLift.setToGround();
 		myLift.letItGo();
-		mySaloonDoor.CloseDoors();
+		//mySaloonDoor.CloseDoors();
 	}
 	
 	public void execute(double overRideValue)
@@ -25,7 +25,7 @@ public  class CommandGoToGround implements Command {
 		if(myLift.getLevel() == CrusaderCommon.GROUND_LEVEL)
 		{
 			myLift.letItGo();
-			mySaloonDoor.CloseDoors();
+			//mySaloonDoor.CloseDoors();
 		}
 	}
 }
