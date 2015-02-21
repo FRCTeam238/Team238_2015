@@ -22,8 +22,11 @@ public class Autonomous
 		commandValue[2] = 1; // left claw spins right 
 		commandValue[3] = 2; // right claw spins left
 	}
-	
 	private void autoMode2(){
+		commandValue[0] = 0;
+	}
+	
+	private void autoMode3(){
 		
 		commandValue[0] =0;
 		commandValue[1] =0;
