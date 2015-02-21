@@ -1,14 +1,12 @@
 package org.usfirst.frc.team238.robot;
 
-
-
-public class CommandDriveForward implements Command {
+public class CommandDriveIdle {
 
 	//CAT CONSIDER: Remove the Robot object and use only the ... 
 	//CAT  ... RobotDrive in CommandDriveForward, Backward and Idle
 	Robot myDT;
 	
-	public CommandDriveForward(Robot theRobot)
+	public CommandDriveIdle(Robot theRobot)
 	{
 		this.myDT = theRobot;
 	}
@@ -16,7 +14,7 @@ public class CommandDriveForward implements Command {
 	public void execute() 
 	{
 
-		myDT.myRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_FORWARD, CrusaderCommon.AUTO_DRIVE_FORWARD);
+		myDT.myRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_IDLE, CrusaderCommon.AUTO_DRIVE_IDLE);
 	}
 
 	public void execute(double overRideValue) {

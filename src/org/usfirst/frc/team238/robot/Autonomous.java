@@ -4,6 +4,9 @@ public class Autonomous
 {
 	static int[] commandValue;
 	
+	public static final int Mode_GrabAndDrive = 1;
+	public static final int Mode_Idle = 2;
+
 	public void autoInit()
 	{
 		try
@@ -31,18 +34,16 @@ public class Autonomous
 	{
 		int test = Integer.parseInt(autoMode);
 		switch(test){
-		case 1:
+		case Autonomous.Mode_GrabAndDrive:
 			autoMode1();
 			break;
-		case 2:
+		case Autonomous.Mode_Idle:
 			autoMode2();
 			break;
 		default:
-		
+			break;
 		}
 		
 		return commandValue;
-		
 	}
-	
 }

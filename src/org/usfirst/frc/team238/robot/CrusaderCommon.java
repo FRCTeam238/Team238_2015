@@ -66,8 +66,12 @@ public class CrusaderCommon {
 	public static final int SHIFT_STATE_HIGH_GEAR = 1;
 	public static final int SHIFT_STATE_LOW_GEAR = 0;
 	
-	//Autonomous Drive Values
+	/*
+	 * The AUTO_DRIVE_* constants are the joystick positions when moving in the
+	 * expected direction. These values are passed to the RobotDrive.tankDrive
+	 * method.
+	 */
 	public static final double AUTO_DRIVE_FORWARD = 0.75;
 	public static final double AUTO_DRIVE_BACKWARD = -0.75;
-	
+	public static final double AUTO_DRIVE_IDLE = 0.0;
 }

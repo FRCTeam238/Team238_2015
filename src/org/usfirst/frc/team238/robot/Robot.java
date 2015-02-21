@@ -4,6 +4,7 @@ package org.usfirst.frc.team238.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.RobotDrive;
 /**
@@ -48,9 +49,16 @@ public class Robot extends IterativeRobot {
 	RobotDrive myRobotDrive;
 	CommandShiftLow shiftLowCMD;
 	CommandShiftHigh shiftHighCMD;
+	
+	// Autonomous Mode Support
 	Autonomous myAutonomous;
 	String autoMode;
+	Timer autonomousTimer;
+	CommandDriveForward myDriveForward;
+	CommandDriveIdle myDriveIdle;
 	DigitalInput autoLoadedSwitch;
+	
+	
 	// This is only valid in test mode. When this object is
 	// valid, then the other objects (thisLife, theClaws, etc.) will not be valid
 	TestMain testController = null; 
@@ -58,6 +66,11 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		try
 		{
+    		if (autonomousTimer != null)
+    		{
+    			autonomousTimer.stop();
+    		}
+    		
 			//only use checkForSmartDashboardChanges function in init methods or you will
 			//smoke the roborio into a useless pile of silicon
 			checkForSmartDashboardChanges("mode", CrusaderCommon.PREFVALUE_OP_MODE_NORMAL );
@@ -115,6 +128,12 @@ public class Robot extends IterativeRobot {
 			//only use checkForSmartDashboardChanges function in init methods or you will
 		 	//smoke the roborio into a useless pile of silicon
 			checkForSmartDashboardChanges("auto", "1");
+			
+			// Note: Command objects for autonomous are initialized in
+			//  RobotInit
+			autonomousTimer = new Timer();
+			autonomousTimer.reset();
+			autonomousTimer.start();
 		}
 		catch(Exception ex){
 			System.out.println("AutonoousInit:Exception");
@@ -213,7 +232,10 @@ public class Robot extends IterativeRobot {
 	    		//operatorCmdSetToSaloonDoorsOpen = new CommandSaloonDoorsOpen(theSaloonDoors);
 	    		//theMCP.setCommand(CrusaderCommon.DRIVER_CMD_LIST, 1, operatorCmdSetToSaloonDoorsOpen);
 	    		
-	    		
+	    		myDriveForward = new CommandDriveForward(this);
+	    		myDriveIdle = new CommandDriveIdle(this);
+	    			// NOTE: the timer is initialized in autonomousInit 
+
 	    		System.out.println("Fully Initialized");
 			}
     	}
@@ -247,6 +269,28 @@ public class Robot extends IterativeRobot {
     	return;
     }
     
+    /* This function will check to determine if the current mode 
+     * wants the robot to drive forward
+     * 
+     * This may need enhancement in the event that future modes
+     * will require turning and 
+     */
+    private boolean IsDrivingForward(int autoModeID)
+    {
+    	// drive forward 3 seconds in autoMode
+    	final double AUTONOMOUS_DRIVE_TO_SCORING_PLATFORM = 3.0;  
+
+    	boolean retval = false; // assume don't drive
+    	
+    	if ((autoModeID == Autonomous.Mode_GrabAndDrive) && 
+    			(autonomousTimer.get() < AUTONOMOUS_DRIVE_TO_SCORING_PLATFORM))
+    	{
+    		retval = true;
+    	}
+    	
+    	return retval;
+    }
+    
     /**
      * This function is called periodically during autonomous
      */
@@ -276,6 +320,15 @@ public class Robot extends IterativeRobot {
         		theMCP.buttonPressed(commandValue);
         	}
     		
+    		int autoModeID = Integer.parseInt(autoMode);
+    		if (IsDrivingForward(autoModeID))
+    		{
+    			myDriveForward.execute();
+    		}
+    		else
+    		{
+    			myDriveIdle.execute();
+    		}
     	}
     	catch( Exception ex){
     		System.out.println("Autonomous exception");
@@ -291,9 +344,14 @@ public class Robot extends IterativeRobot {
     	
     	double leftJsValue = 0;
     	double rightJsValue = 0;
-    	
+
     	try
     	{
+    		if (autonomousTimer != null)
+    		{
+    			autonomousTimer.stop();
+    		}
+    		
 	    	if (robotTestMode)
 	    	{
 	    		if (testController != null)
