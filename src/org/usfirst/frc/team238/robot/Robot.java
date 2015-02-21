@@ -126,13 +126,26 @@ public class Robot extends IterativeRobot {
 			
 			//only use checkForSmartDashboardChanges function in init methods or you will
 		 	//smoke the roborio into a useless pile of silicon
-			checkForSmartDashboardChanges("auto", "1");
+			try{
+				checkForSmartDashboardChanges("auto", "1");
+			}
+			catch(Exception ex)
+			{
+				System.out.println("AutononousInit:CMDB Exception");
+			}
 			
 			// Note: Command objects for autonomous are initialized in
 			//  RobotInit
-			autonomousTimer = new Timer();
+			try{
+				autonomousTimer = new Timer();
+			
 			autonomousTimer.reset();
 			autonomousTimer.start();
+			}
+			catch(Exception ex)
+			{
+				System.out.println("AutononousInit:Timer");	
+			}
 		}
 		catch(Exception ex){
 			System.out.println("AutononousInit:Exception");
@@ -415,9 +428,18 @@ public class Robot extends IterativeRobot {
     	String valueFromPrefs = myPreferences.getString(key, value);
     	if(valueFromPrefs != null){
     		System.out.println("PREFs:" + key + " = " + valueFromPrefs);
-
-    		String valueFromDS = SmartDashboard.getString(key);
+    		String valueFromDS = null;
+    		try{
+    			valueFromDS = SmartDashboard. getString(key);
+    		}
+    		catch(Exception ex)
+    		{
+    			ex.printStackTrace();
+    			SmartDashboard.putString(key, valueFromPrefs);
+    		}
     		
+    		System.out.println("PREFs_DS:" + key + " = " + valueFromDS);
+
     		//check for null and also if it's empty don't overwrite what's in the preferences table
     		if((valueFromDS != null) && (!valueFromDS.isEmpty())){
     			System.out.println("SB:" + key + " = " + valueFromDS);
