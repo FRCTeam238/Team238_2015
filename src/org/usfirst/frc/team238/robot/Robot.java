@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team238.robot; 
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot {
 	CommandShiftHigh shiftHighCMD;
 	Autonomous myAutonomous;
 	String autoMode;
+	DigitalInput autoLoadedSwitch;
 	// This is only valid in test mode. When this object is
 	// valid, then the other objects (thisLife, theClaws, etc.) will not be valid
 	TestMain testController = null; 
@@ -131,7 +133,8 @@ public class Robot extends IterativeRobot {
 			//SmartDashboard.putString("myControlBoard", "initialized");
 			
 			updateTestMode();
-			
+			autoLoadedSwitch = new DigitalInput(1);
+			 
 			if (robotTestMode)
 			{
 				testController = new TestMain();
@@ -267,9 +270,12 @@ public class Robot extends IterativeRobot {
     			
     		}
     		
-    		commandValue = myAutonomous.buildAutoCommands(autoMode);
-    		theMCP.buttonPressed(commandValue);
-    	
+    		//read the backplate switch to make sure we have something in the loading bay
+    		if(autoLoadedSwitch.get() == true){
+    			commandValue = myAutonomous.buildAutoCommands(autoMode);
+        		theMCP.buttonPressed(commandValue);
+        	}
+    		
     	}
     	catch( Exception ex){
     		System.out.println("Autonomous exception");

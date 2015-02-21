@@ -14,12 +14,12 @@ public class CommandGoToDeliver implements Command {
 	public void execute()
 	{	
 
-		myLift.setToGround();
+		myLift.travelingMode();
 		
-		if(myLift.getLevel() == CrusaderCommon.GROUND_LEVEL)
+		if(myLift.getLevel() == CrusaderCommon.TRAVEL_LEVEL)
 		{
 			myLift.letItGo();
-			mySaloonDoor.OpenDoors();
+			//mySaloonDoor.OpenDoors();
 		}
 		
 

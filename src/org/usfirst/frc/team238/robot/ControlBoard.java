@@ -89,6 +89,9 @@ public class ControlBoard {
 		else if(theJoyStick.getRawButton(3)){
 			command = 3;
 		}
+		else if(theJoyStick.getRawButton(4)){
+			command = 4;
+		}
 		
 		SmartDashboard.putNumber("Driver Command", command);
 		SmartDashboard.putNumber("ZPOS", zPos);

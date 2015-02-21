@@ -15,7 +15,7 @@ public class CommandGoToTravel implements Command
 	{
 		myLift.clampOn();
 		myLift.travelingMode();
-		mySaloonDoors.CloseDoors();
+		//mySaloonDoors.CloseDoors();
 		
 	}
 	
@@ -23,6 +23,6 @@ public class CommandGoToTravel implements Command
 	{
 		myLift.clampOn();
 		myLift.manualControlOfLifter(overRideValue);
-		mySaloonDoors.CloseDoors();
+		//mySaloonDoors.CloseDoors();
 	}
 }

@@ -33,8 +33,9 @@ public class CrusaderCommon {
 	//public static final double POT_COOP_MAX = 0.130;
 	
 	//public static final double POT_LOADING_MIN = 0.100;
-	public static final double POT_LOADING = 0.005;
+	public static final double POT_LOADING = 0.018;
 	//public static final double POT_LOADING_MAX = 0.010;/
+	public static final double POT_NEUTRAL_ZONE = .002;
 	
 	public static final double POT_DIFF_MAX = 0.010;
 	public static final double POT_DEAD_BAND = 0.005;
