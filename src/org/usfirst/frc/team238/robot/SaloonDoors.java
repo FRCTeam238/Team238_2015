@@ -100,6 +100,7 @@ public class SaloonDoors {
 	 * Output: none       
 	 */
 	public void poll() {
+		/*
 		boolean b1 = ControlBoard.isButtonFivePressed(); //open door
 		SmartDashboard.putString("ButtonFive", "Pressed");
 		boolean b2 = ControlBoard.isButtonSixPressed(); // close door
@@ -122,6 +123,7 @@ public class SaloonDoors {
 		} else { 
 			//SmartDashboard.putString("Button 5 or 6", "not pressed");
 		}
+		*/
 	}
 	
 	public void stop(){
