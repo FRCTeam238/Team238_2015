@@ -113,9 +113,8 @@ public class ControlBoard {
 		return manualOverrideJs.getY();
 	}
 
-	//hardcoded to false until we get a switch  or possibly use SmartDshBd
 	public static boolean overRide(){
-		boolean overRide = operatorJs.getRawButton(7);
+		boolean overRide = operatorJs.getRawButton(10);
 		
 		return overRide;
 					
