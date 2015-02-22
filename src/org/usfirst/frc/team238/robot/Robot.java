@@ -138,9 +138,9 @@ public class Robot extends IterativeRobot {
 			//  RobotInit
 			try{
 				autonomousTimer = new Timer();
-			
-			autonomousTimer.reset();
-			autonomousTimer.start();
+
+				autonomousTimer.reset();
+				autonomousTimer.start();
 			}
 			catch(Exception ex)
 			{
@@ -158,108 +158,97 @@ public class Robot extends IterativeRobot {
     	{
     		System.out.println("RobotInit()");
     		SmartDashboard.putString(CrusaderCommon.PREFERENCE_OP_MODE, "");
-    		
+
     		myControlBoard = new ControlBoard();
     		myControlBoard.controlBoardInit();
-			//SmartDashboard.putString("myControlBoard", "initialized");
-			
-			updateTestMode();
-			autoLoadedSwitch = new DigitalInput(1);
-			 
-			if (robotTestMode)
-			{
-				testController = new TestMain();
-				testController.Init();
-			}
-			else
-			{
-	    		theLift = new Lift();
-	    		theLift.liftInit();
-	    		
-	    		leftClaw = new Claws();
-	    		leftClaw.clawsInit(4);
-	    		
-	    		rightClaw = new Claws();
-	    		rightClaw.clawsInit(5);
-	    		
-	    		theShifter = new Shifter();
-	    		theShifter.init();
-	    		
-	    		theSaloonDoors = new SaloonDoors();
-	    		theSaloonDoors.Init();
-	    		
-	    		theMCP = new CommandController();
-	    		theMCP.init();
-	    		
-	    		
-	    		myAutonomous = new Autonomous();
-	    		myAutonomous.autoInit();
-	    		autoMode = "1";
-	    		
-	    		theDoNothingCmd = new NoOperatorCommand(theLift, theSaloonDoors );
-	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 0, theDoNothingCmd);
-	    		
-	    		theDoNothingRightDriverCmd = new NoDriverCommand(rightClaw);
-	    		theDoNothingLeftDriverCmd = new NoDriverCommand(leftClaw);
-	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 0, theDoNothingLeftDriverCmd);
-	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 0, theDoNothingRightDriverCmd);
-	    		
-	    		
-	    		operatorCmdSetToGround = new CommandGoToGround(theLift, theSaloonDoors);
-	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 1, operatorCmdSetToGround);
-	    		
-	    		operatorCmdSetToTravel = new CommandGoToTravel(theLift, theSaloonDoors);
-	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 2, operatorCmdSetToTravel);
-	    		
-	    		operatorCmdSetToLift = new CommandGoToLift(theLift, theSaloonDoors);
-	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 3, operatorCmdSetToLift);
-	    		
-	    		operatorCmdSetToDeliver = new CommandGoToDeliver(theLift, theSaloonDoors);
-	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 4, operatorCmdSetToDeliver);
-	    		
-	    		operatorCmdCoopPoints = new CommandCoopPoints(theLift, theSaloonDoors);
-	    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 5, operatorCmdCoopPoints);
-	    		
-	    		driverJs2CmdSpinRight = new CommandClawSpinRight(leftClaw);
-	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 1, driverJs2CmdSpinRight);	    		
-	    		
-	    		driverJs2CmdSpinLeft = new CommandClawSpinLeft(leftClaw);
-	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 2, driverJs2CmdSpinLeft);
-	    		
-	    		driverJs3CmdSpinRight = new CommandClawSpinRight(rightClaw);
-	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 1, driverJs3CmdSpinRight);
-	    		
-	    		driverJs3CmdSpinLeft = new CommandClawSpinLeft(rightClaw);
-	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverJs3CmdSpinLeft);
-	    		
-	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 3, theDoNothingLeftDriverCmd);
-	    		
-	    		shiftLowCMD = new CommandShiftLow(theShifter);
-	    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,  4, shiftLowCMD);
-	    		
-	    		shiftHighCMD = new CommandShiftHigh(theShifter);
-	    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,  3, shiftHighCMD);
-	    		
-	    		autoDriveForward = new CommandDriveForward(myRobotDrive);
-	    		theMCP.setCommand(CrusaderCommon.AUTONOMOUS_CMD_LIST, 1, autoDriveForward);
-	    		
-	    		myRobotDrive = new RobotDrive(0,1,2,3);
-	    		
-	    		//operatorCmdSetToSaloonDoorsOpen = new CommandSaloonDoorsOpen(theSaloonDoors);
-	    		//theMCP.setCommand(CrusaderCommon.DRIVER_CMD_LIST, 1, operatorCmdSetToSaloonDoorsOpen);
-	    		
-	    		autoDriveForward = new CommandDriveForward(this.myRobotDrive);
-	    		autoDriveIdle = new CommandDriveIdle(this);
-	    			// NOTE: the timer is initialized in autonomousInit 
+    		
+    		autoLoadedSwitch = new DigitalInput(1);
 
-	    		System.out.println("Fully Initialized");
-			}
+    		theLift = new Lift();
+    		theLift.liftInit();
+
+    		leftClaw = new Claws();
+    		leftClaw.clawsInit(4);
+
+    		rightClaw = new Claws();
+    		rightClaw.clawsInit(5);
+
+    		theShifter = new Shifter();
+    		theShifter.init();
+
+    		theSaloonDoors = new SaloonDoors();
+    		theSaloonDoors.Init();
+
+    		theMCP = new CommandController();
+    		theMCP.init();
+
+
+    		myAutonomous = new Autonomous();
+    		myAutonomous.autoInit();
+    		//autoMode = "1";
+
+    		theDoNothingCmd = new NoOperatorCommand(theLift, theSaloonDoors );
+    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 0, theDoNothingCmd);
+
+    		theDoNothingRightDriverCmd = new NoDriverCommand(rightClaw);
+    		theDoNothingLeftDriverCmd = new NoDriverCommand(leftClaw);
+    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 0, theDoNothingLeftDriverCmd);
+    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 0, theDoNothingRightDriverCmd);
+
+    		operatorCmdSetToGround = new CommandGoToGround(theLift, theSaloonDoors);
+    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 1, operatorCmdSetToGround);
+
+    		operatorCmdSetToTravel = new CommandGoToTravel(theLift, theSaloonDoors);
+    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 2, operatorCmdSetToTravel);
+
+    		operatorCmdSetToLift = new CommandGoToLift(theLift, theSaloonDoors);
+    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 3, operatorCmdSetToLift);
+
+    		operatorCmdSetToDeliver = new CommandGoToDeliver(theLift, theSaloonDoors);
+    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 4, operatorCmdSetToDeliver);
+
+    		operatorCmdCoopPoints = new CommandCoopPoints(theLift, theSaloonDoors);
+    		theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 5, operatorCmdCoopPoints);
+
+    		//left driver JS commands
+    		driverJs2CmdSpinRight = new CommandClawSpinRight(leftClaw);
+    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 1, driverJs2CmdSpinRight);	    		
+
+    		driverJs2CmdSpinLeft = new CommandClawSpinLeft(leftClaw);
+    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 2, driverJs2CmdSpinLeft);
+    		
+    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST, 3, theDoNothingLeftDriverCmd);
+
+    		shiftLowCMD = new CommandShiftLow(theShifter);
+    		theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,  4, shiftLowCMD);
+    		
+    		//right driver JS commands
+    		driverJs3CmdSpinRight = new CommandClawSpinRight(rightClaw);
+    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 1, driverJs3CmdSpinRight);
+
+    		driverJs3CmdSpinLeft = new CommandClawSpinLeft(rightClaw);
+    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST, 2, driverJs3CmdSpinLeft);
+    		
+    		shiftHighCMD = new CommandShiftHigh(theShifter);
+    		theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,  3, shiftHighCMD);
+
+    		myRobotDrive = new RobotDrive(0,1,2,3);
+
+    		//operatorCmdSetToSaloonDoorsOpen = new CommandSaloonDoorsOpen(theSaloonDoors);
+    		//theMCP.setCommand(CrusaderCommon.DRIVER_CMD_LIST, 1, operatorCmdSetToSaloonDoorsOpen);
+
+    		autoDriveForward = new CommandDriveForward(this.myRobotDrive);
+    		autoDriveIdle = new CommandDriveIdle(this);
+    		// NOTE: the timer is initialized in autonomousInit 
+
+    		System.out.println("Fully Initialized");
+
     	}
-    	
     	catch(Exception ex)
     	{
 			//SmartDashboard.putString(TestMain.TEST_DASH_KEY_EXCEPTION, "EXCEPTION");
     		System.out.println(ex.getMessage());
+    		ex.printStackTrace();
     		
     	}
     }
@@ -378,33 +367,17 @@ public class Robot extends IterativeRobot {
     		{
     			autonomousTimer.stop();
     		}
-    		
-	    	if (robotTestMode)
-	    	{
-	    		if (testController != null)
-	    		{
-	    			testController.Poll();
-	    		}
-	    		else
-	    		{
-	    			System.out.println("testController is null");
-	    		}
-	    	}
-	    	else
-	    	{
-	    		leftJsValue = ControlBoard.driverLeftJs.getY();
-	    		rightJsValue = ControlBoard.driverRightJs.getY();
-	    		
-	    		myRobotDrive.tankDrive(-leftJsValue, -rightJsValue);
-	    		
-	    		
-	    		commandValue = myControlBoard.getCommands();
-	    		System.out.println("telopperiodic: " + commandValue[0]);
-	    		theMCP.buttonPressed(commandValue);
-	    		
-	    		
-	    		
-	    	}
+
+    		leftJsValue = ControlBoard.driverLeftJs.getY();
+    		rightJsValue = ControlBoard.driverRightJs.getY();
+
+    		myRobotDrive.tankDrive(-leftJsValue, -rightJsValue);
+
+
+    		commandValue = myControlBoard.getCommands();
+    		//System.out.println("telopperiodic: " + commandValue[0]);
+    		theMCP.buttonPressed(commandValue);
+
     	}
     	catch (Exception e)
     	{

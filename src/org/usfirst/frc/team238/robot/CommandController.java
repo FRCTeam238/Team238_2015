@@ -37,6 +37,11 @@ public class CommandController {
 		
 	}
 	
+	/*
+	 * Gets the buttons that are pressed or switches that are set from the controls (joysticks or custom)  
+	 * which the values  ( button1 = 1 etc) are an index into the array of commands that have been pre-loaded 
+	 * in robot.init, gets the command at that slot in the array and calls the execute function on that command.
+	 */
 	public void buttonPressed(int slot[]){
 		
 		//if the override switch is enabled the joystick in slot 0  will control motion of the lift, 
@@ -44,6 +49,8 @@ public class CommandController {
 		//but none of the other sensors will be used, this is for testing and extreme circumstances when 
 		//sensors are compromised
 		if(ControlBoard.overRide()){
+			//the next 4 lines are what's done in the one line for operator and driverleft/right below
+			//but has been expanded for clarity and teaching
 			
 			//get the value( button pressed) from the array
 			int buttonpressed = slot[CrusaderCommon.INPUT_MANUAL_OVERRIDE];
