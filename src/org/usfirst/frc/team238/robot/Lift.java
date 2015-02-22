@@ -149,6 +149,7 @@ public class Lift
 		potensOffsetValue = leftPOtValue - rightPOtValue;
 	}
 	
+	/*
 	private boolean isAtLevel(double level, double leftPot, double rightPot){
 		boolean atLevel = false;
 		double leftSide = leftPot - level;
@@ -161,6 +162,7 @@ public class Lift
 		
 		return atLevel;
 	}
+	*/
 	
 	/*
 	 * The jaguars will start going forward and the lift will go up.

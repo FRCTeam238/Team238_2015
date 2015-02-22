@@ -60,6 +60,12 @@ public class CrusaderCommon {
 	public static final int INPUT_OPR_CONTROL = 1;
 	public static final int INPUT_DRIVER_LEFT_JS = 2;
 	public static final int INPUT_DRIVER_RIGHT_JS = 3;
+	public static final int INPUT_AUTO_DRIVE = 4;
+		// this element in the commandValue array is only
+		// used by the AutoMode1Impl class. CommandController
+		// is unaware of it
+	public static final int INPUT_AUTO_PREDICATE = 5;
+
 	
 	public static final boolean SHIFTER_HIGH_GEAR = true;
 	public static final boolean SHIFTER_LOW_GEAR = false;
@@ -75,4 +81,30 @@ public class CrusaderCommon {
 	public static final double AUTO_DRIVE_FORWARD = 0.75;
 	public static final double AUTO_DRIVE_BACKWARD = -0.75;
 	public static final double AUTO_DRIVE_IDLE = 0.0;
+
+	public static final int MAN_CMD_IDX_DONOTHING = 0;
+		
+	public static final int OPR_CMD_IDX_DONOTHING = 0;
+	public static final int OPR_CMD_IDX_SETTOGROUND = 1;
+	public static final int OPR_CMD_IDX_SETTOTRAVEL = 2;
+	public static final int OPR_CMD_IDX_SETTOLIFT = 3;
+	public static final int OPR_CMD_IDX_SETTODELIVER = 4;
+	public static final int OPR_CMD_IDX_COOPPOINTS = 5;
+	
+	public static final int LEFTDRIVER_CMD_IDX_DONOTHING = 0;
+	public static final int LEFTDRIVER_CMD_IDX_SPINRIGHT = 1;
+	public static final int LEFTDRIVER_CMD_IDX_SPINLEFT = 2;
+	public static final int LEFTDRIVER_CMD_IDX_UNUSED3 = 3;
+	public static final int LEFTDRIVER_CMD_IDX_SHIFTLOW = 4;
+	
+	public static final int RIGHTDRIVER_CMD_IDX_DONOTHING = 0;
+	public static final int RIGHTDRIVER_CMD_IDX_SPINRIGHT = 1;
+	public static final int RIGHTDRIVER_CMD_IDX_SPINLEFT = 2;
+	public static final int RIGHTDRIVER_CMD_IDX_SHIFTHIGH = 0;
+
+	public static final int AUTONOMOUS_CMD_IDX_DONOTHING = 0;
+	public static final int AUTONOMOUS_CMD_IDX_DRIVEFORWARD = 1;
+	public static final int AUTONOMOUS_CMD_IDX_DRIVEBACKWARD = 2;
+	public static final int AUTONOMOUS_CMD_IDX_TURNLEFT = 3;
+	public static final int AUTONOMOUS_CMD_IDX_TURNRIGHT = 4;
 }

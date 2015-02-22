@@ -1,11 +1,14 @@
 package org.usfirst.frc.team238.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class CommandController {
 	
 	Command operatorCommandList[];
 	Command driverRightCommandList[];
 	Command driverLeftCommandList[];
 	Command manualOperatorCommandList[];
+	Command autonomousCommandList[];
 	
 	public void  init()
 	{
@@ -15,6 +18,7 @@ public class CommandController {
 		driverLeftCommandList = new Command[numCommands];
 		driverRightCommandList = new Command[numCommands];
 		manualOperatorCommandList = new Command[numCommands];
+		autonomousCommandList = new Command[numCommands];
 	}
 	
 	public void setCommand(int list, int slot, Command command){
@@ -30,11 +34,12 @@ public class CommandController {
 		case CrusaderCommon.RIGHTDRIVER_CMD_LIST:
 			driverRightCommandList[slot] = command;
 			break;
+		case CrusaderCommon.AUTONOMOUS_CMD_LIST:
+			autonomousCommandList[slot] = command;
+			break;
 		default:
 			manualOperatorCommandList[slot] = command;
 		}
-		
-		
 	}
 	
 	/*
@@ -69,5 +74,14 @@ public class CommandController {
 		
 		driverLeftCommandList[slot[CrusaderCommon.INPUT_DRIVER_LEFT_JS]].execute();
 		driverRightCommandList[slot[CrusaderCommon.INPUT_DRIVER_RIGHT_JS]].execute();
+	}
+	
+	public void autoButtonPressed(int slot[])
+	{
+		buttonPressed(slot);
+		Command command = autonomousCommandList[slot[CrusaderCommon.INPUT_AUTO_DRIVE]];
+		
+		SmartDashboard.putString("auto cmd", command.toString());
+		command.execute();
 	}
 }

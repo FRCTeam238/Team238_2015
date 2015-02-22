@@ -1,17 +1,27 @@
 package org.usfirst.frc.team238.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Autonomous 
 {
 	static int[] commandValue;
 	
 	public static final int Mode_GrabAndDrive = 1;
 	public static final int Mode_Idle = 2;
+	
+	private AutoMode1Impl myAutoMode1;
+	private AutoMode2Impl myAutoMode2;
 
-	public void autoInit()
+	public void autoInit(AutonomousDrive theDrive, Lift theLift)
 	{
 		try
 		{
 			commandValue = new int[4];
+			
+			myAutoMode1 = new AutoMode1Impl();
+			myAutoMode1.init(theDrive, theLift);
+			myAutoMode2 = new AutoMode2Impl();
+			//myAutoMode2.init();
 		}
 		catch(Exception ex)
 		{
@@ -19,39 +29,30 @@ public class Autonomous
 		}
 	}
 	
-	private void autoMode1(){
-		commandValue[0] = 0; // do nothing command
-		commandValue[1] = 2; // move to travel mode
-		commandValue[2] = 1; // left claw spins right 
-		commandValue[3] = 2; // right claw spins left
-	}
-	private void autoMode2(){
-		commandValue[0] = 0;
-	}
-	
-	private void autoMode3(){
-		
-		commandValue[0] =0;
-		commandValue[1] =0;
-		commandValue[2] =0;
-		commandValue[3] =0;
-				
-	}
-	
-	public int[] buildAutoCommands(String autoMode)
+	public void reset()
 	{
-		int test = Integer.parseInt(autoMode);
-		switch(test){
+		myAutoMode1.reset();
+	}
+	
+	public int[] buildAutoCommands(int autoModeID)
+	{
+		String modeName = "unknown";
+		
+		switch(autoModeID){
 		case Autonomous.Mode_GrabAndDrive:
-			autoMode1();
+			modeName = "GrabAndDrive";
+			commandValue = myAutoMode1.buildCommands();
 			break;
 		case Autonomous.Mode_Idle:
-			autoMode2();
+			modeName = "Idle";
+			myAutoMode2.setCommandBuffer(commandValue);
+			myAutoMode2.execute();
 			break;
 		default:
 			break;
 		}
 		
+		SmartDashboard.putString("AM Mode", modeName);
 		return commandValue;
 	}
 }
