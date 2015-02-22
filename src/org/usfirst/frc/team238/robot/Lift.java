@@ -282,13 +282,13 @@ public class Lift
 		}
 		else if ((leftDirection != CrusaderCommon.LIFT_STOPS) && (rightDirection != CrusaderCommon.LIFT_STOPS))
 		{
-			if((leftDirection == CrusaderCommon.LIFT_GOES_UP_NORMAL) || (rightDirection != CrusaderCommon.LIFT_GOES_UP_NORMAL))
+			if((leftDirection == CrusaderCommon.LIFT_GOES_UP_NORMAL) || (rightDirection == CrusaderCommon.LIFT_GOES_UP_NORMAL))
 			{
-				//liftGoesUp(differential);
+				liftGoesUp(differential);
 			}
 			else
 			{
-				//liftGoesDown(differential);
+				liftGoesDown(differential);
 			}
 		} //otherwise leave well enough alone.
 		
