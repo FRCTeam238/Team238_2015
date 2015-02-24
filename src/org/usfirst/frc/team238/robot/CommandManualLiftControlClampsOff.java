@@ -3,12 +3,12 @@ package org.usfirst.frc.team238.robot;
 public class CommandManualLiftControlClampsOff implements Command 
 {
 	Lift myLift;
-	SaloonDoors mySaloonDoors;
+	//SaloonDoors mySaloonDoors;
 
 	public CommandManualLiftControlClampsOff(Lift theLift, SaloonDoors theSaloonDoors)
 	{
 		this.myLift = theLift;
-		this.mySaloonDoors = theSaloonDoors;
+		//this.mySaloonDoors = theSaloonDoors;
 	}
 
 	public void execute()

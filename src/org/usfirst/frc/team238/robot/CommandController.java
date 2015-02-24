@@ -78,8 +78,15 @@ public class CommandController {
 	
 	public void autoButtonPressed(int slot[])
 	{
+		for (int idx = 0; idx < slot.length; idx++)
+		{
+			System.out.print(" " + Integer.toString(slot[idx]));
+		}
+		System.out.println();
+		
 		buttonPressed(slot);
 		Command command = autonomousCommandList[slot[CrusaderCommon.INPUT_AUTO_DRIVE]];
+		System.out.println(command);
 		
 		SmartDashboard.putString("auto cmd", command.toString());
 		command.execute();

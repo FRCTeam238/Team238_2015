@@ -4,23 +4,23 @@ public  class NoOperatorCommand implements Command {
 	
 	Lift lift;
 	Claws claws;
-	SaloonDoors saloonDoors;
+	//SaloonDoors saloonDoors;
 	
 	public NoOperatorCommand(Lift theLift, SaloonDoors theSaloonDoors ){
 		
 		this.lift = theLift;
-		this.saloonDoors = theSaloonDoors;
+		//this.saloonDoors = theSaloonDoors;
 		
 	}
 	public void execute() {
 		lift.stop();
-		saloonDoors.stop();
+		//saloonDoors.stop();
 		
 	}
 	
 	public void execute(double overRideValue) {
 		lift.stop();
-		saloonDoors.stop();
+		//saloonDoors.stop();
 	}
 
 }

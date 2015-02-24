@@ -1,14 +1,14 @@
 package org.usfirst.frc.team238.robot;
 
 public  class CommandSaloonDoorsOpen implements Command {
-	SaloonDoors saloonDoor;
+	//SaloonDoors saloonDoor;
 	
 	public CommandSaloonDoorsOpen(SaloonDoors saloonDoor){
-		this.saloonDoor = saloonDoor;
+		//this.saloonDoor = saloonDoor;
 	}
 	
 	public void execute() {
-		saloonDoor.OpenDoors();
+		//saloonDoor.OpenDoors();
 	}
 
 	public void execute(double overRideValue) {

@@ -260,6 +260,7 @@ public class Robot extends IterativeRobot {
 
 			myRobotDrive = new RobotDrive(0, 1, 2, 3);
 			autonomousDrive = new AutonomousDrive(myRobotDrive);
+			autonomousDrive.init();
 			myAutonomous = new Autonomous();
 			myAutonomous.autoInit(autonomousDrive, theLift);
 
@@ -388,6 +389,7 @@ public class Robot extends IterativeRobot {
 			}
 		} catch (Exception ex) {
 			System.out.println("Autonomous exception");
+			ex.printStackTrace();
 		}
 	}
 

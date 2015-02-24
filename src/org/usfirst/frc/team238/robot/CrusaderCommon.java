@@ -7,7 +7,7 @@ public class CrusaderCommon {
 	public final static double CLAWMOTORSPEEDREVERSE = -1.0;
 	public final static double DOORMOTORSPEED = 0.5;
 	public final static double DOORMOTORSPEEDREVERSE = -0.5;
-	public final static double SALOONDOORSTOPVALUE = .96;
+	//public final static double SALOONDOORSTOPVALUE = .96;
 	
 	public static final String PREFERENCE_OP_MODE = "mode";
 	public static final String PREFVALUE_OP_MODE_NORMAL = "normal";
@@ -100,7 +100,7 @@ public class CrusaderCommon {
 	public static final int RIGHTDRIVER_CMD_IDX_DONOTHING = 0;
 	public static final int RIGHTDRIVER_CMD_IDX_SPINRIGHT = 1;
 	public static final int RIGHTDRIVER_CMD_IDX_SPINLEFT = 2;
-	public static final int RIGHTDRIVER_CMD_IDX_SHIFTHIGH = 0;
+	public static final int RIGHTDRIVER_CMD_IDX_SHIFTHIGH = 3;
 
 	public static final int AUTONOMOUS_CMD_IDX_DONOTHING = 0;
 	public static final int AUTONOMOUS_CMD_IDX_DRIVEFORWARD = 1;

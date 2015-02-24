@@ -31,7 +31,7 @@ public class AutoMode1Impl implements Command {
 		{
 			{ 
 				CrusaderCommon.MAN_CMD_IDX_DONOTHING, 
-				CrusaderCommon.OPR_CMD_IDX_SETTOGROUND, 
+				CrusaderCommon.OPR_CMD_IDX_DONOTHING, 
 				CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINRIGHT, 
 				CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINLEFT,
 				CrusaderCommon.AUTONOMOUS_CMD_IDX_DRIVEFORWARD,
@@ -83,6 +83,9 @@ public class AutoMode1Impl implements Command {
 	public void reset()
 	{
 		commandScriptIndex = 0;
+		autonomousDrive.killTimer();
+		autonomousDrive.startTimer();
+		autonomousDrive.resetAction();
 	}
 	
 	private boolean isBinLoaded()
@@ -124,7 +127,9 @@ public class AutoMode1Impl implements Command {
 		switch (predicateID)
 		{
 			case UNTIL_BIN_LOADED:
-				// do nothing
+				autonomousDrive.killTimer();
+				autonomousDrive.startTimer();
+				autonomousDrive.resetAction();
 				break;
 			case UNTIL_IN_TRAVEL_MODE:
 				// do nothing

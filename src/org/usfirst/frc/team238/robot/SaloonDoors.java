@@ -18,7 +18,7 @@ public class SaloonDoors {
 	 * Output: none  
 	 */
 	public void Init() {
-			
+/*			
 		try {
 			
 			leftDoorMotor = new TalonSRX(8);
@@ -38,7 +38,7 @@ public class SaloonDoors {
 		} catch (Exception ex) {
 			System.out.println(ex.getStackTrace());
 		}
-	}
+*/	}
 	
 	/* Overview
 	 * When the OpenSaloondoorsButton is pressed the motors will 
@@ -46,7 +46,7 @@ public class SaloonDoors {
 	 * Input: OpenSaloonDoorsButton
 	 * Output: Motors Forward, "Saloon Doors Open"
 	 */
-	public void OpenDoors() {
+/*	public void OpenDoors() {
 		
 		double leftPotValue = leftPot.get();
 		double rightPotValue = rightPot.get();
@@ -67,7 +67,7 @@ public class SaloonDoors {
 
 		//SmartDashboard.putNumber("SaloonDoors.OpenLeftDoor", leftPotValue);
 		//SmartDashboard.putNumber("SaloonDoors.OpenRighttDoor", rightPotValue);
-	}	
+	}	*/
 
 	/* Overview
 	 * When the CloseSaloondoorsButton is pressed the motors will 
@@ -100,7 +100,7 @@ public class SaloonDoors {
 	 * Output: none       
 	 */
 	public void poll() {
-		/*
+		/*CAT We Probably don't need this at all
 		boolean b1 = ControlBoard.isButtonFivePressed(); //open door
 		SmartDashboard.putString("ButtonFive", "Pressed");
 		boolean b2 = ControlBoard.isButtonSixPressed(); // close door

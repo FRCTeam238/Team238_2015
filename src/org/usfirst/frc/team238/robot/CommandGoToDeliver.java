@@ -3,12 +3,12 @@ package org.usfirst.frc.team238.robot;
 public class CommandGoToDeliver implements Command {
 
 	public Lift myLift;
-	public SaloonDoors mySaloonDoor;
+	//public SaloonDoors mySaloonDoor;
 
 	public CommandGoToDeliver(Lift theLift, SaloonDoors theSaloonDoor)
 	{
 		this.myLift = theLift;
-		this.mySaloonDoor = theSaloonDoor;
+		// this.mySaloonDoor = theSaloonDoor;
 	}
 
 	public void execute()
@@ -32,7 +32,7 @@ public class CommandGoToDeliver implements Command {
 		if(myLift.getLevel() == CrusaderCommon.GROUND_LEVEL)
 		{
 			myLift.letItGo();
-			mySaloonDoor.OpenDoors();
+			//mySaloonDoor.OpenDoors();
 		}
 	}
 }
