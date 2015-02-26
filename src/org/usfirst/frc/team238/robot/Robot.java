@@ -414,7 +414,7 @@ public class Robot extends IterativeRobot {
 			myRobotDrive.tankDrive(-leftJsValue, -rightJsValue);
 
 			commandValue = myControlBoard.getCommands();
-			// System.out.println("telopperiodic: " + commandValue[0]);
+			
 			theMCP.buttonPressed(commandValue);
 
 		} catch (Exception e) {

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team238.robot;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoMode1Impl implements Command {
@@ -21,17 +20,17 @@ public class AutoMode1Impl implements Command {
 	private static final int WHILE_TURN_TO_RIGHT = 2;
 	private static final int WHILE_DRIVE_TO_FINAL = 3;
 	
-	private DigitalInput autoLoadedSwitch; //CAT TODO Move this to another class where it can be used by others
 	private int[] commandValue = new int[6];
 	private int commandScriptIndex = 0;
 	private AutonomousDrive autonomousDrive;
 	private Lift lift;
+	private boolean isInReset = true;
 
 	private int[][] commandScript =
 		{
 			{ 
 				CrusaderCommon.MAN_CMD_IDX_DONOTHING, 
-				CrusaderCommon.OPR_CMD_IDX_DONOTHING, 
+				CrusaderCommon.OPR_CMD_IDX_SETTOGROUND, 
 				CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINRIGHT, 
 				CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINLEFT,
 				CrusaderCommon.AUTONOMOUS_CMD_IDX_DRIVEFORWARD,
@@ -73,28 +72,19 @@ public class AutoMode1Impl implements Command {
 	
 	public void init(AutonomousDrive theDrive, Lift theLift)
 	{
-		autoLoadedSwitch = new DigitalInput(1);
 		autonomousDrive = theDrive;
 		lift = theLift;
 		commandScriptIndex = 0;
 		commandValue = new int[6];
+		isInReset = true;
 	}
 	
 	public void reset()
 	{
 		commandScriptIndex = 0;
-		autonomousDrive.killTimer();
-		autonomousDrive.startTimer();
-		autonomousDrive.resetAction();
-	}
-	
-	private boolean isBinLoaded()
-	{
-		boolean retval =  autoLoadedSwitch.get();
-		// our switches are being installed to return true when not pressed
-		// so invert the result
-		System.out.println("loaded switch=" + retval);
-		return retval;
+		
+		// force evaluatePredicateInitializer into the first command's init
+		isInReset = true; 
 	}
 	
 	private boolean evaluatePredicate(int predicateID)
@@ -104,7 +94,7 @@ public class AutoMode1Impl implements Command {
 		switch (predicateID)
 		{
 			case UNTIL_BIN_LOADED:
-				retval = isBinLoaded();
+				retval = lift.isBinLoaded();
 				break;
 			case UNTIL_IN_TRAVEL_MODE:
 				retval = lift.getLevel() == CrusaderCommon.TRAVEL_LEVEL;
@@ -151,9 +141,17 @@ public class AutoMode1Impl implements Command {
 
 	public int[] buildCommands()
 	{
-		System.out.println("CSI=" + commandScriptIndex);
+		//System.out.println("CSI=" + commandScriptIndex);
 		if ((commandScriptIndex >= 0) && (commandScriptIndex < commandScript.length))
 		{
+			if (isInReset)
+			{
+				isInReset = false;
+				
+				int predicateID = commandScript[commandScriptIndex][CrusaderCommon.INPUT_AUTO_PREDICATE];
+				evaluatePredicateInitializer(predicateID);
+			}
+			
 			SmartDashboard.putNumber("AM1 CSI", commandScriptIndex);
 			int predicateID = commandScript[commandScriptIndex][CrusaderCommon.INPUT_AUTO_PREDICATE];
 			

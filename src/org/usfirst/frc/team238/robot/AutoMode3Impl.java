@@ -1,15 +1,14 @@
 package org.usfirst.frc.team238.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class AutoMode2Impl implements Command {
+public class AutoMode3Impl implements Command  {
 	
 	/* this is a multi-step autonomous mode
-	 *   1. spin the claw to capture the bin and begin driving forward
-	 *      until backplace button is pressed
-	 *   2. move to the travel mode
+	 *   1. move to the travel mode
 	 *      until lift to travel mode is complete
-	 *   3. drive forward 
+	 *   2. drive forward 
 	 *      until a timeout elapses
 	 */
 
@@ -22,20 +21,11 @@ public class AutoMode2Impl implements Command {
 	private int commandScriptIndex = 0;
 	private AutonomousDrive autonomousDrive;
 	private Lift lift;
-	
-	// force next pass through the buildCommands to perform the initialization
-	private boolean isInReset = true; 
+	private boolean isInReset = true;
 
 	private int[][] commandScript =
 		{
-			{ 
-				CrusaderCommon.MAN_CMD_IDX_DONOTHING, 
-				CrusaderCommon.OPR_CMD_IDX_SETTOGROUND, 
-				CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINRIGHT, 
-				CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINLEFT,
-				CrusaderCommon.AUTONOMOUS_CMD_IDX_DRIVEFORWARD,
-				UNTIL_BIN_LOADED
-			},
+			/*
 			{ 
 				CrusaderCommon.MAN_CMD_IDX_DONOTHING,
 				CrusaderCommon.OPR_CMD_IDX_SETTOTRAVEL,
@@ -44,6 +34,7 @@ public class AutoMode2Impl implements Command {
 				CrusaderCommon.AUTONOMOUS_CMD_IDX_DONOTHING,
 				UNTIL_IN_TRAVEL_MODE
 			},
+			*/
 			{
 				// driving functionality occurs in the DriveToFinal
 				CrusaderCommon.MAN_CMD_IDX_DONOTHING,
@@ -53,9 +44,10 @@ public class AutoMode2Impl implements Command {
 				CrusaderCommon.AUTONOMOUS_CMD_IDX_DRIVEFORWARD,
 				WHILE_DRIVE_TO_FINAL
 			}
+			
 		};
 			
-	public AutoMode2Impl()
+	public AutoMode3Impl()
 	{
 		// do nothing
 	}
@@ -72,6 +64,7 @@ public class AutoMode2Impl implements Command {
 	public void reset()
 	{
 		commandScriptIndex = 0;
+		
 		
 		// force evaluatePredicateInitializer into the first command's init
 		isInReset = true; 
@@ -107,9 +100,7 @@ public class AutoMode2Impl implements Command {
 		switch (predicateID)
 		{
 			case UNTIL_BIN_LOADED:
-				autonomousDrive.killTimer();
-				autonomousDrive.startTimer();
-				autonomousDrive.resetAction();
+				// do nothing
 				break;
 			case UNTIL_IN_TRAVEL_MODE:
 				// do nothing
@@ -184,5 +175,4 @@ public class AutoMode2Impl implements Command {
 		// TODO Auto-generated method stub
 
 	}
-
 }

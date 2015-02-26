@@ -70,6 +70,35 @@ public class ControlBoard {
 		int command = 0;
 		double zPos =  0.0;
 		
+		if(theJoyStick.getRawButton(1))
+		{
+			command = 1;
+		}
+		else if (theJoyStick.getRawButton(2))
+		{
+			command = 2;
+		}
+		else if(theJoyStick.getRawButton(3))
+		{
+			command = 3;
+		}
+		else if(theJoyStick.getRawButton(4))
+		{
+			command = 4;
+		}
+		
+		SmartDashboard.putNumber("Driver Command", command);
+		SmartDashboard.putNumber("ZPOS", zPos);
+		
+		return command;
+	}
+	/* //CAT removed this function which used the joystick z-axis to determine ...
+	 * //CAT ... the rotation of the claw wheels
+	 
+	public int getDriverCommand(Joystick theJoyStick){
+		int command = 0;
+		double zPos =  0.0;
+		
 		boolean jsButtonValue = theJoyStick.getRawButton(1);
 		
 		//if the triggers is pressed get the z axis  for direction to spin the wheel
@@ -98,6 +127,7 @@ public class ControlBoard {
 		
 		return command;
 	}
+	*/
 	
 	//populates each array element with the corresponding value for the joys stick
 	public int[] getCommands(){

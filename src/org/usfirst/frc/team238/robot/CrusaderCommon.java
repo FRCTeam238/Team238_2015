@@ -98,8 +98,8 @@ public class CrusaderCommon {
 	public static final int LEFTDRIVER_CMD_IDX_SHIFTLOW = 4;
 	
 	public static final int RIGHTDRIVER_CMD_IDX_DONOTHING = 0;
-	public static final int RIGHTDRIVER_CMD_IDX_SPINRIGHT = 1;
-	public static final int RIGHTDRIVER_CMD_IDX_SPINLEFT = 2;
+	public static final int RIGHTDRIVER_CMD_IDX_SPINRIGHT = 2;
+	public static final int RIGHTDRIVER_CMD_IDX_SPINLEFT = 1;
 	public static final int RIGHTDRIVER_CMD_IDX_SHIFTHIGH = 3;
 
 	public static final int AUTONOMOUS_CMD_IDX_DONOTHING = 0;

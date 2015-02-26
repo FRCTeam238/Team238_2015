@@ -9,6 +9,10 @@ import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 public class Lift 
 {	
+	
+	//CAT consider whether this should be a class of its own
+	private DigitalInput autoLoadedSwitch;
+
 	//Declarations of the pistons for the claw
 	Solenoid rightFrontPiston;
 	Solenoid rightBackPiston;
@@ -44,6 +48,7 @@ public class Lift
 	{
 		//initializations of everything
 		try{
+			autoLoadedSwitch = new DigitalInput(1);
 
 			// The pneumatics are used to clamp onto the new game piece
 			rightFrontPiston = new Solenoid(0); 
@@ -79,6 +84,15 @@ public class Lift
 			System.out.println(e.getStackTrace());  
 		}
 	}
+	
+	public boolean isBinLoaded()
+	{
+		boolean retval =  autoLoadedSwitch.get();
+		System.out.println("loaded switch=" + retval);
+		SmartDashboard.putString("isBinLoaded", retval ? "pressed" : "not pressed");
+		return retval;
+	}
+	
 	public int getLevel()
 	{
 		return currentLiftLevel;
