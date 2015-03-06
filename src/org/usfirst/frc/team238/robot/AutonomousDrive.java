@@ -17,7 +17,7 @@ public class AutonomousDrive {
 	{
 		autonomousTimer = new Timer();
 		autonomousTimer.reset();
-		autonomousTimer.start();
+		//autonomousTimer.start();
 		actionComplete = false;
 	}
 
@@ -47,6 +47,7 @@ public class AutonomousDrive {
 	public void killTimer()
 	{
 		autonomousTimer.stop();
+		//autonomousTimer.reset();
 	}
 	
 	public void startTimer()
@@ -60,8 +61,8 @@ public class AutonomousDrive {
 		//CAT consider making forward, backward, turn left, turn right dumber and let ...
 		//CAT ... the caller decide whetehr to drive or not, no matter what the timer is ...
 		//CAT ... saying
-		
-		if(autonomousTimer.get() <= 3)
+	
+		if(autonomousTimer.get() <= 4)
 		{
 			SmartDashboard.putString("AutonomousDrive", "forward");
 			autoRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_FORWARD, CrusaderCommon.AUTO_DRIVE_FORWARD);
