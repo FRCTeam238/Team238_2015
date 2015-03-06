@@ -1,7 +1,8 @@
 package org.usfirst.frc.team238.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Solenoid;
+
+//import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
@@ -14,10 +15,10 @@ public class Lift
 	private DigitalInput autoLoadedSwitch;
 
 	//Declarations of the pistons for the claw
-	Solenoid rightFrontPiston;
+	/*Solenoid rightFrontPiston;
 	Solenoid rightBackPiston;
 	Solenoid leftFrontPiston;
-	Solenoid leftBackPiston;
+	Solenoid leftBackPiston;*/
 
 
 	//Compressor compress;  May not be needed
@@ -51,10 +52,10 @@ public class Lift
 			autoLoadedSwitch = new DigitalInput(1);
 
 			// The pneumatics are used to clamp onto the new game piece
-			rightFrontPiston = new Solenoid(0); 
+			/*rightFrontPiston = new Solenoid(0); 
 			rightBackPiston = new Solenoid(1); 
 			leftFrontPiston = new Solenoid(2);
-			leftBackPiston = new Solenoid(3);  
+			leftBackPiston = new Solenoid(3);  */
 
 
 			//These are Sensors that will tell the height of the lift
@@ -346,10 +347,10 @@ public class Lift
 	public void clampOn()    
 	{						 		
 
-		rightFrontPiston.set(true);
+		/*rightFrontPiston.set(true);
 		rightBackPiston.set(true);
 		leftFrontPiston.set(true);
-		leftBackPiston.set(true);
+		leftBackPiston.set(true);*/
 
 	}
 
@@ -361,10 +362,10 @@ public class Lift
 	public void letItGo()   
 	{		
 
-		rightFrontPiston.set(false);
+		/*rightFrontPiston.set(false);
 		rightBackPiston.set(false);
 		leftFrontPiston.set(false);
-		leftBackPiston.set(false);
+		leftBackPiston.set(false);*/
 	}
 
 	
