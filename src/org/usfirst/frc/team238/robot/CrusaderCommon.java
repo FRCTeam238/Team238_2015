@@ -7,6 +7,8 @@ public class CrusaderCommon {
 	public final static double CLAWMOTORSPEEDREVERSE = -1.0;
 	public final static double DOORMOTORSPEED = 0.5;
 	public final static double DOORMOTORSPEEDREVERSE = -0.5;
+	public final static double ARM_MOTOR_SPEED = 1.0;
+	public final static double ARM_MOTOR_SPEED_REVERSE = -1.0;
 	//public final static double SALOONDOORSTOPVALUE = .96;
 	
 	public static final String PREFERENCE_OP_MODE = "mode";
@@ -33,6 +35,7 @@ public class CrusaderCommon {
 	public static final double POT_COOP = 0.140;
 	//public static final double POT_COOP_MAX = 0.130;
 	
+	
 	//public static final double POT_LOADING_MIN = 0.100;
 	public static final double POT_LOADING = 0.018;
 	//public static final double POT_LOADING_MAX = 0.010;/
@@ -47,6 +50,8 @@ public class CrusaderCommon {
 	public static final int LOADING_LEVEL = 3;
 	public static final int DELIVER_LEVEL = 4;
 	public static final int COOP_LEVEL = 5;
+	//Added RAISE_ARM for testing purposes, Jon
+	public static final int RAISE_ARM = 6;
 	
 	//Speed for the Lift Jaguars
 	public static final int LIFT_GOES_UP_NORMAL = -1;
@@ -90,6 +95,8 @@ public class CrusaderCommon {
 	public static final int OPR_CMD_IDX_SETTOLIFT = 3;
 	public static final int OPR_CMD_IDX_SETTODELIVER = 4;
 	public static final int OPR_CMD_IDX_COOPPOINTS = 5;
+	//RAISE ARM added for testing purposes, Jon
+	public static final int OPR_CMD_IDX_RAISEARM = 6;
 	
 	public static final int LEFTDRIVER_CMD_IDX_DONOTHING = 0;
 	public static final int LEFTDRIVER_CMD_IDX_SPINRIGHT = 1;

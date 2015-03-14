@@ -1,16 +1,16 @@
 package org.usfirst.frc.team238.robot;
 
 public class NoDriverCommand implements Command {
-	Claws claws;
+	//Claws claws;
 	
-	public NoDriverCommand(Claws theClaws){
-		this.claws = theClaws;
+	/*public NoDriverCommand(Claws theClaws){
+		//this.claws = theClaws;
 		// TODO Auto-generated constructor stub
-	}
+	}*/
 
 	
 	public void execute() {
-		claws.stop();
+		//claws.stop();
 	}
 
 	

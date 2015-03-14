@@ -3,7 +3,7 @@ package org.usfirst.frc.team238.robot;
 public  class NoOperatorCommand implements Command {
 	
 	Lift lift;
-	Claws claws;
+	//Claws claws;
 	//SaloonDoors saloonDoors;
 	
 	public NoOperatorCommand(Lift theLift, SaloonDoors theSaloonDoors ){

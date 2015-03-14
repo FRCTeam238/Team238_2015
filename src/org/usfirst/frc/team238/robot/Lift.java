@@ -37,7 +37,7 @@ public class Lift
 
 	AnalogPotentiometer leftPotens;
 	AnalogPotentiometer rightPotens;
-	double potensOffsetValue = 0.0; //cant Zero a pot so need something to hold whatthe opffset is between the two
+	double potensOffsetValue = 0.0; //can't Zero a pot so need something to hold what the offset is between the two
 	
 	double leftPotMin; 
 	double leftPotMax; 

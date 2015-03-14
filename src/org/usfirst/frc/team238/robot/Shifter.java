@@ -24,9 +24,10 @@ public class Shifter {
 	{
 		
 		leftSolenoid.set(CrusaderCommon.SHIFTER_HIGH_GEAR);
-		SmartDashboard.getBoolean("leftSolenoid", leftSolenoid.get());
+		SmartDashboard.putBoolean("leftSolenoid", leftSolenoid.get());
 		rightSolenoid.set(CrusaderCommon.SHIFTER_HIGH_GEAR);
-		SmartDashboard.getBoolean("rightSolenoid", rightSolenoid.get());
+		SmartDashboard.putBoolean("rightSolenoid", rightSolenoid.get());
+		
 		
 		shiftState = CrusaderCommon.SHIFT_STATE_HIGH_GEAR;
 			
@@ -47,7 +48,7 @@ public class Shifter {
 	public void shiftingGears()
 	{
 	//We need a class level variable called shift state
-		//if low shift to high; set shift state to high
+		//if state is high it will stay in high till pressed low
 		//else its high; shift to low; set shift state to low
 		//
 		
@@ -64,7 +65,4 @@ public class Shifter {
 		
 	}
 	
-	
 }
-	
-	

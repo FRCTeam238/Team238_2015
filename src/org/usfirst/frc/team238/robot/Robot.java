@@ -3,6 +3,7 @@ package org.usfirst.frc.team238.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -25,10 +26,10 @@ public class Robot extends IterativeRobot {
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
-
+	Arm theArm;
 	Lift theLift;
-	Claws rightClaw;
-	Claws leftClaw;
+	//Claws rightClaw;
+	//Claws leftClaw;
 	SaloonDoors theSaloonDoors;
 	Shifter theShifter;
 	CommandGoToGround operatorCmdSetToGround;
@@ -37,12 +38,12 @@ public class Robot extends IterativeRobot {
 	CommandGoToDeliver operatorCmdSetToDeliver;
 	CommandCoopPoints operatorCmdCoopPoints;
 	CommandSaloonDoorsOpen operatorCmdSetToSaloonDoorsOpen;
-	CommandClawSpinRight driverJs3CmdSpinRight;
-	CommandClawSpinRight driverJs2CmdSpinRight;
+	//CommandClawSpinRight driverJs3CmdSpinRight;
+	//CommandClawSpinRight driverJs2CmdSpinRight;
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
-	CommandClawSpinLeft driverJs3CmdSpinLeft;
-	CommandClawSpinLeft driverJs2CmdSpinLeft;
+	//CommandClawSpinLeft driverJs3CmdSpinLeft;
+	//CommandClawSpinLeft driverJs2CmdSpinLeft;
 	NoOperatorCommand theDoNothingCmd;
 	NoDriverCommand theDoNothingRightDriverCmd;
 	NoDriverCommand theDoNothingLeftDriverCmd;
@@ -50,6 +51,7 @@ public class Robot extends IterativeRobot {
 	RobotDrive myRobotDrive;
 	CommandShiftLow shiftLowCMD;
 	CommandShiftHigh shiftHighCMD;
+	CommandRaiseArm raiseArmCMD;
 
 	// Autonomous Mode Support
 	Autonomous myAutonomous;
@@ -139,14 +141,10 @@ public class Robot extends IterativeRobot {
 			// Note: Command objects for autonomous are initialized in
 			// RobotInit
 			try {
-				//autonomousTimer = new Timer();
-
-				//autonomousTimer.reset();
-				//autonomousTimer.start();
+			
 				autoMode = myPreferences.getString("auto", "3");
 				AUTO_STARTED = false;
 				autonomousDrive.killTimer();
-				//myAutonomous.reset();
 			} catch (Exception ex) {
 				System.out.println("AutononousInit:Timer");
 			}
@@ -163,24 +161,25 @@ public class Robot extends IterativeRobot {
 
 			myControlBoard = new ControlBoard();
 			myControlBoard.controlBoardInit();
-			
-			// CAT autoLoadedSwitch = new DigitalInput(1);
 
 			theLift = new Lift();
 			theLift.liftInit();
 
-			leftClaw = new Claws();
+			/*leftClaw = new Claws();
 			leftClaw.clawsInit(4);
 
 			rightClaw = new Claws();
-			rightClaw.clawsInit(5);
+			rightClaw.clawsInit(5);*/
 
 			theShifter = new Shifter();
 			theShifter.init();
 
 			theSaloonDoors = new SaloonDoors();
 			theSaloonDoors.Init();
-
+			
+			theArm = new Arm();
+			theArm.armInit();
+			
 			theMCP = new CommandController();
 			theMCP.init();
 
@@ -188,8 +187,8 @@ public class Robot extends IterativeRobot {
 			theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST,
 					CrusaderCommon.OPR_CMD_IDX_DONOTHING, theDoNothingCmd);
 
-			theDoNothingRightDriverCmd = new NoDriverCommand(rightClaw);
-			theDoNothingLeftDriverCmd = new NoDriverCommand(leftClaw);
+			/*theDoNothingRightDriverCmd = new NoDriverCommand(rightClaw);
+			theDoNothingLeftDriverCmd = new NoDriverCommand(leftClaw);*/
 			theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,
 					CrusaderCommon.LEFTDRIVER_CMD_IDX_DONOTHING,
 					theDoNothingLeftDriverCmd);
@@ -226,7 +225,7 @@ public class Robot extends IterativeRobot {
 					operatorCmdCoopPoints);
 
 			// left driver JS commands
-			driverJs2CmdSpinRight = new CommandClawSpinRight(leftClaw);
+			/*driverJs2CmdSpinRight = new CommandClawSpinRight(leftClaw);
 			theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,
 					CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINRIGHT,
 					driverJs2CmdSpinRight);
@@ -234,7 +233,7 @@ public class Robot extends IterativeRobot {
 			driverJs2CmdSpinLeft = new CommandClawSpinLeft(leftClaw);
 			theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,
 					CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINLEFT,
-					driverJs2CmdSpinLeft);
+					driverJs2CmdSpinLeft);*/
 
 			theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,
 					CrusaderCommon.LEFTDRIVER_CMD_IDX_UNUSED3,
@@ -245,7 +244,7 @@ public class Robot extends IterativeRobot {
 					CrusaderCommon.LEFTDRIVER_CMD_IDX_SHIFTLOW, shiftLowCMD);
 
 			// right driver JS commands
-			driverJs3CmdSpinRight = new CommandClawSpinRight(rightClaw);
+			/*driverJs3CmdSpinRight = new CommandClawSpinRight(rightClaw);
 			theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,
 					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINRIGHT,
 					driverJs3CmdSpinRight);
@@ -253,22 +252,22 @@ public class Robot extends IterativeRobot {
 			driverJs3CmdSpinLeft = new CommandClawSpinLeft(rightClaw);
 			theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,
 					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINLEFT,
-					driverJs3CmdSpinLeft);
+					driverJs3CmdSpinLeft);*/
 
 			shiftHighCMD = new CommandShiftHigh(theShifter);
 			theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,
 					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SHIFTHIGH, shiftHighCMD);
+			
+			raiseArmCMD = new CommandRaiseArm(theArm);
+			theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 
+					CrusaderCommon.OPR_CMD_IDX_RAISEARM,
+					raiseArmCMD);
 
 			myRobotDrive = new RobotDrive(0, 1, 2, 3);
 			autonomousDrive = new AutonomousDrive(myRobotDrive);
 			autonomousDrive.init();
 			myAutonomous = new Autonomous();
 			myAutonomous.autoInit(autonomousDrive, theLift);
-
-			// operatorCmdSetToSaloonDoorsOpen = new
-			// CommandSaloonDoorsOpen(theSaloonDoors);
-			// theMCP.setCommand(CrusaderCommon.DRIVER_CMD_LIST, 1,
-			// operatorCmdSetToSaloonDoorsOpen);
 
 			autoDriveIdle = new CommandDriveIdle(autonomousDrive);
 			theMCP.setCommand(CrusaderCommon.AUTONOMOUS_CMD_LIST, CrusaderCommon.AUTONOMOUS_CMD_IDX_DONOTHING, autoDriveIdle);
@@ -290,8 +289,7 @@ public class Robot extends IterativeRobot {
 			System.out.println("Fully Initialized");
 
 		} catch (Exception ex) {
-			// SmartDashboard.putString(TestMain.TEST_DASH_KEY_EXCEPTION,
-			// "EXCEPTION");
+
 			System.out.println(ex.getMessage());
 			ex.printStackTrace();
 
@@ -326,7 +324,6 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		//int commandValue[]; mjf
 
 		try {
 			
@@ -384,15 +381,15 @@ public class Robot extends IterativeRobot {
 		double rightJsValue = 0;
 
 		try {
-			/*if (autonomousTimer != null) {
-				autonomousTimer.stop();
-			}*/
 
 			leftJsValue = ControlBoard.driverLeftJs.getY();
 			rightJsValue = ControlBoard.driverRightJs.getY();
 
 			myRobotDrive.tankDrive(-leftJsValue, -rightJsValue);
-
+			
+			//theArm.raiseArm();
+			//theArm.lowerArm();
+			
 			commandValue = myControlBoard.getCommands();
 			
 			theMCP.buttonPressed(commandValue);

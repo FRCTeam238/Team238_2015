@@ -4,7 +4,7 @@ public  class CommandCoopPoints implements Command {
 	
 	public Lift myLift;
 	//public SaloonDoors mySaloonDoor;
-	public Claws myClaws;
+	//public Claws myClaws;
 	
 	public CommandCoopPoints(Lift theLift, SaloonDoors theSaloonDoors)
 	{
@@ -15,8 +15,8 @@ public  class CommandCoopPoints implements Command {
 	
 	public void execute()
 	{
-		myLift.clampOn();
-		//myLift.setToCoop();
+		//myLift.clampOn();
+		myLift.setToCoop();
 		//mySaloonDoor.OpenDoors();
 		//myClaws.spitItemsOut();
 	}
