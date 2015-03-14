@@ -7,9 +7,11 @@ public class CrusaderCommon {
 	public final static double CLAWMOTORSPEEDREVERSE = -1.0;
 	public final static double DOORMOTORSPEED = 0.5;
 	public final static double DOORMOTORSPEEDREVERSE = -0.5;
-	public final static double ARM_MOTOR_SPEED = 1.0;
-	public final static double ARM_MOTOR_SPEED_REVERSE = -1.0;
-	//public final static double SALOONDOORSTOPVALUE = .96;
+	
+	public final static double ARM_MOTOR_SPEED = -1.0;
+	public final static double ARM_MOTOR_SPEED_REVERSE = 1.0;
+	public final static double ARM_ENCODER_MAX_VAL = 1.0;  //WILL BE CHANGED TO FIT
+	public final static double ARM_ENCODER_MIN_VAL = -1.0; //WILL BE CHANGED TO FIT
 	
 	public static final String PREFERENCE_OP_MODE = "mode";
 	public static final String PREFVALUE_OP_MODE_NORMAL = "normal";

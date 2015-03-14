@@ -1,7 +1,7 @@
 package org.usfirst.frc.team238.robot;
 
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Arm {
 	Talon armTalon;
 	PIDController armPID;
-	DigitalInput armEncoder;
+	Encoder armEncoder;
 	Joystick armJoySlider;
-	SmartDashboard smartDash;
 	
-	double sliderValue;
+	
+	double sliderValue, encoderVal;
 	
 	public void armInit() 
 	{
 		armTalon = new Talon(4);
-		armEncoder = new DigitalInput(9);
+		armEncoder = new Encoder(8,9);  //8 is Channel A, 9 is Channel B
 		armJoySlider = new Joystick(1);
 		
 	}
@@ -38,14 +38,15 @@ public class Arm {
 		//else go up
 		sliderValue = armJoySlider.getX();
 		SmartDashboard.putNumber("sliderValue", sliderValue);
-		System.out.println("Hello World");
-		//armTalon.set(CrusaderCommon.ARM_MOTOR_SPEED);
-		
-		if (armJoySlider.getX() > 0.2)
+		encoderVal = armEncoder.getDistance();
+		SmartDashboard.putNumber("armEncoder", encoderVal);
+	
+
+		if ((armJoySlider.getX() > 0.2) && (armEncoder.getDistance() < CrusaderCommon.ARM_ENCODER_MAX_VAL))
 		{
 			armTalon.set(CrusaderCommon.ARM_MOTOR_SPEED);
 		}
-		else if (armJoySlider.getX() < -0.2)
+		else if ((armJoySlider.getX() < -0.2) && (armEncoder.getDistance() > CrusaderCommon.ARM_ENCODER_MIN_VAL))
 		{
 			armTalon.set(CrusaderCommon.ARM_MOTOR_SPEED_REVERSE);
 		}

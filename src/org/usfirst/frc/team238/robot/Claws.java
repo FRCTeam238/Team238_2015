@@ -1,4 +1,4 @@
-/*package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.robot;
 
 import edu.wpi.first.wpilibj.Talon;
 
@@ -67,4 +67,4 @@ public class Claws {
 		
 		SmartDashboard.putString("Claws.stop()", "I'm Off");
 	}
-}*/
+}
