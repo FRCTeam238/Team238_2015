@@ -228,7 +228,7 @@ public class Robot extends IterativeRobot {
 			//driverJs2CmdSpinRight = new CommandClawSpinRight(leftClaw);
 			theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,
 					CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINRIGHT,
-					theDoNothingCmd);
+					theDoNothingLeftDriverCmd);
 
 			//driverJs2CmdSpinLeft = new CommandClawSpinLeft(leftClaw);
 			theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,
@@ -252,7 +252,7 @@ public class Robot extends IterativeRobot {
 			//driverJs3CmdSpinLeft = new CommandClawSpinLeft(rightClaw);
 			theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,
 					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINLEFT,
-					theDoNothingLeftDriverCmd);
+					theDoNothingRightDriverCmd);
 
 			shiftHighCMD = new CommandShiftHigh(theShifter);
 			theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,
@@ -266,6 +266,7 @@ public class Robot extends IterativeRobot {
 			myRobotDrive = new RobotDrive(0, 1, 2, 3);
 			autonomousDrive = new AutonomousDrive(myRobotDrive);
 			autonomousDrive.init();
+/*
 			myAutonomous = new Autonomous();
 			myAutonomous.autoInit(autonomousDrive, theLift);
 
@@ -285,7 +286,7 @@ public class Robot extends IterativeRobot {
 			theMCP.setCommand(CrusaderCommon.AUTONOMOUS_CMD_LIST, CrusaderCommon.AUTONOMOUS_CMD_IDX_TURNRIGHT, autoDriveTurnRight);
 			
 			// NOTE: the timer is initialized in autonomousInit
-
+	*/
 			System.out.println("Fully Initialized");
 
 		} catch (Exception ex) {

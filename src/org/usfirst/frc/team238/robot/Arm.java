@@ -21,7 +21,7 @@ public class Arm {
 	{
 		armTalon = new Talon(4);
 		armEncoder = new Encoder(8,9);  //8 is Channel A, 9 is Channel B
-		armJoySlider = new Joystick(1);
+		armJoySlider = ControlBoard.operatorJs; //new Joystick(1); //NO NO NO NO!!!!
 		
 	}
 /* i added slider value to smartdash and inizalized it/
