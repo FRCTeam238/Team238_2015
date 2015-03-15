@@ -38,7 +38,7 @@ public class Arm {
 		//else go up
 		sliderValue = armJoySlider.getX();
 		SmartDashboard.putNumber("sliderValue", sliderValue);
-		encoderVal = armEncoder.getDistance();
+		encoderVal = armEncoder.getRaw(); //  .getDistance();
 		SmartDashboard.putNumber("armEncoder", encoderVal);
 	
 

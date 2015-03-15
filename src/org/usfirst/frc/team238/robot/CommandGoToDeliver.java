@@ -13,15 +13,7 @@ public class CommandGoToDeliver implements Command {
 
 	public void execute()
 	{	
-
-		myLift.travelingMode();
-		
-		if(myLift.getLevel() == CrusaderCommon.TRAVEL_LEVEL)
-		{
-			myLift.letItGo();
-			//mySaloonDoor.OpenDoors();
-		}
-		
+		myLift.setToCatch();;
 
 	}
 
@@ -29,10 +21,5 @@ public class CommandGoToDeliver implements Command {
 	{
 		myLift.manualControlOfLifter(overRideValue);
 		
-		if(myLift.getLevel() == CrusaderCommon.GROUND_LEVEL)
-		{
-			myLift.letItGo();
-			//mySaloonDoor.OpenDoors();
-		}
 	}
 }

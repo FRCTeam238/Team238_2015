@@ -140,10 +140,10 @@ public class Lift
 				rightPotMax = CrusaderCommon.R_POT_LOADING + CrusaderCommon.POT_NEUTRAL_ZONE;
 				break;
 			case CrusaderCommon.DELIVER_LEVEL:
-				leftPotMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
-				leftPotMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMin = CrusaderCommon.R_POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.R_POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
+				leftPotMin = CrusaderCommon.POT_DELIVER - CrusaderCommon.POT_NEUTRAL_ZONE;
+				leftPotMax = CrusaderCommon.POT_DELIVER + CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMin = CrusaderCommon.R_POT_DELIVER - CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMax = CrusaderCommon.R_POT_DELIVER + CrusaderCommon.POT_NEUTRAL_ZONE;
 				break;
 			default:
 				leftPotMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
@@ -345,6 +345,12 @@ public class Lift
 	public void setToCoop()
 	{
 		goToSpecifiedLevel(CrusaderCommon.COOP_LEVEL);
+	}
+	
+	//realy catch romn hP station
+	public void setToCatch()
+	{
+		goToSpecifiedLevel(CrusaderCommon.DELIVER_LEVEL);
 	}
 
 	public void clampOn()    

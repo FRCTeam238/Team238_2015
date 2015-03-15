@@ -26,8 +26,8 @@ public class CrusaderCommon {
 	public static final int AUTONOMOUS_CMD_LIST = 4;
 	
 	//public static final double POT_GROUND_MIN = 0.690;
-	public static final double POT_GROUND = 0.455; 		//0.440;
-	public static final double R_POT_GROUND = 0.452;
+	public static final double POT_GROUND = 0.452; 		//0.440;
+	public static final double R_POT_GROUND = 0.450;
 	//public static final double POT_GROUND_MAX = 0.610;
 	
 	//public static final double POT_TRAVEL_MIN = 0.380;
@@ -38,11 +38,12 @@ public class CrusaderCommon {
 	//public static final double POT_COOP_MIN = 0.230;
 	public static final double POT_COOP = 0.184; 		//0.140;
 	public static final double R_POT_COOP = 0.179;
-	//public static final double POT_COOP_MAX = 0.130;	
 	
-	//public static final double POT_LOADING_MIN = 0.100;
-	public static final double POT_LOADING = 0.002; 		//0.018;
-	public static final double R_POT_LOADING = 0.002; 		
+	public static final double POT_DELIVER = 0.170; 		//0.140;
+	public static final double R_POT_DELIVER = 0.189;
+	
+	public static final double POT_LOADING = 0.000; 		//0.018;
+	public static final double R_POT_LOADING = 0.000; 		
 	//public static final double POT_LOADING_MAX = 0.010;
 	
 	public static final double POT_NEUTRAL_ZONE = .002;
