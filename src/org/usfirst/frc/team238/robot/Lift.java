@@ -105,6 +105,11 @@ public class Lift
 		liftMotorLeft.set(overRideValue);
 		SmartDashboard.putNumber("ManualMode", overRideValue);
 		
+		double loadPotValueLeft = leftPotens.get();
+		double loadPotValueRight = rightPotens.get();
+		SmartDashboard.putNumber("PotValueLeft", loadPotValueLeft);
+		SmartDashboard.putNumber("PotValueRight", loadPotValueRight);
+		
 	}
 	
 	public void setMinAndMax(int level){
@@ -113,40 +118,38 @@ public class Lift
 			case CrusaderCommon.GROUND_LEVEL:
 				leftPotMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
 				leftPotMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMin = CrusaderCommon.R_POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMax = CrusaderCommon.R_POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
 				break;
 			case CrusaderCommon.TRAVEL_LEVEL:
 				leftPotMin = CrusaderCommon.POT_TRAVEL - CrusaderCommon.POT_NEUTRAL_ZONE;
 				leftPotMax = CrusaderCommon.POT_TRAVEL + CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMin = CrusaderCommon.POT_TRAVEL - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.POT_TRAVEL + CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMin = CrusaderCommon.R_POT_TRAVEL - CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMax = CrusaderCommon.R_POT_TRAVEL + CrusaderCommon.POT_NEUTRAL_ZONE;
 				break;
 			case CrusaderCommon.COOP_LEVEL:
 				leftPotMin = CrusaderCommon.POT_COOP - CrusaderCommon.POT_NEUTRAL_ZONE;
 				leftPotMax = CrusaderCommon.POT_COOP + CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMin = CrusaderCommon.POT_COOP - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.POT_COOP + CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMin = CrusaderCommon.R_POT_COOP - CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMax = CrusaderCommon.R_POT_COOP + CrusaderCommon.POT_NEUTRAL_ZONE;
 				break;
 			case CrusaderCommon.LOADING_LEVEL:
 				leftPotMin = CrusaderCommon.POT_LOADING - CrusaderCommon.POT_NEUTRAL_ZONE;
 				leftPotMax = CrusaderCommon.POT_LOADING + CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMin = CrusaderCommon.POT_LOADING - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.POT_LOADING + CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMin = CrusaderCommon.R_POT_LOADING - CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMax = CrusaderCommon.R_POT_LOADING + CrusaderCommon.POT_NEUTRAL_ZONE;
 				break;
 			case CrusaderCommon.DELIVER_LEVEL:
 				leftPotMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
 				leftPotMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
-				
-				rightPotMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMin = CrusaderCommon.R_POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMax = CrusaderCommon.R_POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
 				break;
 			default:
 				leftPotMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
 				leftPotMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
-				
-				rightPotMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMin = CrusaderCommon.R_POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
+				rightPotMax = CrusaderCommon.R_POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
 				break;
 				
 		}
@@ -281,8 +284,8 @@ public class Lift
 	private void goToSpecifiedLevel(int level){
 		
 		double loadPotValueLeft = leftPotens.get();
-		double loadPotValueRight = rightPotens.get() - .020;
-		double differential = loadPotValueLeft -  loadPotValueRight;
+		double loadPotValueRight = rightPotens.get();
+		//double differential = loadPotValueLeft -  loadPotValueRight;
 		
 		setMinAndMax(level);
 		
@@ -297,18 +300,18 @@ public class Lift
 		{
 			currentLiftLevel = level;
 		}
-		else if ((leftDirection != CrusaderCommon.LIFT_STOPS) && (rightDirection != CrusaderCommon.LIFT_STOPS))
+		/*else if ((leftDirection != CrusaderCommon.LIFT_STOPS) && (rightDirection != CrusaderCommon.LIFT_STOPS))
 		{
 			if((leftDirection == CrusaderCommon.LIFT_GOES_UP_NORMAL) || (rightDirection == CrusaderCommon.LIFT_GOES_UP_NORMAL))
 			{
-				liftGoesUp(differential);
+				//liftGoesUp(differential);
 			}
 			else
 			{
-				liftGoesDown(differential);
+				//liftGoesDown(differential);
 			}
 		} //otherwise leave well enough alone.
-		
+		*/
 		SmartDashboard.putNumber("PotValueLeft", loadPotValueLeft);
 		SmartDashboard.putNumber("PotValueRight", loadPotValueRight);
 		SmartDashboard.putNumber("Level MIN", leftPotMin);

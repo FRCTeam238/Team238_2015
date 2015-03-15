@@ -42,11 +42,11 @@ public class Arm {
 		SmartDashboard.putNumber("armEncoder", encoderVal);
 	
 
-		if ((armJoySlider.getX() > 0.2) && (armEncoder.getDistance() < CrusaderCommon.ARM_ENCODER_MAX_VAL))
+		if ((armJoySlider.getX() > 0.2)) //&& (armEncoder.getDistance() < CrusaderCommon.ARM_ENCODER_MAX_VAL))
 		{
 			armTalon.set(CrusaderCommon.ARM_MOTOR_SPEED);
 		}
-		else if ((armJoySlider.getX() < -0.2) && (armEncoder.getDistance() > CrusaderCommon.ARM_ENCODER_MIN_VAL))
+		else if ((armJoySlider.getX() < -0.2)) //&& (armEncoder.getDistance() > CrusaderCommon.ARM_ENCODER_MIN_VAL))
 		{
 			armTalon.set(CrusaderCommon.ARM_MOTOR_SPEED_REVERSE);
 		}
