@@ -36,13 +36,28 @@ public class Arm {
 	{
 		//if the slidervalue equals encoder value, do nothing
 		//else go up
-		sliderValue = armJoySlider.getX();
+		sliderValue = armJoySlider.getX() + 1;
 		SmartDashboard.putNumber("sliderValue", sliderValue);
 		encoderVal = armEncoder.getRaw(); //  .getDistance();
 		SmartDashboard.putNumber("armEncoder", encoderVal);
-	
+		double deadband = 50;
+				
+		sliderValue = (sliderValue  * 1750);
+		
+		if(sliderValue > (encoderVal + deadband) )
+		{
+			armTalon.set(CrusaderCommon.ARM_MOTOR_SPEED);
+		}
+		else if(sliderValue < (encoderVal - deadband))
+		{
+			armTalon.set(CrusaderCommon.ARM_MOTOR_SPEED_REVERSE);
+		}
+		else
+		{
+			armTalon.set(CrusaderCommon.MOTOROFF);
+		}
 
-		if ((armJoySlider.getX() > 0.2)) //&& (armEncoder.getDistance() < CrusaderCommon.ARM_ENCODER_MAX_VAL))
+	/*	if ((armJoySlider.getX() > 0.2)) //&& (armEncoder.getDistance() < CrusaderCommon.ARM_ENCODER_MAX_VAL))
 		{
 			armTalon.set(CrusaderCommon.ARM_MOTOR_SPEED);
 		}
@@ -54,7 +69,7 @@ public class Arm {
 		{
 			armTalon.set(CrusaderCommon.MOTOROFF);
 		}
-			
+		*/	
 	}
 	
 	public void lowerArm()
