@@ -22,7 +22,8 @@ public class Arm {
 		armTalon = new Talon(4);
 		armEncoder = new Encoder(8,9);  //8 is Channel A, 9 is Channel B
 		armJoySlider = ControlBoard.operatorJs; //new Joystick(1); //NO NO NO NO!!!!
-		
+		//armEncoder.setDistancePerPulse(500.00);
+		armEncoder.reset();
 	}
 /* i added slider value to smartdash and inizalized it/
  *  we want to be able to use all the arms to the whole extent of the X axis 
@@ -36,17 +37,32 @@ public class Arm {
 	{
 		//if the slidervalue equals encoder value, do nothing
 		//else go up
-		sliderValue = armJoySlider.getX();
+		sliderValue = armJoySlider.getX() + 1;
 		SmartDashboard.putNumber("sliderValue", sliderValue);
-		encoderVal = armEncoder.getRaw(); //  .getDistance();
+		encoderVal = armEncoder.getDistance();
 		SmartDashboard.putNumber("armEncoder", encoderVal);
-	
-
-		if ((armJoySlider.getX() > 0.2)) //&& (armEncoder.getDistance() < CrusaderCommon.ARM_ENCODER_MAX_VAL))
+		double deadband = 50;
+	/*			
+		sliderValue = (sliderValue  * 1750);
+		
+		if(sliderValue > (encoderVal + deadband) )
 		{
 			armTalon.set(CrusaderCommon.ARM_MOTOR_SPEED);
 		}
-		else if ((armJoySlider.getX() < -0.2)) //&& (armEncoder.getDistance() > CrusaderCommon.ARM_ENCODER_MIN_VAL))
+		else if(sliderValue < (encoderVal - deadband))
+		{
+			armTalon.set(CrusaderCommon.ARM_MOTOR_SPEED_REVERSE);
+		}
+		else
+		{
+			armTalon.set(CrusaderCommon.MOTOROFF);
+		}
+*/
+		if ((armJoySlider.getX() > 0.1)) //&& (armEncoder.getDistance() < CrusaderCommon.ARM_ENCODER_MAX_VAL))
+		{
+			armTalon.set(CrusaderCommon.ARM_MOTOR_SPEED);
+		}
+		else if ((armJoySlider.getX() < -0.1)) //&& (armEncoder.getDistance() > CrusaderCommon.ARM_ENCODER_MIN_VAL))
 		{
 			armTalon.set(CrusaderCommon.ARM_MOTOR_SPEED_REVERSE);
 		}
