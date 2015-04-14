@@ -353,6 +353,18 @@ public class Robot extends IterativeRobot {
 							AUTO_STARTED = true;
 						}
 					}
+					else if(autoModeID == 2)
+					{
+						if(AUTO_STARTED)
+						{
+							autonomousDrive.forward2();
+						}
+						else
+						{
+							autonomousDrive.startTimer();
+							AUTO_STARTED = true;
+						}
+					}
 					
 				} catch (NumberFormatException ex) {
 					System.out.println("automode cannot be parsed");
@@ -394,6 +406,8 @@ public class Robot extends IterativeRobot {
 			commandValue = myControlBoard.getCommands();
 			
 			theMCP.buttonPressed(commandValue);
+			
+			raiseArmCMD.execute();
 
 		} catch (Exception e) {
 			System.out.println("telopperiodic: ");

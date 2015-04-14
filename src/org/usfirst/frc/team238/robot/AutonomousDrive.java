@@ -73,6 +73,22 @@ public class AutonomousDrive {
 		}
 	}
 
+	public void forward2()
+	{
+		//CAT consider making forward, backward, turn left, turn right dumber and let ...
+		//CAT ... the caller decide whetehr to drive or not, no matter what the timer is ...
+		//CAT ... saying
+	
+		if(autonomousTimer.get() <= 2)
+		{
+			SmartDashboard.putString("AutonomousDrive", "forward");
+			autoRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_FORWARD, CrusaderCommon.AUTO_DRIVE_FORWARD);
+		}
+		else
+		{
+			idle();
+		}
+	}
 	public void backward()
 	{
 		if(autonomousTimer.get() <= 3)
