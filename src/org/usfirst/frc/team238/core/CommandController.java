@@ -1,5 +1,25 @@
-package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.core;
 
+import org.usfirst.frc.team238.commands.CommandCoopPoints;
+import org.usfirst.frc.team238.commands.CommandDriveForward;
+import org.usfirst.frc.team238.commands.CommandGoToDeliver;
+import org.usfirst.frc.team238.commands.CommandGoToGround;
+import org.usfirst.frc.team238.commands.CommandGoToLift;
+import org.usfirst.frc.team238.commands.CommandGoToTravel;
+import org.usfirst.frc.team238.commands.CommandRaiseArm;
+import org.usfirst.frc.team238.commands.CommandShiftHigh;
+import org.usfirst.frc.team238.commands.CommandShiftLow;
+import org.usfirst.frc.team238.commands.CommandTankDrive;
+import org.usfirst.frc.team238.commands.NoDriverCommand;
+import org.usfirst.frc.team238.commands.NoOperatorCommand;
+import org.usfirst.frc.team238.robot.Arm;
+import org.usfirst.frc.team238.robot.AutonomousDrive;
+import org.usfirst.frc.team238.robot.ControlBoard;
+import org.usfirst.frc.team238.robot.CrusaderCommon;
+import org.usfirst.frc.team238.robot.Lift;
+import org.usfirst.frc.team238.robot.Shifter;
+
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CommandController {
@@ -9,8 +29,23 @@ public class CommandController {
 	Command driverLeftCommandList[];
 	Command manualOperatorCommandList[];
 	Command autonomousCommandList[];
+	Command driveTrainList[];
 	
-	public void  init()
+	NoOperatorCommand theDoNothingCmd;
+	NoDriverCommand theDoNothingRightDriverCmd;
+	NoDriverCommand theDoNothingLeftDriverCmd;
+	CommandGoToGround operatorCmdSetToGround;
+	CommandGoToTravel operatorCmdSetToTravel;
+	CommandGoToLift operatorCmdSetToLift;
+	CommandGoToDeliver operatorCmdSetToDeliver;
+	CommandCoopPoints operatorCmdCoopPoints;
+	CommandShiftLow shiftLowCMD;
+	CommandShiftHigh shiftHighCMD;
+	CommandRaiseArm raiseArmCMD;
+	CommandTankDrive cmdToDriveTheRobot;
+	CommandDriveForward autoDriveForward;
+	
+	public void  init(Lift theLift, Shifter theShifter, Arm theArm, RobotDrive myRobotDrive, AutonomousDrive autonomousDrive)
 	{
 		int numCommands = 10; 
 		System.out.println("ControlBoard Init:NUMCMDS = " + numCommands);
@@ -19,9 +54,120 @@ public class CommandController {
 		driverRightCommandList = new Command[numCommands];
 		manualOperatorCommandList = new Command[numCommands];
 		autonomousCommandList = new Command[numCommands];
+		driveTrainList = new Command[1];
+		
+		setupOperatorCommands(theLift, theArm);
+		setupDriverCommands(theShifter, myRobotDrive);
+		setupAutonomousCommands(autonomousDrive);
 	}
 	
-	public void setCommand(int list, int slot, Command command){
+	public CommandDriveForward getAutoCmd()
+	{
+		return autoDriveForward;
+	}
+	
+	public CommandGoToLift getLiftCmd()
+	{
+		return operatorCmdSetToLift;
+	}
+	
+	private void setupAutonomousCommands(AutonomousDrive autonomousDrive)
+	{
+		autoDriveForward = new CommandDriveForward(autonomousDrive);
+	}
+	
+	private void setupDriverCommands(Shifter theShifter, RobotDrive myRobotDrive)
+	{
+		
+		cmdToDriveTheRobot = new CommandTankDrive(myRobotDrive);
+		shiftLowCMD = new CommandShiftLow(theShifter);
+		shiftHighCMD = new CommandShiftHigh(theShifter);
+		theDoNothingRightDriverCmd = new NoDriverCommand();
+		theDoNothingLeftDriverCmd = new NoDriverCommand();
+		
+		setCommand(	CrusaderCommon.DT_CMD_LIST, 
+					CrusaderCommon.DRIVE_TRAIN_CMD_IDX,
+					cmdToDriveTheRobot);
+		
+		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
+					CrusaderCommon.LEFTDRIVER_CMD_IDX_DONOTHING,
+					theDoNothingLeftDriverCmd);
+		
+		setCommand(	CrusaderCommon.RIGHTDRIVER_CMD_LIST,
+					CrusaderCommon.RIGHTDRIVER_CMD_IDX_DONOTHING,
+					theDoNothingRightDriverCmd);
+		
+		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
+					CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINRIGHT,
+					theDoNothingLeftDriverCmd);
+
+		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
+					CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINLEFT,
+					theDoNothingLeftDriverCmd);
+
+		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
+					CrusaderCommon.LEFTDRIVER_CMD_IDX_UNUSED3,
+					theDoNothingLeftDriverCmd);
+
+		
+		setCommand(	CrusaderCommon.LEFTDRIVER_CMD_LIST,
+					CrusaderCommon.LEFTDRIVER_CMD_IDX_SHIFTLOW,
+					shiftLowCMD);
+
+		
+		setCommand(	CrusaderCommon.RIGHTDRIVER_CMD_LIST,
+					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINRIGHT,
+					theDoNothingRightDriverCmd);
+		
+		setCommand(	CrusaderCommon.RIGHTDRIVER_CMD_LIST,
+					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINLEFT,
+					theDoNothingRightDriverCmd);
+
+		
+		setCommand(	CrusaderCommon.RIGHTDRIVER_CMD_LIST,
+					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SHIFTHIGH,
+					shiftHighCMD);
+		
+		
+	}
+	
+	private void setupOperatorCommands(Lift theLift, Arm theArm)
+	{
+		theDoNothingCmd = new NoOperatorCommand(theLift);
+		setCommand(CrusaderCommon.OPR_CMD_LIST,
+				CrusaderCommon.OPR_CMD_IDX_DONOTHING, theDoNothingCmd);
+
+		operatorCmdSetToGround = new CommandGoToGround(theLift);
+		setCommand(CrusaderCommon.OPR_CMD_LIST,
+				CrusaderCommon.OPR_CMD_IDX_SETTOGROUND,
+				operatorCmdSetToGround);
+
+		operatorCmdSetToTravel = new CommandGoToTravel(theLift);
+		setCommand(CrusaderCommon.OPR_CMD_LIST,
+				CrusaderCommon.OPR_CMD_IDX_SETTOTRAVEL,
+				operatorCmdSetToTravel);
+
+		operatorCmdSetToLift = new CommandGoToLift(theLift);
+		setCommand(CrusaderCommon.OPR_CMD_LIST,
+				CrusaderCommon.OPR_CMD_IDX_SETTOLIFT, operatorCmdSetToLift);
+
+		operatorCmdSetToDeliver = new CommandGoToDeliver(theLift);
+		setCommand(CrusaderCommon.OPR_CMD_LIST,
+				CrusaderCommon.OPR_CMD_IDX_SETTODELIVER,
+				operatorCmdSetToDeliver);
+
+		operatorCmdCoopPoints = new CommandCoopPoints(theLift);
+		setCommand(CrusaderCommon.OPR_CMD_LIST,
+				CrusaderCommon.OPR_CMD_IDX_COOPPOINTS,
+				operatorCmdCoopPoints);
+		
+		raiseArmCMD = new CommandRaiseArm(theArm);
+		setCommand(CrusaderCommon.OPR_CMD_LIST, 
+				CrusaderCommon.OPR_CMD_IDX_RAISEARM,
+				raiseArmCMD);
+	}
+	
+	private void setCommand(int list, int slot, Command command){
 		
 		switch(list)
 		{
@@ -36,6 +182,9 @@ public class CommandController {
 			break;
 		case CrusaderCommon.AUTONOMOUS_CMD_LIST:
 			autonomousCommandList[slot] = command;
+			break;
+		case CrusaderCommon.DT_CMD_LIST:
+			driveTrainList[slot] = command;
 			break;
 		default:
 			manualOperatorCommandList[slot] = command;
@@ -65,6 +214,8 @@ public class CommandController {
 			double valueForMotors = ControlBoard.getManualCommandValue();
 			//execute the command
 			manualCmd.execute(-valueForMotors);
+			
+			
 		}
 		else
 		{
@@ -74,21 +225,8 @@ public class CommandController {
 		
 		driverLeftCommandList[slot[CrusaderCommon.INPUT_DRIVER_LEFT_JS]].execute();
 		driverRightCommandList[slot[CrusaderCommon.INPUT_DRIVER_RIGHT_JS]].execute();
+		driveTrainList[slot[CrusaderCommon.DT_CMD_LIST]].execute();
 	}
 	
-	public void autoButtonPressed(int slot[])
-	{
-		for (int idx = 0; idx < slot.length; idx++)
-		{
-			System.out.print(" " + Integer.toString(slot[idx]));
-		}
-		System.out.println();
-		
-		buttonPressed(slot);
-		Command command = autonomousCommandList[slot[CrusaderCommon.INPUT_AUTO_DRIVE]];
-		System.out.println(command);
-		
-		SmartDashboard.putString("auto cmd", command.toString());
-		command.execute();
-	}
+	
 }

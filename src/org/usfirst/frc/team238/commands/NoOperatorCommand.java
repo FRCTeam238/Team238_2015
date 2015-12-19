@@ -1,26 +1,24 @@
-package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.commands;
+
+import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.robot.Lift;
 
 public  class NoOperatorCommand implements Command {
 	
 	Lift lift;
-	//Claws claws;
-	//SaloonDoors saloonDoors;
 	
-	public NoOperatorCommand(Lift theLift, SaloonDoors theSaloonDoors ){
+	public NoOperatorCommand(Lift theLift){
 		
 		this.lift = theLift;
-		//this.saloonDoors = theSaloonDoors;
 		
 	}
 	public void execute() {
 		lift.stop();
-		//saloonDoors.stop();
 		
 	}
 	
 	public void execute(double overRideValue) {
 		lift.stop();
-		//saloonDoors.stop();
 	}
 
 }

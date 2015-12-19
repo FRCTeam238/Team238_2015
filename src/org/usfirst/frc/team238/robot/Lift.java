@@ -1,48 +1,48 @@
 package org.usfirst.frc.team238.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-
-//import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Talon;
 
 
 public class Lift 
 {	
-	
-	//CAT consider whether this should be a class of its own
 	private DigitalInput autoLoadedSwitch;
+	
+	DigitalInput stopGoingDownSwitch;
 
 	//Declarations of the pistons for the claw
-	/*Solenoid rightFrontPiston;
+	Solenoid rightFrontPiston;
 	Solenoid rightBackPiston;
-	Solenoid leftFrontPiston;
-	Solenoid leftBackPiston;*/
+
 
 
 	//Compressor compress;  May not be needed
 
-	//Switches that tell the elevator when to stop
-	DigitalInput raisedSwitch;
-	DigitalInput travelSwitch;
-	DigitalInput loadedSwitch;
-	DigitalInput coopSwitch;
-
+	//Switches that tell the elevator(lift?) when to stop
+	Encoder liftEncoderLeft;
+	Encoder liftEncoderRight;
+	
 	int currentLiftLevel;  
 
 	//motors to control the lift
-	Jaguar liftMotorLeft;  
-	Jaguar liftMotorRight;
+	
+	Talon toteLiftMotorLeft;
+	Talon toteLiftMotorRight;
 
-	AnalogPotentiometer leftPotens;
-	AnalogPotentiometer rightPotens;
 	double potensOffsetValue = 0.0; //can't Zero a pot so need something to hold what the offset is between the two
 	
-	double leftPotMin; 
-	double leftPotMax; 
-	double rightPotMin;
-	double rightPotMax;
+	double liftEncoderLeftMin; 
+	double liftEncoderLeftMax; 
+	double liftEncoderRightMin;
+	double liftEncoderRightMax;
+	
+	
 	
 	
 	public void liftInit()
@@ -50,33 +50,26 @@ public class Lift
 		//initializations of everything
 		try{
 			autoLoadedSwitch = new DigitalInput(1);
+			//stopGoingDownSwitch = new DigitalInput(0);
+			
 
 			// The pneumatics are used to clamp onto the new game piece
-			/*rightFrontPiston = new Solenoid(0); 
-			rightBackPiston = new Solenoid(1); 
-			leftFrontPiston = new Solenoid(2);
-			leftBackPiston = new Solenoid(3);  */
+			rightFrontPiston = new Solenoid(4); 
+			rightBackPiston = new Solenoid(1);  
 
-
-			//These are Sensors that will tell the height of the lift
-			//loadedSwitch = new DigitalInput(4); // This level is when the robot is picking up the tower
-			//travelSwitch = new DigitalInput(5); // This level is used when robot is traveling with the tower
-			//raisedSwitch = new DigitalInput(6); // This level is when we are approaching a new tote or a bin
-			//coopSwitch = new DigitalInput(7);
 
 			currentLiftLevel = CrusaderCommon.GROUND_LEVEL; // Maybe?  under revise
 			SmartDashboard.putNumber("CurrentLevel: ", currentLiftLevel);
 
-			//These will bring the game piece up or down
-			liftMotorRight= new Jaguar(7);  
-			liftMotorLeft = new Jaguar(6); 
-
-			//This is the potentiometer which may be added for more acuraccy
-			leftPotens = new AnalogPotentiometer(2); // these go into analog ports
-			rightPotens = new AnalogPotentiometer(3);
+			
+			liftEncoderLeft = new Encoder(4,5);
+			liftEncoderRight = new Encoder(6,7);
+			
+			toteLiftMotorLeft = new Talon(6);
+			toteLiftMotorRight = new Talon(7);
 			
 			letItGo();
-			setPotOffsetValue();
+			
 			setMinAndMax(currentLiftLevel);
 
 		}
@@ -94,6 +87,12 @@ public class Lift
 		return retval;
 	}
 	
+	/*public boolean stopGoingDownBoolean()
+	{
+		boolean stopGoingDown = stopGoingDownSwitch.get();
+		return stopGoingDown;
+	}*/
+	
 	public int getLevel()
 	{
 		return currentLiftLevel;
@@ -101,55 +100,60 @@ public class Lift
 	
 	public void manualControlOfLifter(double overRideValue)  
 	{
-		liftMotorRight.set(overRideValue);
-		liftMotorLeft.set(overRideValue);
+		toteLiftMotorLeft.set(overRideValue);
+		toteLiftMotorRight.set(overRideValue);
+		//liftMotorLeft.set(overRideValue);
 		SmartDashboard.putNumber("ManualMode", overRideValue);
 		
-		double loadPotValueLeft = leftPotens.get();
-		double loadPotValueRight = rightPotens.get();
-		SmartDashboard.putNumber("PotValueLeft", loadPotValueLeft);
-		SmartDashboard.putNumber("PotValueRight", loadPotValueRight);
+		if (ControlBoard.resetEncoderValue() == true)
+		{
+			liftEncoderLeft.reset();
+			liftEncoderRight.reset();
+		}
 		
 	}
-	
+	//sets min and max values for the encoders NEEDS TO BE UPDATED FOR ENCODERS!!!!!!!!!!
 	public void setMinAndMax(int level){
 		
 		switch(level){
 			case CrusaderCommon.GROUND_LEVEL:
-				leftPotMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
-				leftPotMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMin = CrusaderCommon.R_POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.R_POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderLeftMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderLeftMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderRightMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderRightMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
+
 				break;
 			case CrusaderCommon.TRAVEL_LEVEL:
-				leftPotMin = CrusaderCommon.POT_TRAVEL - CrusaderCommon.POT_NEUTRAL_ZONE;
-				leftPotMax = CrusaderCommon.POT_TRAVEL + CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMin = CrusaderCommon.R_POT_TRAVEL - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.R_POT_TRAVEL + CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderLeftMin = CrusaderCommon.POT_TRAVEL - CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderLeftMax = CrusaderCommon.POT_TRAVEL + CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderRightMin = CrusaderCommon.POT_TRAVEL - CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderRightMax = CrusaderCommon.POT_TRAVEL + CrusaderCommon.POT_NEUTRAL_ZONE;
+
 				break;
 			case CrusaderCommon.COOP_LEVEL:
-				leftPotMin = CrusaderCommon.POT_COOP - CrusaderCommon.POT_NEUTRAL_ZONE;
-				leftPotMax = CrusaderCommon.POT_COOP + CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMin = CrusaderCommon.R_POT_COOP - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.R_POT_COOP + CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderLeftMin = CrusaderCommon.POT_COOP - CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderLeftMax = CrusaderCommon.POT_COOP + CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderRightMin = CrusaderCommon.POT_COOP - CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderRightMax = CrusaderCommon.POT_COOP + CrusaderCommon.POT_NEUTRAL_ZONE;
+
 				break;
 			case CrusaderCommon.LOADING_LEVEL:
-				leftPotMin = CrusaderCommon.POT_LOADING - CrusaderCommon.POT_NEUTRAL_ZONE;
-				leftPotMax = CrusaderCommon.POT_LOADING + CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMin = CrusaderCommon.R_POT_LOADING - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.R_POT_LOADING + CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderLeftMin = CrusaderCommon.POT_LOADING - CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderLeftMax = CrusaderCommon.POT_LOADING + CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderRightMin = CrusaderCommon.POT_LOADING - CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderRightMax = CrusaderCommon.POT_LOADING + CrusaderCommon.POT_NEUTRAL_ZONE;
 				break;
 			case CrusaderCommon.DELIVER_LEVEL:
-				leftPotMin = CrusaderCommon.POT_DELIVER - CrusaderCommon.POT_NEUTRAL_ZONE;
-				leftPotMax = CrusaderCommon.POT_DELIVER + CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMin = CrusaderCommon.R_POT_DELIVER - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.R_POT_DELIVER + CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderLeftMin = CrusaderCommon.POT_DELIVER - CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderLeftMax = CrusaderCommon.POT_DELIVER + CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderRightMin = CrusaderCommon.POT_DELIVER - CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderRightMax = CrusaderCommon.POT_DELIVER + CrusaderCommon.POT_NEUTRAL_ZONE;
 				break;
 			default:
-				leftPotMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
-				leftPotMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMin = CrusaderCommon.R_POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
-				rightPotMax = CrusaderCommon.R_POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderLeftMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderLeftMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderRightMin = CrusaderCommon.POT_GROUND - CrusaderCommon.POT_NEUTRAL_ZONE;
+				liftEncoderRightMax = CrusaderCommon.POT_GROUND + CrusaderCommon.POT_NEUTRAL_ZONE;
 				break;
 				
 		}
@@ -158,14 +162,9 @@ public class Lift
 	
 	/* we use the left side pot as the reference, determine the difference between right and left as the value 
 	 * to be used as the "offset". Add that value (pos or neg) to the right side every time a get() is done
-	 * to essentially "level" them. Then the checks can be done to see if they are getting out o synch  
+	 * to essentially "level" them. Then the checks can be done to see if they are getting out of synch  
 	 */
-	private void setPotOffsetValue(){
-		double leftPOtValue = leftPotens.get();
-		double rightPOtValue = rightPotens.get();
-		
-		potensOffsetValue = leftPOtValue - rightPOtValue;
-	}
+
 	
 	/*
 	private boolean isAtLevel(double level, double leftPot, double rightPot){
@@ -193,25 +192,28 @@ public class Lift
 		{
 			if(differential < 0)
 			{
-				liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
-				//left side is above right side so slow it down
-				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+			
+				//left side is above right side so slow it (left?) down
+				toteLiftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+				toteLiftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
 			}
 			else
 			{
 				//left side is below right side so slow right down
-				liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
-				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+				
+				toteLiftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+				toteLiftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
 			}
 		}
 		else
 		{
-			liftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
-			liftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+		
+			toteLiftMotorLeft.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
+			toteLiftMotorRight.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
 		}
 		
-		SmartDashboard.putNumber("Lift Motor Right", liftMotorRight.get());
-		SmartDashboard.putNumber("Lift Motor Left", liftMotorLeft.get());
+		
+		SmartDashboard.putNumber("Lift Motor Left", toteLiftMotorLeft.get());
 	}
 	
 	
@@ -228,24 +230,28 @@ public class Lift
 			if(differential < 0)
 			{
 				//left side is above right side so slow right down
-				liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
-				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);	
+				
+				toteLiftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
+				toteLiftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
 			}
 			else
 			{
 				//left side is below right side so slow left down
-				liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
-				liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
+			
+				toteLiftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
+				toteLiftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
 			}
 		}
 		else
 		{
-			liftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
-			liftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
+			
+			toteLiftMotorLeft.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
+			toteLiftMotorRight.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
 		}	
 		
-		SmartDashboard.putNumber("Lift Motor Right", liftMotorRight.get());
-		SmartDashboard.putNumber("Lift Motor Left", liftMotorLeft.get());
+		
+		SmartDashboard.putNumber("Lift Motor Left", toteLiftMotorLeft.get());
+		SmartDashboard.putNumber("Lift Motor Right", toteLiftMotorRight.get());
 	}
 
 	/*
@@ -254,18 +260,21 @@ public class Lift
 	 */
 	public void stop()
 	{
-		liftMotorRight.set(CrusaderCommon.LIFT_STOPS);
-		liftMotorLeft.set(CrusaderCommon.LIFT_STOPS);
-	}
-
-	private int update(Jaguar motor, double potValue,  double min, double max ) {
-		int direction = CrusaderCommon.LIFT_STOPS;
 		
-		if( (potValue >= min) && (potValue <= max))
+		toteLiftMotorLeft.set(CrusaderCommon.LIFT_STOPS);
+		toteLiftMotorRight.set(CrusaderCommon.LIFT_STOPS);
+	}
+	/*This is where the lift goes up and down*/
+
+	private double update(Talon motor, double encoderValue,  double min, double max ) {
+		double direction = CrusaderCommon.LIFT_STOPS;
+		SmartDashboard.putString("Is THIS working", "Yes It IS");
+		
+		if( (encoderValue >= min) && (encoderValue <= max))
 		{
 			motor.set(CrusaderCommon.LIFT_STOPS);
 		}
-		else if( potValue > max)
+		else if( encoderValue > max)
 		{
 			//going up
 			motor.set(CrusaderCommon.LIFT_GOES_UP_NORMAL);
@@ -273,32 +282,44 @@ public class Lift
 		}
 		else 
 		{
+			//going down
 			motor.set(CrusaderCommon.LIFT_GOES_DOWN_NORMAL);
 			direction = CrusaderCommon.LIFT_GOES_DOWN_NORMAL;
 		}
-		
+		//Stops from going down too far
+		/*if (stopGoingDownBoolean() == true && (direction == CrusaderCommon.LIFT_GOES_UP_NORMAL))
+		{
+			motor.set(CrusaderCommon.LIFT_STOPS);
+		}*/
 		
 		return direction;
 	}
 	
 	private void goToSpecifiedLevel(int level){
 		
-		double loadPotValueLeft = leftPotens.get();
-		double loadPotValueRight = rightPotens.get();
+
+		double loadEncoderValueLeft = liftEncoderLeft.get();
+		double loadEncoderValueRight = liftEncoderRight.get() * -1;
 		//double differential = loadPotValueLeft -  loadPotValueRight;
 		
 		setMinAndMax(level);
 		
-		int leftDirection = update(liftMotorLeft, loadPotValueLeft,  leftPotMin, leftPotMax );
-		int rightDirection = update(liftMotorRight, loadPotValueRight,  rightPotMin, rightPotMax);
+		double leftDirection = update(toteLiftMotorLeft, loadEncoderValueLeft,  liftEncoderLeftMin, liftEncoderLeftMax );
+		double rightDirection = update(toteLiftMotorRight, loadEncoderValueRight,  liftEncoderRightMin, liftEncoderRightMax );
+	
 		
 		/* if both update calls come back with stop then set to Loading Level
 		 * if both come back other than stop make the call to see if they need balancing
 		 * if one is in the stopped state just leave it and the other will catch up
 		 */
-		if( (leftDirection == CrusaderCommon.LIFT_STOPS) && (rightDirection == CrusaderCommon.LIFT_STOPS))
+		if( (leftDirection == CrusaderCommon.LIFT_STOPS) && (rightDirection == CrusaderCommon.LIFT_STOPS)) 
 		{
 			currentLiftLevel = level;
+//			if(currentLiftLevel == CrusaderCommon.GROUND_LEVEL)
+//			{
+//				liftEncoderLeft.reset();
+//				liftEncoderRight.reset();
+//			}
 		}
 		/*else if ((leftDirection != CrusaderCommon.LIFT_STOPS) && (rightDirection != CrusaderCommon.LIFT_STOPS))
 		{
@@ -312,16 +333,15 @@ public class Lift
 			}
 		} //otherwise leave well enough alone.
 		*/
-		SmartDashboard.putNumber("PotValueLeft", loadPotValueLeft);
-		SmartDashboard.putNumber("PotValueRight", loadPotValueRight);
-		SmartDashboard.putNumber("Level MIN", leftPotMin);
-		SmartDashboard.putNumber("Level MAX", leftPotMax);
+
+		SmartDashboard.putNumber("Level MIN", liftEncoderLeftMin);
+		SmartDashboard.putNumber("Level MAX", liftEncoderLeftMax);
 		SmartDashboard.putNumber("Left Dir", leftDirection);
-		SmartDashboard.putNumber("Right Dir", rightDirection);
-		SmartDashboard.putNumber("CurLevel: ", currentLiftLevel);
 		SmartDashboard.putNumber("TargetLevel: ", level);
+		SmartDashboard.putNumber("liftEncoderLeft", loadEncoderValueLeft);
+		SmartDashboard.putNumber("liftEncoderRight", loadEncoderValueRight);
 	}
-	
+	/*This is where levels are set*/
 	public void setToGround()  
 	{
 		goToSpecifiedLevel(CrusaderCommon.GROUND_LEVEL);
@@ -347,7 +367,7 @@ public class Lift
 		goToSpecifiedLevel(CrusaderCommon.COOP_LEVEL);
 	}
 	
-	//realy catch romn hP station
+	
 	public void setToCatch()
 	{
 		goToSpecifiedLevel(CrusaderCommon.DELIVER_LEVEL);
@@ -356,10 +376,11 @@ public class Lift
 	public void clampOn()    
 	{						 		
 
-		/*rightFrontPiston.set(true);
-		rightBackPiston.set(true);
-		leftFrontPiston.set(true);
-		leftBackPiston.set(true);*/
+		rightFrontPiston.set(true);
+		//rightBackPiston.set(true);
+		
+		//leftFrontPiston.set(true);
+		//leftBackPiston.set(true);
 
 	}
 
@@ -371,11 +392,20 @@ public class Lift
 	public void letItGo()   
 	{		
 
-		/*rightFrontPiston.set(false);
-		rightBackPiston.set(false);
-		leftFrontPiston.set(false);
-		leftBackPiston.set(false);*/
+		rightFrontPiston.set(false);
+		//rightBackPiston.set(false);
+		
+		//leftFrontPiston.set(false);
+		//leftBackPiston.set(false);
 	}
 
-	
+	public void UpdateDashboard()
+	{
+		SmartDashboard.putNumber("CurLevel: ", currentLiftLevel);
+		double loadEncoderValueLeft = liftEncoderLeft.get();
+		double loadEncoderValueRight = liftEncoderRight.get();
+
+		SmartDashboard.putNumber("Encoder value LEFT", loadEncoderValueLeft);
+		SmartDashboard.putNumber("Encoder value RIGHT", loadEncoderValueRight);
+	}
 }

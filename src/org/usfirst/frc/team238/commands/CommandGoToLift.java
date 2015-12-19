@@ -1,26 +1,39 @@
-package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.commands;
+
+import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.robot.CrusaderCommon;
+import org.usfirst.frc.team238.robot.Lift;
 
 public  class CommandGoToLift implements Command {
 	
 	Lift myLift;
-	//SaloonDoors mySaloonDoor;
 	
-	public CommandGoToLift(Lift theLift, SaloonDoors theSaloonDoor)
+	public CommandGoToLift(Lift theLift)
 	{
 		this.myLift = theLift;
-		//this.mySaloonDoor = theSaloonDoor;
+		
 	}
 	public void execute()
 	{
 		myLift.clampOn();
 		myLift.liftToLoadLevel();
-		//mySaloonDoor.CloseDoors();
+		
 	}
 	
 	public void execute(double overRideValue) 
 	{
 		myLift.clampOn();
 		myLift.manualControlOfLifter(overRideValue);
-		//mySaloonDoor.CloseDoors();
+		
+	}
+	
+	public boolean complete()
+	{
+		if(myLift.getLevel() == CrusaderCommon.LOADING_LEVEL)
+		{
+			return true;
+		}
+		
+		return false;
 	}
 }

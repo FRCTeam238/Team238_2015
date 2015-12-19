@@ -1,4 +1,7 @@
-package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.commands;
+
+import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.robot.Arm;
 
 public class CommandRaiseArm implements Command 
 {

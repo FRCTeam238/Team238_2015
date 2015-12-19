@@ -1,9 +1,12 @@
-package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.commands;
+
+import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.robot.Lift;
 
 public abstract class CommandManualLiftControlClampsOn implements Command
 {
 	Lift myLift;
-	public CommandManualLiftControlClampsOn(Lift theLift, SaloonDoors theSaloonDoor)
+	public CommandManualLiftControlClampsOn(Lift theLift)
 	{
 
 		this.myLift = theLift;

@@ -7,8 +7,8 @@ public class ControlBoard {
 	//Here are the joysticks for controlling  the robot
 	static Joystick manualOverrideJs; 	// operator manual overide
 	static Joystick operatorJs;  	// operator control board
-	static Joystick driverLeftJs; 	// driveTrain left
-	static Joystick driverRightJs; 	// driveTrain right
+	private static Joystick driverLeftJs; 	// driveTrain left
+	private static Joystick driverRightJs; 	// driveTrain right
 	static int commands[];
 	
 	public void controlBoardInit()
@@ -17,11 +17,11 @@ public class ControlBoard {
 		{
 			manualOverrideJs = new Joystick(0);
 			operatorJs = new Joystick(1);
-			driverLeftJs = new Joystick(2);
-			driverRightJs = new Joystick(3);
+			setDriverLeftJs(new Joystick(2));
+			setDriverRightJs(new Joystick(3));
 			
 			//array that holds the command sent by each control device
-			commands = new int[4];
+			commands = new int[5];
 			
 			SmartDashboard.putString("operatorJs", "operatorJs Is Intialized");
 			
@@ -134,8 +134,9 @@ public class ControlBoard {
 		
 		commands[0] = getCommand(manualOverrideJs);
 		commands[1] = getCommand(operatorJs);
-		commands[2] = getDriverCommand(driverLeftJs);
-		commands[3] = getDriverCommand(driverRightJs);
+		commands[2] = getDriverCommand(getDriverLeftJs());
+		commands[3] = getDriverCommand(getDriverRightJs());
+		commands[4] = CrusaderCommon.DRIVE_TRAIN_CMD_IDX;
 		
 		return commands;
 	}
@@ -145,12 +146,46 @@ public class ControlBoard {
 	{
 		return manualOverrideJs.getY();
 	}
-
+	
+	public static boolean resetEncoderValue()
+	{
+		boolean resetEncoderValue = operatorJs.getRawButton(8);
+		System.out.println("Reset Encoder = " + resetEncoderValue);
+		return resetEncoderValue;
+	}
+	
+	
+	
+	
 	public static boolean overRide(){
 		boolean overRide = operatorJs.getRawButton(10);
 		
 		return overRide;
 					
+	}
+
+
+
+	public static Joystick getDriverLeftJs() {
+		return driverLeftJs;
+	}
+
+
+
+	public static void setDriverLeftJs(Joystick driverLeftJs) {
+		ControlBoard.driverLeftJs = driverLeftJs;
+	}
+
+
+
+	public static Joystick getDriverRightJs() {
+		return driverRightJs;
+	}
+
+
+
+	public static void setDriverRightJs(Joystick driverRightJs) {
+		ControlBoard.driverRightJs = driverRightJs;
 	}
 	
 	

@@ -1,4 +1,6 @@
-package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.commands;
+
+import org.usfirst.frc.team238.core.Command;
 
 public class NoDriverCommand implements Command {
 	//Claws claws;

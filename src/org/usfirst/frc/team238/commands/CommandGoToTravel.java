@@ -1,28 +1,26 @@
-package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.commands;
+
+import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.robot.Lift;
 
 public class CommandGoToTravel implements Command 
 {
 	Lift myLift;
-	//SaloonDoors mySaloonDoors;
 	
-	public CommandGoToTravel(Lift theLift, SaloonDoors theSaloonDoors)
+	public CommandGoToTravel(Lift theLift)
 	{
 		this.myLift = theLift;
-		//this.mySaloonDoors = theSaloonDoors;
 	}
 	
 	public void execute()
 	{
 		myLift.clampOn();
 		myLift.travelingMode();
-		//mySaloonDoors.CloseDoors();
-		
 	}
 	
 	public void execute(double overRideValue)
 	{
 		myLift.clampOn();
 		myLift.manualControlOfLifter(overRideValue);
-		//mySaloonDoors.CloseDoors();
 	}
 }

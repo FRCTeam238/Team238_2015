@@ -1,21 +1,21 @@
-package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.commands;
+
+import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.robot.Lift;
 
 public class CommandManualLiftControlClampsOff implements Command 
 {
 	Lift myLift;
 	//SaloonDoors mySaloonDoors;
 
-	public CommandManualLiftControlClampsOff(Lift theLift, SaloonDoors theSaloonDoors)
+	public CommandManualLiftControlClampsOff(Lift theLift)
 	{
 		this.myLift = theLift;
-		//this.mySaloonDoors = theSaloonDoors;
 	}
 
 	public void execute()
 	{
 		myLift.manualControlOfLifter(0);
-		//mySaloonDoors.CloseDoors();
-
 	}
 
 	public void execute(double overRideValue){

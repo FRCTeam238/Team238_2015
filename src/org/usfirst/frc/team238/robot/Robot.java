@@ -1,5 +1,24 @@
 package org.usfirst.frc.team238.robot;
 
+import org.usfirst.frc.team238.commands.CommandCoopPoints;
+import org.usfirst.frc.team238.commands.CommandDriveBackwards;
+import org.usfirst.frc.team238.commands.CommandDriveForward;
+import org.usfirst.frc.team238.commands.CommandDriveIdle;
+import org.usfirst.frc.team238.commands.CommandDriveTurnLeft;
+import org.usfirst.frc.team238.commands.CommandDriveTurnRight;
+import org.usfirst.frc.team238.commands.CommandGoToDeliver;
+import org.usfirst.frc.team238.commands.CommandGoToGround;
+import org.usfirst.frc.team238.commands.CommandGoToLift;
+import org.usfirst.frc.team238.commands.CommandGoToTravel;
+import org.usfirst.frc.team238.commands.CommandRaiseArm;
+import org.usfirst.frc.team238.commands.CommandShiftHigh;
+import org.usfirst.frc.team238.commands.CommandShiftLow;
+import org.usfirst.frc.team238.commands.CommandTankDrive;
+import org.usfirst.frc.team238.commands.NoDriverCommand;
+import org.usfirst.frc.team238.commands.NoOperatorCommand;
+import org.usfirst.frc.team238.core.AutonomousController;
+import org.usfirst.frc.team238.core.CommandController;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -19,7 +38,6 @@ import edu.wpi.first.wpilibj.RobotDrive;
 // @SuppressWarnings("deprecation")
 public class Robot extends IterativeRobot {
 
-	private static boolean robotTestMode = false;
 	private static int count = 0;
 	private static boolean AUTO_STARTED = false;
 	/**
@@ -30,63 +48,33 @@ public class Robot extends IterativeRobot {
 	Lift theLift;
 	//Claws rightClaw;
 	//Claws leftClaw;
-	SaloonDoors theSaloonDoors;
+	
 	Shifter theShifter;
-	CommandGoToGround operatorCmdSetToGround;
-	CommandGoToTravel operatorCmdSetToTravel;
-	CommandGoToLift operatorCmdSetToLift;
-	CommandGoToDeliver operatorCmdSetToDeliver;
-	CommandCoopPoints operatorCmdCoopPoints;
-	//CommandSaloonDoorsOpen operatorCmdSetToSaloonDoorsOpen;
-	//CommandClawSpinRight driverJs3CmdSpinRight;
-	//CommandClawSpinRight driverJs2CmdSpinRight;
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
-	//CommandClawSpinLeft driverJs3CmdSpinLeft;
-	//CommandClawSpinLeft driverJs2CmdSpinLeft;
-	NoOperatorCommand theDoNothingCmd;
-	NoDriverCommand theDoNothingRightDriverCmd;
-	NoDriverCommand theDoNothingLeftDriverCmd;
 	CommandController theMCP;
 	RobotDrive myRobotDrive;
-	CommandShiftLow shiftLowCMD;
-	CommandShiftHigh shiftHighCMD;
-	CommandRaiseArm raiseArmCMD;
-
 	// Autonomous Mode Support
-	Autonomous myAutonomous;
 	String autoMode;
-	//Timer autonomousTimer;
 	AutonomousDrive autonomousDrive;
 
 	CommandDriveIdle autoDriveIdle;
-	CommandDriveForward autoDriveForward;
 	CommandDriveBackwards autoDriveBackward;
 	CommandDriveTurnRight autoDriveTurnRight;
 	CommandDriveTurnLeft autoDriveTurnLeft;
-	
-	// CAT DigitalInput autoLoadedSwitch;
 
-	// This is only valid in test mode. When this object is
-	// valid, then the other objects (thisLife, theClaws, etc.) will not be
-	// valid
-	TestMain testController = null;
+	private AutonomousController theMACP;
 
 	public void disabledInit() {
 		try {
-			
-
 			// only use checkForSmartDashboardChanges function in init methods
 			// or you will
 			// smoke the roborio into a useless pile of silicon
 			checkForSmartDashboardChanges("mode",
 					CrusaderCommon.PREFVALUE_OP_MODE_NORMAL);
-
-			//updateTestMode();
 		} catch (Exception ex) {
 			System.out.println("disabledInit exception");
 		}
-
 	}
 
 	public void disabledPeriodic() {
@@ -117,7 +105,6 @@ public class Robot extends IterativeRobot {
 			// smoke the roborio into a useless pile of silicon
 			checkForSmartDashboardChanges("mode",
 					CrusaderCommon.PREFVALUE_OP_MODE_NORMAL);
-			updateTestMode();
 		} catch (Exception ex) {
 			System.out.println("TeleopInit:Exception");
 		}
@@ -159,134 +146,34 @@ public class Robot extends IterativeRobot {
 			System.out.println("RobotInit()");
 			SmartDashboard.putString(CrusaderCommon.PREFERENCE_OP_MODE, "");
 
+			//object that is the code representation for the physical control board
 			myControlBoard = new ControlBoard();
 			myControlBoard.controlBoardInit();
 
+			//Create robot core objects 
 			theLift = new Lift();
 			theLift.liftInit();
-
-			/*leftClaw = new Claws();
-			leftClaw.clawsInit(10);
-
-			rightClaw = new Claws();
-			rightClaw.clawsInit(11);*/
+			System.out.println("The Lift is Born!");
 
 			theShifter = new Shifter();
 			theShifter.init();
 
-			theSaloonDoors = new SaloonDoors();
-			theSaloonDoors.Init();
-			
 			theArm = new Arm();
 			theArm.armInit();
 			
-			theMCP = new CommandController();
-			theMCP.init();
-
-			theDoNothingCmd = new NoOperatorCommand(theLift, theSaloonDoors);
-			theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST,
-					CrusaderCommon.OPR_CMD_IDX_DONOTHING, theDoNothingCmd);
-
-			theDoNothingRightDriverCmd = new NoDriverCommand();
-			theDoNothingLeftDriverCmd = new NoDriverCommand();
-			theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,
-					CrusaderCommon.LEFTDRIVER_CMD_IDX_DONOTHING,
-					theDoNothingLeftDriverCmd);
-			theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,
-					CrusaderCommon.RIGHTDRIVER_CMD_IDX_DONOTHING,
-					theDoNothingRightDriverCmd);
-
-			operatorCmdSetToGround = new CommandGoToGround(theLift,
-					theSaloonDoors);
-			theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST,
-					CrusaderCommon.OPR_CMD_IDX_SETTOGROUND,
-					operatorCmdSetToGround);
-
-			operatorCmdSetToTravel = new CommandGoToTravel(theLift,
-					theSaloonDoors);
-			theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST,
-					CrusaderCommon.OPR_CMD_IDX_SETTOTRAVEL,
-					operatorCmdSetToTravel);
-
-			operatorCmdSetToLift = new CommandGoToLift(theLift, theSaloonDoors);
-			theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST,
-					CrusaderCommon.OPR_CMD_IDX_SETTOLIFT, operatorCmdSetToLift);
-
-			operatorCmdSetToDeliver = new CommandGoToDeliver(theLift,
-					theSaloonDoors);
-			theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST,
-					CrusaderCommon.OPR_CMD_IDX_SETTODELIVER,
-					operatorCmdSetToDeliver);
-
-			operatorCmdCoopPoints = new CommandCoopPoints(theLift,
-					theSaloonDoors);
-			theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST,
-					CrusaderCommon.OPR_CMD_IDX_COOPPOINTS,
-					operatorCmdCoopPoints);
-
-			// left driver JS commands
-			//driverJs2CmdSpinRight = new CommandClawSpinRight(leftClaw);
-			theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,
-					CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINRIGHT,
-					theDoNothingLeftDriverCmd);
-
-			//driverJs2CmdSpinLeft = new CommandClawSpinLeft(leftClaw);
-			theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,
-					CrusaderCommon.LEFTDRIVER_CMD_IDX_SPINLEFT,
-					theDoNothingLeftDriverCmd);
-
-			theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,
-					CrusaderCommon.LEFTDRIVER_CMD_IDX_UNUSED3,
-					theDoNothingLeftDriverCmd);
-
-			shiftLowCMD = new CommandShiftLow(theShifter);
-			theMCP.setCommand(CrusaderCommon.LEFTDRIVER_CMD_LIST,
-					CrusaderCommon.LEFTDRIVER_CMD_IDX_SHIFTLOW, shiftLowCMD);
-
-			// right driver JS commands
-			//driverJs3CmdSpinRight = new CommandClawSpinRight(rightClaw);
-			theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,
-					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINRIGHT,
-					theDoNothingRightDriverCmd);
-
-			//driverJs3CmdSpinLeft = new CommandClawSpinLeft(rightClaw);
-			theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,
-					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SPINLEFT,
-					theDoNothingRightDriverCmd);
-
-			shiftHighCMD = new CommandShiftHigh(theShifter);
-			theMCP.setCommand(CrusaderCommon.RIGHTDRIVER_CMD_LIST,
-					CrusaderCommon.RIGHTDRIVER_CMD_IDX_SHIFTHIGH, shiftHighCMD);
-			
-			raiseArmCMD = new CommandRaiseArm(theArm);
-			theMCP.setCommand(CrusaderCommon.OPR_CMD_LIST, 
-					CrusaderCommon.OPR_CMD_IDX_RAISEARM,
-					raiseArmCMD);
-
 			myRobotDrive = new RobotDrive(0, 1, 2, 3);
+			
 			autonomousDrive = new AutonomousDrive(myRobotDrive);
 			autonomousDrive.init();
-/*
-			myAutonomous = new Autonomous();
-			myAutonomous.autoInit(autonomousDrive, theLift);
-
-			autoDriveIdle = new CommandDriveIdle(autonomousDrive);
-			theMCP.setCommand(CrusaderCommon.AUTONOMOUS_CMD_LIST, CrusaderCommon.AUTONOMOUS_CMD_IDX_DONOTHING, autoDriveIdle);
-
-			autoDriveForward = new CommandDriveForward(autonomousDrive);
-			theMCP.setCommand(CrusaderCommon.AUTONOMOUS_CMD_LIST, CrusaderCommon.AUTONOMOUS_CMD_IDX_DRIVEFORWARD, autoDriveForward);
-
-			autoDriveBackward = new CommandDriveBackwards(autonomousDrive);
-			theMCP.setCommand(CrusaderCommon.AUTONOMOUS_CMD_LIST, CrusaderCommon.AUTONOMOUS_CMD_IDX_DRIVEBACKWARD, autoDriveBackward);
-
-			autoDriveTurnLeft = new CommandDriveTurnLeft(autonomousDrive);
-			theMCP.setCommand(CrusaderCommon.AUTONOMOUS_CMD_LIST, CrusaderCommon.AUTONOMOUS_CMD_IDX_TURNLEFT, autoDriveTurnLeft);
 			
-			autoDriveTurnRight = new CommandDriveTurnRight(autonomousDrive);
-			theMCP.setCommand(CrusaderCommon.AUTONOMOUS_CMD_LIST, CrusaderCommon.AUTONOMOUS_CMD_IDX_TURNRIGHT, autoDriveTurnRight);
-			
-			// NOTE: the timer is initialized in autonomousInit
-	*/
+			//Controller object for telop
+			theMCP = new CommandController();
+			theMCP.init(theLift, theShifter, theArm, myRobotDrive, autonomousDrive);
+
+			//Controller Object for autonomous
+			theMACP = new AutonomousController(); 
+			theMACP.init(theMCP);
+		
 			System.out.println("Fully Initialized");
 
 		} catch (Exception ex) {
@@ -297,29 +184,10 @@ public class Robot extends IterativeRobot {
 		}
 	}
 
-	private void updateTestMode() {
-		String mode = Preferences.getInstance().getString(
-				CrusaderCommon.PREFERENCE_OP_MODE,
-				CrusaderCommon.PREFVALUE_OP_MODE_NORMAL);
-		if (mode != null) {
-			System.out.println("TMI_PrefMode = " + mode);
-			SmartDashboard.putString(CrusaderCommon.PREFERENCE_OP_MODE, mode);
-
-			switch (mode) {
-			case CrusaderCommon.PREFVALUE_OP_MODE_TEST:
-				robotTestMode = true;
-				break;
-			case CrusaderCommon.PREFVALUE_OP_MODE_NORMAL:
-			default:
-				robotTestMode = false;
-				break;
-			}
-		}
-
-		return;
+	public CommandController getTheMCP()
+	{
+		return theMCP;
 	}
-
-	
 
 	/**
 	 * This function is called periodically during autonomous
@@ -328,43 +196,9 @@ public class Robot extends IterativeRobot {
 
 		try {
 			
-			if (autoMode != null) {
-				try {
-					int autoModeID = Integer.parseInt(autoMode);
-
-					// read the backplate switch to make sure we have something
-					// in the loading bay
-					// CAT if(autoLoadedSwitch.get() == true){
-				//mjf
-				//commandValue = myAutonomous.buildAutoCommands(autoModeID);
-				//theMCP.autoButtonPressed(commandValue);
-					// CAT }
-
-					//mjf					
-					if(autoModeID == 3)
-					{
-						if(AUTO_STARTED)
-						{
-							autonomousDrive.forward();
-						}
-						else
-						{
-							autonomousDrive.startTimer();
-							AUTO_STARTED = true;
-						}
-					}
-					
-				} catch (NumberFormatException ex) {
-					System.out.println("automode cannot be parsed");
-				}
-			}
-			else 
-			{
-				//mjf
-				autoMode = myPreferences.getString("auto", "3");
-				System.out.println("Auto-PREFs: " + autoMode);
-				System.out.println("automode is null");
-			}
+			theMACP.process();
+			
+			
 		} catch (Exception ex) {
 			System.out.println("Autonomous exception");
 			ex.printStackTrace();
@@ -377,23 +211,14 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 
 		int commandValue[];
-
-		double leftJsValue = 0;
-		double rightJsValue = 0;
-
+		SmartDashboard.putString("Is this working","Yep");
 		try {
 
-			leftJsValue = ControlBoard.driverLeftJs.getY();
-			rightJsValue = ControlBoard.driverRightJs.getY();
-
-			myRobotDrive.tankDrive(-leftJsValue, -rightJsValue);
-			
-			//theArm.raiseArm();
-			//theArm.lowerArm();
-			
+			//get the buttons (commands) that were pressed on the control board
 			commandValue = myControlBoard.getCommands();
-			
+			//pass the array with the commands coming form the control to the Controller object 
 			theMCP.buttonPressed(commandValue);
+			theLift.UpdateDashboard();
 
 		} catch (Exception e) {
 			System.out.println("telopperiodic: ");
@@ -418,6 +243,7 @@ public class Robot extends IterativeRobot {
 		if (valueFromPrefs != null) {
 			System.out.println("PREFs:" + key + " = " + valueFromPrefs);
 			String valueFromDS = null;
+			
 			try {
 				valueFromDS = SmartDashboard.getString(key);
 			} catch (Exception ex) {

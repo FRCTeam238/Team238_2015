@@ -1,21 +1,21 @@
-package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.commands;
 
+import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.robot.CrusaderCommon;
+import org.usfirst.frc.team238.robot.Lift;
 public  class CommandGoToGround implements Command {
 	
 	public Lift myLift;
-	//public SaloonDoors mySaloonDoor;
 	
-	public CommandGoToGround(Lift theLift, SaloonDoors theSaloonDoor)
+	public CommandGoToGround(Lift theLift)
 	{
 		this.myLift = theLift;
-		//this.mySaloonDoor = theSaloonDoor;
 	}
 	
 	public void execute()
 	{
 		myLift.setToGround();
 		myLift.letItGo();
-		//mySaloonDoor.CloseDoors();
 	}
 	
 	public void execute(double overRideValue)
@@ -25,7 +25,6 @@ public  class CommandGoToGround implements Command {
 		if(myLift.getLevel() == CrusaderCommon.GROUND_LEVEL)
 		{
 			myLift.letItGo();
-			//mySaloonDoor.CloseDoors();
 		}
 	}
 }

@@ -3,10 +3,14 @@ package org.usfirst.frc.team238.robot;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Encoder;
 
 public class AutonomousDrive {
 	RobotDrive autoRobotDrive;
 	Timer autonomousTimer;
+	Encoder autonomousDriveEncoder;
+	
+	double autonomousDriveValue; 
 	
 	public AutonomousDrive(RobotDrive theRobotDrive)
 	{
@@ -19,6 +23,8 @@ public class AutonomousDrive {
 		autonomousTimer.reset();
 		//autonomousTimer.start();
 		actionComplete = false;
+		autonomousDriveEncoder = new Encoder(8,9);
+		autonomousDriveValue = autonomousDriveEncoder.get();
 	}
 
 	/*CAT Need to plan for two types of actions:
@@ -49,20 +55,23 @@ public class AutonomousDrive {
 		autonomousTimer.stop();
 		//autonomousTimer.reset();
 	}
-	
-	public void startTimer()
+	//Reset sets the encoder to zero. Get gets the current count
+	public void startTick()
 	{
-		autonomousTimer.reset();
-		autonomousTimer.start();
+		autonomousDriveEncoder.reset();
+		autonomousDriveEncoder.get();
+		
+
 	}
 	
 	public void forward()
 	{
 		//CAT consider making forward, backward, turn left, turn right dumber and let ...
-		//CAT ... the caller decide whetehr to drive or not, no matter what the timer is ...
+		//CAT ... the caller decide whether to drive or not, no matter what the timer is ...
 		//CAT ... saying
+		
 	
-		if(autonomousTimer.get() <= 4)
+		if(autonomousDriveEncoder.get() < autonomousDriveValue + CrusaderCommon.AUTO_DRIVE_LIMIT )
 		{
 			SmartDashboard.putString("AutonomousDrive", "forward");
 			autoRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_FORWARD, CrusaderCommon.AUTO_DRIVE_FORWARD);
@@ -75,7 +84,7 @@ public class AutonomousDrive {
 
 	public void backward()
 	{
-		if(autonomousTimer.get() <= 3)
+		if(autonomousDriveEncoder.get() > autonomousDriveValue - CrusaderCommon.AUTO_DRIVE_LIMIT)
 		{
 			SmartDashboard.putString("AutonomousDrive", "backward");
 			autoRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_BACKWARD, CrusaderCommon.AUTO_DRIVE_BACKWARD);
@@ -88,7 +97,7 @@ public class AutonomousDrive {
 	
 	public void turnRight()
 	{
-		if(autonomousTimer.get() <= 3)
+		if(autonomousDriveEncoder.get() < autonomousDriveValue + CrusaderCommon.AUTO_DRIVE_LIMIT )
 		{
 			SmartDashboard.putString("AutonomousDrive", "turn right");
 			autoRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_FORWARD, CrusaderCommon.AUTO_DRIVE_BACKWARD);
@@ -101,7 +110,7 @@ public class AutonomousDrive {
 	
 	public void turnLeft()
 	{
-		if(autonomousTimer.get() <= 3)
+		if(autonomousDriveEncoder.get() > autonomousDriveValue - CrusaderCommon.AUTO_DRIVE_LIMIT)
 		{
 			SmartDashboard.putString("AutonomousDrive", "turn left");
 			autoRobotDrive.tankDrive(CrusaderCommon.AUTO_DRIVE_BACKWARD, CrusaderCommon.AUTO_DRIVE_FORWARD);

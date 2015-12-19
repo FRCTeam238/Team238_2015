@@ -23,30 +23,31 @@ public class CrusaderCommon {
 	public static final int OPR_CMD_LIST = 1;
 	public static final int LEFTDRIVER_CMD_LIST = 2;
 	public static final int RIGHTDRIVER_CMD_LIST = 3;
-	public static final int AUTONOMOUS_CMD_LIST = 4;
+	public static final int DT_CMD_LIST = 4;
+	public static final int AUTONOMOUS_CMD_LIST = 5;
 	
 	//public static final double POT_GROUND_MIN = 0.690;
-	public static final double POT_GROUND = 0.452; 		//0.440;
-	public static final double R_POT_GROUND = 0.450;
+	public static final double POT_GROUND = 50; //0.452; 		//0.440;
+	public static final double R_POT_GROUND = 50; //0.450;
 	//public static final double POT_GROUND_MAX = 0.610;
 	
 	//public static final double POT_TRAVEL_MIN = 0.380;
-	public static final double POT_TRAVEL = 0.335; 		//0.346;
-	public static final double R_POT_TRAVEL = 0.332;
+	public static final double POT_TRAVEL = 480; //0.335; 		//0.346;
+	public static final double R_POT_TRAVEL = 480; //0.332;
 	//public static final double POT_TRAVEL_MAX = 0.280;
 	
 	//public static final double POT_COOP_MIN = 0.230;
-	public static final double POT_COOP = 0.184; 		//0.140;
-	public static final double R_POT_COOP = 0.179;
+	public static final double POT_COOP = 1150; //0.184; 		//0.140;
+	public static final double R_POT_COOP = 1150; //0.179;
 	
-	public static final double POT_DELIVER = 0.170; 		//0.140;
-	public static final double R_POT_DELIVER = 0.189;
+	public static final double POT_DELIVER = 140; //0.170; 		//0.140;
+	public static final double R_POT_DELIVER = 140; //0.189;
 	
-	public static final double POT_LOADING = 0.000; 		//0.018;
-	public static final double R_POT_LOADING = 0.000; 		
+	public static final double POT_LOADING = 1790; //0.000; 		//0.018;
+	public static final double R_POT_LOADING = 1790; //0.000; 		
 	//public static final double POT_LOADING_MAX = 0.010;
 	
-	public static final double POT_NEUTRAL_ZONE = .002;
+	public static final double POT_NEUTRAL_ZONE = 10; //.002;
 	
 	public static final double POT_DIFF_MAX = 0.010;
 	public static final double POT_DEAD_BAND = 0.005;
@@ -61,11 +62,11 @@ public class CrusaderCommon {
 	public static final int RAISE_ARM = 6;
 	
 	//Speed for the Lift Jaguars
-	public static final int LIFT_GOES_UP_NORMAL = -1;
-	public static final int LIFT_GOES_DOWN_NORMAL = 1;
+	public static final double LIFT_GOES_UP_NORMAL = 0.25; //-1;
+	public static final double LIFT_GOES_DOWN_NORMAL = -0.25; //1;
 	public static final int LIFT_STOPS = 0;
-	public static final double LIFT_GOES_DOWN_SLOW = 0.5;
-	public static final double LIFT_GOES_UP_SLOW = -0.5;
+	public static final double LIFT_GOES_DOWN_SLOW = -0.1;
+	public static final double LIFT_GOES_UP_SLOW = 0.1;
 	
 	//
 	public static final int INPUT_MANUAL_OVERRIDE = 0;
@@ -121,4 +122,11 @@ public class CrusaderCommon {
 	public static final int AUTONOMOUS_CMD_IDX_DRIVEBACKWARD = 2;
 	public static final int AUTONOMOUS_CMD_IDX_TURNLEFT = 3;
 	public static final int AUTONOMOUS_CMD_IDX_TURNRIGHT = 4;
+	
+	public static final int DRIVE_TRAIN_CMD_IDX = 0;
+	
+	/*AUTONOMOUS INTEGERS*/
+	
+	public static final int AUTO_DRIVE_LIMIT = 15000;
+	
 }

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.core;
 
 public interface Command {
 	

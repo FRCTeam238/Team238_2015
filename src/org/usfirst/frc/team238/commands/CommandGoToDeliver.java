@@ -1,11 +1,14 @@
-package org.usfirst.frc.team238.robot;
+package org.usfirst.frc.team238.commands;
+
+import org.usfirst.frc.team238.core.Command;
+import org.usfirst.frc.team238.robot.Lift;
 
 public class CommandGoToDeliver implements Command {
 
 	public Lift myLift;
 	//public SaloonDoors mySaloonDoor;
 
-	public CommandGoToDeliver(Lift theLift, SaloonDoors theSaloonDoor)
+	public CommandGoToDeliver(Lift theLift)
 	{
 		this.myLift = theLift;
 		// this.mySaloonDoor = theSaloonDoor;
@@ -13,7 +16,8 @@ public class CommandGoToDeliver implements Command {
 
 	public void execute()
 	{	
-		myLift.setToCatch();;
+		myLift.clampOn();
+		myLift.setToCatch();
 
 	}
 

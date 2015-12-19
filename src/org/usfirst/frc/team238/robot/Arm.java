@@ -20,7 +20,7 @@ public class Arm {
 	public void armInit() 
 	{
 		armTalon = new Talon(4);
-		armEncoder = new Encoder(8,9);  //8 is Channel A, 9 is Channel B
+		//armEncoder = new Encoder(8,9);  //8 is Channel A, 9 is Channel B
 		armJoySlider = ControlBoard.operatorJs; //new Joystick(1); //NO NO NO NO!!!!
 		
 	}
@@ -38,8 +38,8 @@ public class Arm {
 		//else go up
 		sliderValue = armJoySlider.getX() + 1;
 		SmartDashboard.putNumber("sliderValue", sliderValue);
-		encoderVal = armEncoder.getRaw(); //  .getDistance();
-		SmartDashboard.putNumber("armEncoder", encoderVal);
+		encoderVal = 0;// armEncoder.getRaw(); //  .getDistance();
+		//SmartDashboard.putNumber("armEncoder", encoderVal);
 		double deadband = 50;
 				
 		sliderValue = (sliderValue  * 1750);
