@@ -9,8 +9,7 @@ public class ControlBoard {
 	static Joystick operatorJs;  	// operator control board
 	private static Joystick driverLeftJs; 	// driveTrain left
 	private static Joystick driverRightJs; 	// driveTrain right
-	//
-	look at using more sophisticated collection classes
+	//look at using more sophisticated collection classes
 	static int commands[];
 	
 	public void controlBoardInit()
